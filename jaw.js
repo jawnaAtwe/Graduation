@@ -59,6 +59,22 @@ pool.connect();
 
 
 
+
+
+app.get('/wish', function(request, response){
+    console.log("back");
+    let query1 = `SELECT *  FROM wish `;
+    
+    pool.query(query1, function(error, results){
+        if ( error ){
+            response.status(400).send('Error in database operation');
+        } else {
+             console.log(results);
+            response.send(results);
+        }
+    });
+});
+
 app.get('/login', function(request, response){
     console.log("back");
     let query1 = `SELECT *  FROM users where username='${request.query.username}' and userpass='${request.query.userpass}'`;
