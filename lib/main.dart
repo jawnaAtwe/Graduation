@@ -12,22 +12,18 @@ import 'package:flutter_carousel_slider/carousel_slider_transforms.dart';
 import 'package:flutter_swiper_plus/flutter_swiper_plus.dart';
 
 void main() {
-  runApp(MyApp()) ;
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
-
     return MaterialApp(
-      
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
       home: MyHomePage(),
     );
-   
   }
 }
 
@@ -39,15 +35,15 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
-   String istapped = '';
- 
+  String istapped = '';
+
   //  final imageList = [
   //   'https://cdn.pixabay.com/photo/2016/03/05/19/02/hamburger-1238246__480.jpg',
   //   'https://cdn.pixabay.com/photo/2016/11/20/09/06/bowl-1842294__480.jpg',
   //   'https://cdn.pixabay.com/photo/2017/01/03/11/33/pizza-1949183__480.jpg',
   //   'https://cdn.pixabay.com/photo/2017/02/03/03/54/burger-2034433__480.jpg',
   // ];
-late final AnimationController _controller = AnimationController(
+  late final AnimationController _controller = AnimationController(
     duration: const Duration(seconds: 2),
     vsync: this,
   )..repeat(reverse: true);
@@ -62,72 +58,59 @@ late final AnimationController _controller = AnimationController(
     super.dispose();
   }
 
-@override
-Widget build(BuildContext context){
- 
- return Container(
-       
-      child: 
-      
-      Scaffold(
-  
-     body: new Center(
-     child: new Column(mainAxisSize: MainAxisSize.min,  children:  <Widget> [    
-                 
-   
-new Column( mainAxisAlignment: MainAxisAlignment.center,children:  <Widget>[
-ScaleTransition(
-  scale: _animation,
-  alignment: Alignment.center,
-  child: Center(
-    child: Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        Image.asset("assets/images/logo.png",height: 300,width:300),
-      ],
-    ),
-  ),
-),
-  ElevatedButton (
-          style: ElevatedButton.styleFrom(
-    primary: Colors.pink, // Background color
-   // Text Color (Foreground color)
-  ),
-  
-              onPressed: (){
-
-Navigator.of(context).push(MaterialPageRoute(builder:(context){
-
-return homm();
-}));
-
-},child: Text("map1"),)
-,
-Container(
-                alignment: Alignment.center,
-                padding: const EdgeInsets.all(10),
-              )
-,ElevatedButton(
-        style: ElevatedButton.styleFrom(
-    primary: Colors.pink, // Background color
-   // Text Color (Foreground color)
-  ),
-  onPressed: (){
-
-Navigator.of(context).push(MaterialPageRoute(builder:(context){
-
-     return first();
-
-}));
-
-},child: Text("user"),)
-
-    ]),
-    ])
-  
-
-) ),
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: Scaffold(
+          body: new Center(
+              child:
+                  new Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
+        new Column(mainAxisAlignment: MainAxisAlignment.center, children: <
+            Widget>[
+          ScaleTransition(
+            scale: _animation,
+            alignment: Alignment.center,
+            child: Center(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Image.asset("assets/images/logo.png",
+                      height: 300, width: 300),
+                ],
+              ),
+            ),
+          ),
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              primary: Color.fromARGB(255, 143, 243, 143), // Background color
+              // Text Color (Foreground color)
+            ),
+            onPressed: () {
+              Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+                return homm();
+              }));
+            },
+            child: Text("map1"),
+          ),
+          Container(
+            alignment: Alignment.center,
+            padding: const EdgeInsets.all(10),
+          ),
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              primary: Color.fromARGB(255, 143, 243, 143), // Background color
+              // Text Color (Foreground color)
+            ),
+            onPressed: () {
+              Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+                return first();
+              }));
+            },
+            child: Text("user"),
+          )
+        ]),
+      ]))),
     );
 
     // new Swiper(
@@ -141,19 +124,5 @@ Navigator.of(context).push(MaterialPageRoute(builder:(context){
     //     pagination: new SwiperPagination(),
     //     control: new SwiperControl(),
     //   ),    );
-
-
-
-
-
-
-
-
-
- }
- 
+  }
 }
-
-
-
-
