@@ -5,93 +5,135 @@ import 'package:untitled/widgets/app_button.dart';
 import 'package:untitled/widgets/base_view.dart';
 import 'package:untitled/widgets/cart_product_item.dart';
 import 'package:untitled/constants/constants.dart';
+import 'dart:ui';
+import 'package:http/http.dart' as http;
+import 'package:flutter/material.dart';
+import 'package:flutter_login/flutter_login.dart';
+import 'package:untitled/homm.dart';
+import 'package:async/async.dart';
+import 'dart:convert';
+import 'dart:async';
+
+import 'package:flutter_calendar_carousel/classes/event.dart';
 
 TextEditingController productNameController = TextEditingController();
 TextEditingController productImageURLController = TextEditingController();
 TextEditingController productPriceController = TextEditingController();
 TextEditingController productMarketController = TextEditingController();
 TextEditingController productManufactureingController = TextEditingController();
+  
+ wish( List<Product> g) async {
+  List<Product> prodList = [];
+    http.Response res = await http.get(Uri.parse('http://192.168.1.134:3000/wish'),
+  headers: {
+'Content-Type':'application/json'
 
+  }
+       
+ );
+
+  if (res.statusCode == 200) {
+    // If the server did return a 200 OK response,
+    // then parse the JSON.
+   
+
+    var jsonString = jsonDecode(res.body);
+List<Product> products = jsonString.map((jsonMap) => Product.fromJson(jsonMap)).toList();
+    g= products;
+  } else {
+    // If the server did not return a 200 OK response,
+    // then throw an exception.
+    throw Exception('Failed to load album');
+  }
+}
+  
 class WishList extends StatefulWidget {
+
+
+
   const WishList({Key? key}) : super(key: key);
   @override
   _MyHomePageState createState() => _MyHomePageState();
 }
 
 class _MyHomePageState extends State<WishList> {
+  
+  
   // final CategoriesScroller categoriesScroller = CategoriesScroller();
-  final List<Product> myList = [
-    Product(
-        name: 'Deshi Mango',
-        imageUrl: 'broccoli',
-        price: 300,
-        quantity: '1Kg',
-        manufactureing: 'pravo',
-        market: 'pravo'),
-    Product(
-        name: 'Deshi Mango',
-        imageUrl: 'broccoli',
-        price: 300,
-        quantity: '1Kg',
-        manufactureing: 'pravo',
-        market: 'pravo'),
-    Product(
-        name: 'Deshi Mango',
-        imageUrl: 'mango',
-        price: 300,
-        quantity: '1Kg',
-        manufactureing: 'pravo',
-        market: 'pravo'),
-    Product(
-        name: 'Deshi Mango',
-        imageUrl: 'mango',
-        price: 300,
-        quantity: '1Kg',
-        manufactureing: 'pravo',
-        market: 'pravo'),
-    Product(
-        name: 'Deshi Mango',
-        imageUrl: 'mango',
-        price: 300,
-        quantity: '1Kg',
-        manufactureing: 'pravo',
-        market: 'pravo'),
-    Product(
-        name: 'Deshi Mango',
-        imageUrl: 'mango',
-        price: 300,
-        quantity: '1Kg',
-        manufactureing: 'pravo',
-        market: 'pravo'),
-    Product(
-        name: 'Deshi Mango',
-        imageUrl: 'mango',
-        price: 300,
-        quantity: '1Kg',
-        manufactureing: 'pravo',
-        market: 'pravo'),
-    Product(
-        name: 'Deshi Mango',
-        imageUrl: 'mango',
-        price: 300,
-        quantity: '1Kg',
-        manufactureing: 'pravo',
-        market: 'pravo'),
-    Product(
-        name: 'Deshi Mango',
-        imageUrl: 'mango',
-        price: 300,
-        quantity: '1Kg',
-        manufactureing: 'pravo',
-        market: 'pravo')
-  ];
+  // final List<Product> myList = [
+  //   Product(
+  //       name: 'Deshi Mango',
+  //       imageUrl: 'broccoli',
+  //       price: 300,
+  //       quantity: '1Kg',
+  //       manufactureing: 'pravo',
+  //       market: 'pravo'),
+  //   Product(
+  //       name: 'Deshi Mango',
+  //       imageUrl: 'broccoli',
+  //       price: 300,
+  //       quantity: '1Kg',
+  //       manufactureing: 'pravo',
+  //       market: 'pravo'),
+  //   Product(
+  //       name: 'Deshi Mango',
+  //       imageUrl: 'mango',
+  //       price: 300,
+  //       quantity: '1Kg',
+  //       manufactureing: 'pravo',
+  //       market: 'pravo'),
+  //   Product(
+  //       name: 'Deshi Mango',
+  //       imageUrl: 'mango',
+  //       price: 300,
+  //       quantity: '1Kg',
+  //       manufactureing: 'pravo',
+  //       market: 'pravo'),
+  //   Product(
+  //       name: 'Deshi Mango',
+  //       imageUrl: 'mango',
+  //       price: 300,
+  //       quantity: '1Kg',
+  //       manufactureing: 'pravo',
+  //       market: 'pravo'),
+  //   Product(
+  //       name: 'Deshi Mango',
+  //       imageUrl: 'mango',
+  //       price: 300,
+  //       quantity: '1Kg',
+  //       manufactureing: 'pravo',
+  //       market: 'pravo'),
+  //   Product(
+  //       name: 'Deshi Mango',
+  //       imageUrl: 'mango',
+  //       price: 300,
+  //       quantity: '1Kg',
+  //       manufactureing: 'pravo',
+  //       market: 'pravo'),
+  //   Product(
+  //       name: 'Deshi Mango',
+  //       imageUrl: 'mango',
+  //       price: 300,
+  //       quantity: '1Kg',
+  //       manufactureing: 'pravo',
+  //       market: 'pravo'),
+  //   Product(
+  //       name: 'Deshi Mango',
+  //       imageUrl: 'mango',
+  //       price: 300,
+  //       quantity: '1Kg',
+  //       manufactureing: 'pravo',
+  //       market: 'pravo')
+  // ];
 
   ScrollController controller = ScrollController();
+     
   bool closeTopContainer = false;
   double topContainer = 0;
   List<Widget> itemsData = [];
 
   void getPostsData() {
+
     List<Widget> listItems = [];
 
     myList.forEach((post) {
@@ -160,10 +202,12 @@ class _MyHomePageState extends State<WishList> {
       itemsData = listItems;
     });
   }
-
+  
+ late  List<Product> myList;
   @override
   void initState() {
     super.initState();
+     wish(myList);
     getPostsData();
     controller.addListener(() {
       double value = controller.offset / 125;

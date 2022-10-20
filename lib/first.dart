@@ -99,7 +99,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget>  {
    print(n);
    print(p);
    try{
-      http.Response res = await http.get(Uri.parse('http://192.168.1.65:3000/login?username='+n+'&&userpass='+p),
+      http.Response res = await http.get(Uri.parse('http://192.168.1.134:3000/login?username='+n+'&&userpass='+p),
   headers: {
 'Content-Type':'application/json'
 
@@ -367,7 +367,7 @@ class _MyStatefulWidgetState1 extends State<MyStatefulWidget1> {
    print(n);
    print(p);
    try{
-      http.Response res = await http.get(Uri.parse('http://192.168.1.65:3000/loginadmin?AdminName='+n+'&&AdminPass='+p),
+      http.Response res = await http.get(Uri.parse('http://192.168.1.134:3000/loginadmin?AdminName='+n+'&&AdminPass='+p),
   headers: {
 'Content-Type':'application/json'
 
@@ -598,7 +598,7 @@ TextEditingController phoneController2 = TextEditingController();
 
    
    try{
-      http.Response res = await http.get(Uri.parse('http://192.168.1.65:3000/register?username='+name+'&&userpass='+pass+'&&place='+place+'&&email='+email+'&&phone='+phone1),
+      http.Response res = await http.get(Uri.parse('http://192.168.1.134:3000/register?username='+name+'&&userpass='+pass+'&&place='+place+'&&email='+email+'&&phone='+phone1),
   headers: {
 'Content-Type':'application/json'
 
