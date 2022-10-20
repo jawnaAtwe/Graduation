@@ -7,7 +7,6 @@ import 'package:untitled/pages/home.dart';
 import 'package:untitled/pages/user_profile.dart';
 import 'package:untitled/pages/wish_list.dart';
 
-
 class homm extends StatelessWidget {
   const homm({Key? key}) : super(key: key);
 
@@ -62,7 +61,7 @@ class _MyHomePageState extends State<MyHomePage1> {
             ),
             BottomNavigationBarItem(
               icon: _createBarIcon('wish_list', 2),
-              label: 'Wishlist',
+              label: 'Shopping',
             ),
             BottomNavigationBarItem(
               icon: _createBarIcon('user_profile', 3),
