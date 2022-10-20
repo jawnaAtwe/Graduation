@@ -84,7 +84,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
     print(p);
     try {
       http.Response res = await http.get(
-          Uri.parse('http://192.168.1.9:3000/login?username=' +
+          Uri.parse('http://192.168.1.65:3000/login?username=' +
               n +
               '&&userpass=' +
               p),
@@ -307,7 +307,7 @@ class _MyStatefulWidgetState1 extends State<MyStatefulWidget1> {
     print(p);
     try {
       http.Response res = await http.get(
-          Uri.parse('http://192.168.1.9:3000/loginadmin?AdminName=' +
+          Uri.parse('http://192.168.1.65:3000/loginadmin?AdminName=' +
               n +
               '&&AdminPass=' +
               p),
@@ -508,7 +508,7 @@ class _MyStatefulWidgetState2 extends State<MyStatefulWidget2> {
       String phone1) async {
     try {
       http.Response res = await http.get(
-          Uri.parse('http://192.168.1.9:3000/register?username=' +
+          Uri.parse('http://192.168.1.65:3000/register?username=' +
               name +
               '&&userpass=' +
               pass +

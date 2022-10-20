@@ -21,10 +21,10 @@ TextEditingController productImageURLController = TextEditingController();
 TextEditingController productPriceController = TextEditingController();
 TextEditingController productMarketController = TextEditingController();
 TextEditingController productManufactureingController = TextEditingController();
-  late  List<Product> myList;
- wish( List<Product> g) async {
-  List<Product> prodList = [];
-    http.Response res = await http.get(Uri.parse('http://192.168.1.134:3000/wish'),
+   late  List<Product> myList=[];
+  wish( List<Product> g) async {
+ 
+    http.Response res = await http.get(Uri.parse('http://192.168.1.65:3000/wish'),
   headers: {
 'Content-Type':'application/json'
 
@@ -37,9 +37,11 @@ TextEditingController productManufactureingController = TextEditingController();
     // then parse the JSON.
    
 
-    var jsonString = jsonDecode(res.body);
-List<Product> products = jsonString.map((jsonMap) => Product.fromJson(jsonMap)).toList();
-    g= products;
+    var jsonString = json.decode(res.body);
+    List<Product> list = List<Product>.from(jsonString.map((i) => Product.fromJson(i)));
+// List<Product> products = jsonString.map((jsonMap) => Product.fromJson(jsonMap)).toList();
+myList= list;
+
   } else {
     // If the server did not return a 200 OK response,
     // then throw an exception.
