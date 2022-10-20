@@ -21,7 +21,7 @@ TextEditingController productImageURLController = TextEditingController();
 TextEditingController productPriceController = TextEditingController();
 TextEditingController productMarketController = TextEditingController();
 TextEditingController productManufactureingController = TextEditingController();
-  
+  late  List<Product> myList;
  wish( List<Product> g) async {
   List<Product> prodList = [];
     http.Response res = await http.get(Uri.parse('http://192.168.1.134:3000/wish'),
@@ -203,9 +203,10 @@ class _MyHomePageState extends State<WishList> {
     });
   }
   
- late  List<Product> myList;
+ 
   @override
   void initState() {
+    
     super.initState();
      wish(myList);
     getPostsData();
