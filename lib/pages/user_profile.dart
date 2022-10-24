@@ -3,7 +3,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:untitled/constants/constants.dart';
 import 'package:untitled/widgets/base_view.dart';
-
+import 'package:untitled/pages/profile.dart';
 class UserProfile extends StatelessWidget {
   const UserProfile({Key? key}) : super(key: key);
 
@@ -15,8 +15,15 @@ class UserProfile extends StatelessWidget {
           _buildListItem('list', 'My Orders', () => {}),
           _buildListItem('wish_list', 'My Favorite', () => {}),
           _buildListItem('wallet', 'Payment Details', () => {}),
-          _buildListItem('settings', 'My Account', () => {}),
+          _buildListItem('settings', 'My Account', () =>{  Navigator.of(context).push(MaterialPageRoute(builder: (c) => pro()))}),
+          
+          // Navigator.of(context).push(MaterialPageRoute(builder: (c) => homm()));
+
+    
         ]));
+        
+  }
+
   }
 
   _buildListItem(String iconName, String title, Function() onPressed) {
@@ -35,4 +42,4 @@ class UserProfile extends StatelessWidget {
       onTap: onPressed,
     );
   }
-}
+

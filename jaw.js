@@ -59,6 +59,20 @@ pool.connect();
 
 
 
+app.get('/infouser', function(request, response){
+    console.log("information1122");
+
+    let query1 = `SELECT *  FROM users `;
+    
+    pool.query(query1, function(error, results){
+        if ( error ){
+            response.status(400).send('Error in database operation');
+        } else {
+             console.log(results);
+            response.send(results);
+        }
+    });
+});
 
 
 app.get('/wish', function(request, response){

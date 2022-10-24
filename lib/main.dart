@@ -83,7 +83,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
           ),
           ElevatedButton(
             style: ElevatedButton.styleFrom(
-              primary: Color.fromARGB(255, 143, 243, 143), // Background color
+              primary: Colors.pink, // Background color
               // Text Color (Foreground color)
             ),
             onPressed: () {
@@ -99,7 +99,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
           ),
           ElevatedButton(
             style: ElevatedButton.styleFrom(
-              primary: Color.fromARGB(255, 143, 243, 143), // Background color
+              primary: Colors.pink // Background color
               // Text Color (Foreground color)
             ),
             onPressed: () {

@@ -6,6 +6,9 @@ import 'package:untitled/homm.dart';
 import 'package:async/async.dart';
 import 'dart:convert';
 import 'dart:async';
+import 'package:flutter_session_manager/flutter_session_manager.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+var sessionManager = SessionManager();
 
 //UI USER INTERFACs
 class first extends StatelessWidget {
@@ -93,6 +96,8 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
         // Map<String, dynamic> map = json.decode(res.body);
         // List<dynamic> data = map["result"];
         print("sucess");
+        await sessionManager.set("namename", n);
+        await sessionManager.set("passpass", p);
         Navigator.of(context).push(MaterialPageRoute(builder: (c) => homm()));
 
         return const homm();
@@ -501,6 +506,7 @@ class _MyStatefulWidgetState2 extends State<MyStatefulWidget2> {
 
   @override
   void initState() {
+    
     super.initState();
   }
 
