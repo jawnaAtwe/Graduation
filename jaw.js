@@ -60,9 +60,9 @@ pool.connect();
 
 
 app.get('/infouser', function(request, response){
-    console.log("information1122");
+    console.log("information");
 
-    let query1 = `SELECT *  FROM users `;
+    let query1 = `SELECT *  FROM users where username='${request.query.username}' `;
     
     pool.query(query1, function(error, results){
         if ( error ){
