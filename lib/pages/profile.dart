@@ -36,7 +36,7 @@ Future getinfo() async {
     try {
     
       http.Response res = await http.get(
-          Uri.parse('http://192.168.1.65:3000/infouser?username=' +
+          Uri.parse('http://192.168.1.242:3000/infouser?username=' +
               A +
               '&&userpass=' +
              'B'),

@@ -24,7 +24,7 @@ TextEditingController productManufactureingController = TextEditingController();
    late  List<Product> myList=[];
   wish( List<Product> g) async {
  
-    http.Response res = await http.get(Uri.parse('http://192.168.1.65:3000/wish'),
+    http.Response res = await http.get(Uri.parse('http://192.168.1.242:3000/wish'),
   headers: {
 'Content-Type':'application/json'
 

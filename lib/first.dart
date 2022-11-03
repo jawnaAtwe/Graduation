@@ -87,7 +87,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
     print(p);
     try {
       http.Response res = await http.get(
-          Uri.parse('http://192.168.1.65:3000/login?username=' +
+          Uri.parse('http://192.168.1.242:3000/login?username=' +
               n +
               '&&userpass=' +
               p),
@@ -133,10 +133,10 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                 alignment: Alignment.center,
                 padding: const EdgeInsets.all(32),
                 decoration: const BoxDecoration(
-                  image: DecorationImage(
-                      image: NetworkImage(
-                          "https://blog.mostaql.com/wp-content/uploads/2020/11/%D8%A3%D8%B3%D8%A8%D8%A7%D8%A8-%D8%AA%D8%AE%D9%84%D9%8A-%D8%A7%D9%84%D9%85%D8%B4%D8%AA%D8%B1%D9%88%D9%86-%D8%B9%D9%86-%D8%B3%D9%84%D8%A9-%D8%A7%D9%84%D8%B4%D8%B1%D8%A7%D8%A1-1.jpg"),
-                      fit: BoxFit.cover),
+                  // image: DecorationImage(
+                  //     image: NetworkImage(
+                  //         "https://blog.mostaql.com/wp-content/uploads/2020/11/%D8%A3%D8%B3%D8%A8%D8%A7%D8%A8-%D8%AA%D8%AE%D9%84%D9%8A-%D8%A7%D9%84%D9%85%D8%B4%D8%AA%D8%B1%D9%88%D9%86-%D8%B9%D9%86-%D8%B3%D9%84%D8%A9-%D8%A7%D9%84%D8%B4%D8%B1%D8%A7%D8%A1-1.jpg"),
+                  //     fit: BoxFit.cover),
                 ),
                 child: Column(children: <Widget>[
                   Container(
@@ -312,7 +312,7 @@ class _MyStatefulWidgetState1 extends State<MyStatefulWidget1> {
     print(p);
     try {
       http.Response res = await http.get(
-          Uri.parse('http://192.168.1.65:3000/loginadmin?AdminName=' +
+          Uri.parse('http://192.168.1.242:3000/loginadmin?AdminName=' +
               n +
               '&&AdminPass=' +
               p),
@@ -353,10 +353,10 @@ class _MyStatefulWidgetState1 extends State<MyStatefulWidget1> {
                 alignment: Alignment.center,
                 padding: const EdgeInsets.all(32),
                 decoration: const BoxDecoration(
-                  image: DecorationImage(
-                      image: NetworkImage(
-                          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTAENGXsk5ISiszsV-9gZyxToXE1P1QnZd_oQ&usqp=CAU"),
-                      fit: BoxFit.cover),
+                  // image: DecorationImage(
+                  //     image: NetworkImage(
+                  //         "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTAENGXsk5ISiszsV-9gZyxToXE1P1QnZd_oQ&usqp=CAU"),
+                  //     fit: BoxFit.cover),
                 ),
                 child: Column(children: <Widget>[
                   Container(
@@ -479,7 +479,8 @@ class _MyStatefulWidgetState1 extends State<MyStatefulWidget1> {
 }
 
 class MyStatefulWidget2 extends StatefulWidget {
-  const MyStatefulWidget2({Key? key}) : super(key: key);
+ 
+ const MyStatefulWidget2({super.key});
 
   @override
   State<MyStatefulWidget2> createState() => _MyStatefulWidgetState2();
@@ -510,11 +511,11 @@ class _MyStatefulWidgetState2 extends State<MyStatefulWidget2> {
     super.initState();
   }
 
-  Future register(String name, String pass, String email, String place,
+  void register(String name, String pass, String email, String place,
       String phone1) async {
     try {
       http.Response res = await http.get(
-          Uri.parse('http://192.168.1.65:3000/register?username=' +
+          Uri.parse('http://192.168.1.242:3000/register?username=' +
               name +
               '&&userpass=' +
               pass +
@@ -529,12 +530,12 @@ class _MyStatefulWidgetState2 extends State<MyStatefulWidget2> {
       print("no register");
     }
   }
-
+final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
-    return Padding(
-        padding: const EdgeInsets.all(0),
-        child: ListView(
+    return Form(
+      key: _formKey,
+      child: ListView(
           children: <Widget>[
             //     BackgroundImage(
             //   image: 'images/file.jpg',
@@ -544,10 +545,11 @@ class _MyStatefulWidgetState2 extends State<MyStatefulWidget2> {
                 alignment: Alignment.center,
                 padding: const EdgeInsets.all(32),
                 decoration: const BoxDecoration(
-                  image: DecorationImage(
-                      image: NetworkImage(
-                          "https://media.istockphoto.com/photos/female-customer-buying-coffee-and-placing-signature-on-tablet-picture-id1138022521?k=20&m=1138022521&s=612x612&w=0&h=64LbjGG21JIx6E5WgyXfUU0SEaVe62PbV_W40T5UGqE="),
-                      fit: BoxFit.cover),
+                  // image: DecorationImage(
+                  //     image: NetworkImage(
+                  //         "https://media.istockphoto.com/photos/female-customer-buying-coffee-and-placing-signature-on-tablet-picture-id1138022521?k=20&m=1138022521&s=612x612&w=0&h=64LbjGG21JIx6E5WgyXfUU0SEaVe62PbV_W40T5UGqE="),
+                     
+                  //     fit: BoxFit.cover),
                 ),
                 child: Column(children: <Widget>[
                   Container(
@@ -556,7 +558,7 @@ class _MyStatefulWidgetState2 extends State<MyStatefulWidget2> {
                   Container(
                     padding: const EdgeInsets.fromLTRB(10, 20, 10, 0),
                     child: SizedBox(
-                      child: TextField(
+                      child: TextFormField(
                         textInputAction: TextInputAction.next,
                         controller: nameController2,
                         decoration: InputDecoration(
@@ -583,6 +585,13 @@ class _MyStatefulWidgetState2 extends State<MyStatefulWidget2> {
                             ),
                           ),
                         ),
+                       validator: (val) {
+                              if((val!.isEmpty) ){
+                                return "Enter a name";
+                              }
+                              return null;
+                            },
+
                       ),
                     ),
                   ),
@@ -594,6 +603,7 @@ class _MyStatefulWidgetState2 extends State<MyStatefulWidget2> {
                         controller: emailController2,
                         keyboardType: TextInputType.emailAddress,
                         decoration: InputDecoration(
+                         
                           filled: true,
                           fillColor: Colors.grey[500]!.withOpacity(0.4),
                           focusedBorder: OutlineInputBorder(
@@ -616,14 +626,20 @@ class _MyStatefulWidgetState2 extends State<MyStatefulWidget2> {
                               color: Colors.pink,
                             ),
                           ),
-                        ),
+                        ),   validator: (val) {
+                              if((val!.isEmpty) || !RegExp(r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?)*$").hasMatch(val)){
+                                return "Enter a valid email address";
+                              }
+                              return null;
+                            },
+
                       ),
                     ),
                   ),
                   Container(
                     padding: const EdgeInsets.fromLTRB(10, 20, 10, 0),
                     child: SizedBox(
-                      child: TextField(
+                      child: TextFormField(
                         textInputAction: TextInputAction.next,
                         controller: placeController2,
                         decoration: InputDecoration(
@@ -650,12 +666,19 @@ class _MyStatefulWidgetState2 extends State<MyStatefulWidget2> {
                             ),
                           ),
                         ),
+                      validator: (val) {
+                              if((val!.isEmpty) ){
+                                return "Enter a valid place";
+                              }
+                              return null;
+                            },
+
                       ),
                     ),
                   ),
                   Container(
                     padding: const EdgeInsets.fromLTRB(10, 20, 10, 0),
-                    child: TextField(
+                    child: TextFormField(
                       textInputAction: TextInputAction.next,
                       controller: passwordController2,
                       obscureText: true,
@@ -684,7 +707,12 @@ class _MyStatefulWidgetState2 extends State<MyStatefulWidget2> {
                           ),
                         ),
                       ),
-                    ),
+                    validator: (val) {
+                              if((val!.isEmpty) ){
+                                return "Enter a valid password";
+                              }
+                              return null;
+                            }, ),
                   ),
                   Container(
                     padding: const EdgeInsets.fromLTRB(10, 20, 10, 0),
@@ -717,7 +745,12 @@ class _MyStatefulWidgetState2 extends State<MyStatefulWidget2> {
                             ),
                           ),
                         ),
-                      ),
+                      validator: (val) {
+                              if((val!.isEmpty) ){
+                                return "Enter a valid phone";
+                              }
+                              return null;
+                            }, ),
                     ),
                   ),
                   Container(
@@ -734,27 +767,41 @@ class _MyStatefulWidgetState2 extends State<MyStatefulWidget2> {
                         ),
                         child: const Text('Register'),
                         onPressed: () {
-                          if (nameController2.text != '' &&
-                              passwordController2.text != '' &&
-                              emailController2.text != '' &&
-                              placeController2.text != '')
-                            register(
+                          
+                            
+                          // if (nameController2.text != '' &&
+                          //     passwordController2.text != '' &&
+                          //     emailController2.text != '' &&
+                          //     placeController2.text != '')
+                          // {
+                              if (_formKey.currentState!.validate()) { register(
                                 nameController2.text,
                                 passwordController2.text,
                                 emailController2.text,
                                 placeController2.text,
                                 phoneController2.text);
-                          else {
-                            AlertDialog alert = AlertDialog(
-                              content: Text("please fill all feild"),
-                            );
-                            showDialog(
-                              context: context,
-                              builder: (BuildContext context) {
-                                return alert;
-                              },
-                            );
-                          }
+                                                             
+ScaffoldMessenger.of(context).showSnackBar(
+  
+        const SnackBar(content: Text('Processing Data')),
+      );
+                                }
+ 
+                          // }
+                          // else {
+                          //   AlertDialog alert = AlertDialog(
+                          //     content: Text("please fill all feild"),
+                          //   );
+                          //   showDialog(
+                          //     context: context,
+                          //     builder: (BuildContext context) {
+                          //       return alert;
+                          //     },
+                          //   );
+                          // }
+      // If the form is valid, display a snackbar. In the real world,
+      // you'd often call a server or save the information in a database.
+      
                         },
                       )),
                   Row(
