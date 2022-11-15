@@ -40,11 +40,11 @@ class ProductItem extends StatelessWidget {
                   Expanded(
                       child: Row(
                     children: [
-                      Image.asset(
-                        'assets/images/${product.imageUrl}.png',
-                        width: 80,
-                        height: 80,
-                      ),
+                      // Image.asset(
+                      //   'assets/images/${product.imageUrl}.png',
+                      //   width: 80,
+                      //   height: 80,
+                      // ),
                       const SizedBox(
                         width: 13,
                       ),
@@ -60,18 +60,18 @@ class ProductItem extends StatelessWidget {
                                   color: kTextColor.withOpacity(0.68)),
                             ),
                             spacer,
-                            Text(
-                              product.name,
-                              style: const TextStyle(
-                                  fontSize: 17, fontWeight: FontWeight.bold),
-                            ),
-                            spacer,
-                            Text(
-                              product.quantity,
-                              style: TextStyle(
-                                  fontSize: 13,
-                                  color: kTextColor.withOpacity(0.30)),
-                            )
+                            // Text(
+                            //   product.name,
+                            //   style: const TextStyle(
+                            //       fontSize: 17, fontWeight: FontWeight.bold),
+                            // ),
+                            // spacer,
+                            // Text(
+                            //   product.quantity,
+                            //   style: TextStyle(
+                            //       fontSize: 13,
+                            //       color: kTextColor.withOpacity(0.30)),
+                            // )
                           ],
                         ),
                       )

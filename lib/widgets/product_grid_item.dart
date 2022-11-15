@@ -35,12 +35,14 @@ class ProductGridItem extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Center(
-                        child: Image.asset(
-                      'assets/images/${product.imageUrl}.png',
-                      width: imageSize,
-                      height: imageSize,
-                    )),
+                    // Center(
+                    //     child: Image.asset(
+                    //   'assets/images/${product.imageUrl}.png',
+                    //   width: imageSize,
+                    //   height: imageSize,
+                    // )),
+                    
+                    
                     Text(
                       product.getFormattedPrice(),
                       style: TextStyle(
@@ -48,18 +50,18 @@ class ProductGridItem extends StatelessWidget {
                           color: kTextColor.withOpacity(0.68)),
                     ),
                     spacer,
-                    Text(
-                      product.name,
-                      overflow: TextOverflow.ellipsis,
-                      style: const TextStyle(
-                          fontSize: 17, fontWeight: FontWeight.bold),
-                    ),
+                    // Text(
+                    //   product.name,
+                    //   overflow: TextOverflow.ellipsis,
+                    //   style: const TextStyle(
+                    //       fontSize: 17, fontWeight: FontWeight.bold),
+                    // ),
                     spacer,
-                    Text(
-                      product.quantity,
-                      style: TextStyle(
-                          fontSize: 13, color: kTextColor.withOpacity(0.30)),
-                    ),
+                    // Text(
+                    //   product.quantity,
+                    //   style: TextStyle(
+                    //       fontSize: 13, color: kTextColor.withOpacity(0.30)),
+                    // ),
                   ],
                 ),
                 onTap: () {

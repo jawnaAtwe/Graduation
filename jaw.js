@@ -77,7 +77,7 @@ app.get('/infouser', function(request, response){
 
 app.get('/wish', function(request, response){
     console.log("back");
-    let query1 = `SELECT *  FROM wish `;
+    let query1 = `SELECT *  FROM products `;
     
     pool.query(query1, function(error, results){
         if ( error ){
@@ -106,6 +106,20 @@ app.get('/login', function(request, response){
 
 
 
+app.get('/showlist', function(request, response){
+    console.log("backshow");
+    let query1 = `SELECT *  FROM list where username='${request.query.username}'`;
+    
+    pool.query(query1, function(error, results){
+        if ( error ){
+            response.status(400).send('Error in database operation');
+        } else {
+             console.log(results);
+            response.send(results);
+        }
+    });
+});
+
 app.get('/loginadmin', function(request, response){
     console.log("back");
     let query1 = `SELECT *  FROM admin where AdminName='${request.query.AdminName}' and AdminPass='${request.query.AdminPass}'`;
@@ -120,7 +134,20 @@ app.get('/loginadmin', function(request, response){
     });
 });
 
-
+app.get('/reglist', function(request, response){
+    console.log("backjojo");
+    let query1 = `INSERT INTO list (username,listname,price) VALUES ('${request.query.username}','${request.query.listname}',' ${request.query.price}')`;
+    
+    pool.query(query1, function(error, results){
+        if ( error ){
+            response.status(400).send('Error in database operation');
+        } else {
+             console.log(results);
+            response.send("Success");
+           
+        }
+    });
+});
 
 app.get('/register', function(request, response){
    

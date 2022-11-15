@@ -24,7 +24,7 @@ TextEditingController productManufactureingController = TextEditingController();
    late  List<Product> myList=[];
   wish( List<Product> g) async {
  
-    http.Response res = await http.get(Uri.parse('http://192.168.1.242:3000/wish'),
+    http.Response res = await http.get(Uri.parse('http://192.168.1.65:3000/wish'),
   headers: {
 'Content-Type':'application/json'
 
@@ -157,16 +157,16 @@ class _MyHomePageState extends State<WishList> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Text(
-                      post.name,
+                      post.productName,
                       style: const TextStyle(
                           fontSize: 23, fontWeight: FontWeight.bold),
                     ),
                     Text(
-                      post.market,
+                      post.marketName,
                       style: const TextStyle(fontSize: 17, color: Colors.grey),
                     ),
                     Text(
-                      post.manufactureing,
+                      post.manufacturing,
                       style: const TextStyle(fontSize: 17, color: Colors.grey),
                     ),
                     SizedBox(
@@ -192,10 +192,10 @@ class _MyHomePageState extends State<WishList> {
                     )
                   ],
                 ),
-                Image.asset(
-                  "assets/images/${post.imageUrl}.png",
-                  height: double.infinity,
-                )
+                // Image.asset(
+                //   "assets/images/${post.imageUrl}.png",
+                //   height: double.infinity,
+                // )
               ],
             ),
           )));

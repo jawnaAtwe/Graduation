@@ -87,7 +87,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
     print(p);
     try {
       http.Response res = await http.get(
-          Uri.parse('http://192.168.1.242:3000/login?username=' +
+          Uri.parse('http://192.168.1.65:3000/login?username=' +
               n +
               '&&userpass=' +
               p),
@@ -95,6 +95,11 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
       if (res.body.contains("@")) {
         // Map<String, dynamic> map = json.decode(res.body);
         // List<dynamic> data = map["result"];
+
+
+
+
+        
         print("sucess");
         await sessionManager.set("namename", n);
         await sessionManager.set("passpass", p);
@@ -312,7 +317,7 @@ class _MyStatefulWidgetState1 extends State<MyStatefulWidget1> {
     print(p);
     try {
       http.Response res = await http.get(
-          Uri.parse('http://192.168.1.242:3000/loginadmin?AdminName=' +
+          Uri.parse('http://192.168.1.65:3000/loginadmin?AdminName=' +
               n +
               '&&AdminPass=' +
               p),
@@ -515,7 +520,7 @@ class _MyStatefulWidgetState2 extends State<MyStatefulWidget2> {
       String phone1) async {
     try {
       http.Response res = await http.get(
-          Uri.parse('http://192.168.1.242:3000/register?username=' +
+          Uri.parse('http://192.168.1.65:3000/register?username=' +
               name +
               '&&userpass=' +
               pass +
