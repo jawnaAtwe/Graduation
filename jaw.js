@@ -74,7 +74,20 @@ app.get('/infouser', function(request, response){
     });
 });
 
-
+app.get('/listelement', function(request, response){
+    console.log("backjojo");
+    let query1 = `INSERT INTO listselement (productName,listName,marketName,userName,manufacturing) VALUES ('${request.query.productName}','${request.query.listName}',' ${request.query.marketName}',' ${request.query.userName}',' ${request.query.manufacturing}')`;
+    
+    pool.query(query1, function(error, results){
+        if ( error ){
+            response.status(400).send('Error in database operation');
+        } else {
+             console.log(results);
+            response.send("Success");
+           
+        }
+    });
+});
 app.get('/wish', function(request, response){
     console.log("back");
     let query1 = `SELECT *  FROM products `;

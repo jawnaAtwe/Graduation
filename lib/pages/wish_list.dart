@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:untitled/models/cart_item.dart';
 import 'package:untitled/models/product.dart';
+import 'package:untitled/pages/cart.dart';
 import 'package:untitled/widgets/app_button.dart';
 import 'package:untitled/widgets/base_view.dart';
 import 'package:untitled/widgets/cart_product_item.dart';
@@ -13,17 +14,58 @@ import 'package:untitled/homm.dart';
 import 'package:async/async.dart';
 import 'dart:convert';
 import 'dart:async';
-
 import 'package:flutter_calendar_carousel/classes/event.dart';
-
+import 'package:filter_list/filter_list.dart';
+import 'package:flutter_session_manager/flutter_session_manager.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 TextEditingController productNameController = TextEditingController();
 TextEditingController productImageURLController = TextEditingController();
 TextEditingController productPriceController = TextEditingController();
 TextEditingController productMarketController = TextEditingController();
 TextEditingController productManufactureingController = TextEditingController();
    late  List<Product> myList=[];
-  wish( List<Product> g) async {
+    addadd(String productName,String marketName,String manufacturing ) async {
+   String A=await SessionManager().get("namename") ;
+   String A1=await SessionManager().get("current-list") ;
+
+   try {
+      http.Response res = await http.get(
+          Uri.parse('http://192.168.1.65:3000/listelement?userName=' +
+              A +
+              '&&listName=' +
+              A1 +
+              '&&productName=' +
+              productName +
+              '&&marketName=' +
+              marketName +
+              '&&manufacturing=' +
+              manufacturing),
+          headers: {'Content-Type': 'application/json'});
+    } catch (e) {
+      print("no filld");
+    }
+
+}
+    void _runFilter(String enteredKeyword) {
+    List<Product> results = [];
+    if (enteredKeyword.isEmpty) {
+      // if the search field is empty or only contains white-space, we'll display all users
+      results = myList;
+    } else {
+      results = myList
+          .where((user) =>
+              user.productName.toLowerCase().contains(enteredKeyword.toLowerCase()))
+          .toList();
+      // we use the toLowerCase() method to make it case-insensitive
+    }
+
  
+      myList = results;
+   
+  }
+   wish( List<Product> g) async {
+  
+          
     http.Response res = await http.get(Uri.parse('http://192.168.1.65:3000/wish'),
   headers: {
 'Content-Type':'application/json'
@@ -47,6 +89,8 @@ myList= list;
     // then throw an exception.
     throw Exception('Failed to load album');
   }
+
+   
 }
   
 class WishList extends StatefulWidget {
@@ -59,6 +103,22 @@ class WishList extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<WishList> {
+ 
+@override
+  void initState() {
+    
+    super.initState();
+    wish(myList);
+    getPostsData();
+    controller.addListener(() {
+      double value = controller.offset / 125;
+
+      setState(() {
+        topContainer = value;
+        closeTopContainer = controller.offset > 30;
+      });
+    });
+  }
   
   
   // final CategoriesScroller categoriesScroller = CategoriesScroller();
@@ -137,7 +197,7 @@ class _MyHomePageState extends State<WishList> {
   void getPostsData() {
 
     List<Widget> listItems = [];
-
+  // future: wish(myList);
     myList.forEach((post) {
       listItems.add(Container(
           height: 190,
@@ -188,6 +248,7 @@ class _MyHomePageState extends State<WishList> {
                       ),
                       onPressed: () {
                         print('Pressed');
+                        addadd( post.productName,post.marketName,post.manufacturing);
                       },
                     )
                   ],
@@ -206,21 +267,8 @@ class _MyHomePageState extends State<WishList> {
   }
   
  
-  @override
-  void initState() {
-    
-    super.initState();
-     wish(myList);
-    getPostsData();
-    controller.addListener(() {
-      double value = controller.offset / 125;
 
-      setState(() {
-        topContainer = value;
-        closeTopContainer = controller.offset > 30;
-      });
-    });
-  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -299,9 +347,13 @@ _buildSearchBar() {
                   blurRadius: 30,
                   offset: const Offset(0, 5)),
             ]),
+
+            
         child: Padding(
           padding: const EdgeInsets.only(left: 10, top: 4),
-          child: TextField(
+          child: 
+          TextField(onChanged: (value) => _runFilter(value),
+
             decoration: InputDecoration(
                 border: InputBorder.none,
                 hintText: 'Search Product',
@@ -314,8 +366,11 @@ _buildSearchBar() {
                 )),
           ),
         ),
+
+
       )),
     ],
   );
+  
 }
 

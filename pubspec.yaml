@@ -38,7 +38,7 @@ dependencies:
   hexcolor: ^2.0.7
   any_animated_button: ^0.0.3
   flutter_carousel_slider: ^1.0.8
-
+  filter_list: ^0.0.8
   mvc_pattern: ^8.12.0
   flutter_swiper_plus : ^2.0.4
   
