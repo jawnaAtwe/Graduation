@@ -1,4 +1,6 @@
 {
+  "homepage": "https://github.com/jawnaAtwe/Graduation",
+  "name": "Graduation",
   "scripts": {
     "start": "node jaw.js",
     "dev": "nodemon jaw.js"

@@ -18,96 +18,116 @@ import 'package:flutter_calendar_carousel/classes/event.dart';
 import 'package:filter_list/filter_list.dart';
 import 'package:flutter_session_manager/flutter_session_manager.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:avatar_glow/avatar_glow.dart';
+import 'package:speech_to_text/speech_to_text.dart' as stts;
+import 'package:highlight_text/highlight_text.dart';
+
 TextEditingController productNameController = TextEditingController();
 TextEditingController productImageURLController = TextEditingController();
 TextEditingController productPriceController = TextEditingController();
 TextEditingController productMarketController = TextEditingController();
 TextEditingController productManufactureingController = TextEditingController();
-   late  List<Product> myList=[];
-    addadd(String productName,String marketName,String manufacturing ) async {
-   String A=await SessionManager().get("namename") ;
-   String A1=await SessionManager().get("current-list") ;
+late List<Product> myList = [];
+addadd(String productName, String marketName, String manufacturing) async {
+  String A = await SessionManager().get("namename");
+  String A1 = await SessionManager().get("current-list");
 
-   try {
-      http.Response res = await http.get(
-          Uri.parse('http://192.168.1.65:3000/listelement?userName=' +
-              A +
-              '&&listName=' +
-              A1 +
-              '&&productName=' +
-              productName +
-              '&&marketName=' +
-              marketName +
-              '&&manufacturing=' +
-              manufacturing),
-          headers: {'Content-Type': 'application/json'});
-    } catch (e) {
-      print("no filld");
-    }
-
+  try {
+    http.Response res = await http.get(
+        Uri.parse('http://192.168.1.65:3000/listelement?userName=' +
+            A +
+            '&&listName=' +
+            A1 +
+            '&&productName=' +
+            productName +
+            '&&marketName=' +
+            marketName +
+            '&&manufacturing=' +
+            manufacturing),
+        headers: {'Content-Type': 'application/json'});
+  } catch (e) {
+    print("no filld");
+  }
 }
-    void _runFilter(String enteredKeyword) {
-    List<Product> results = [];
-    if (enteredKeyword.isEmpty) {
-      // if the search field is empty or only contains white-space, we'll display all users
-      results = myList;
-    } else {
-      results = myList
-          .where((user) =>
-              user.productName.toLowerCase().contains(enteredKeyword.toLowerCase()))
-          .toList();
-      // we use the toLowerCase() method to make it case-insensitive
-    }
 
- 
-      myList = results;
-   
+void _runFilter(String enteredKeyword) {
+  List<Product> results = [];
+  if (enteredKeyword.isEmpty) {
+    // if the search field is empty or only contains white-space, we'll display all users
+    results = myList;
+  } else {
+    results = myList
+        .where((user) => user.productName
+            .toLowerCase()
+            .contains(enteredKeyword.toLowerCase()))
+        .toList();
+    // we use the toLowerCase() method to make it case-insensitive
   }
-   wish( List<Product> g) async {
-  
-          
-    http.Response res = await http.get(Uri.parse('http://192.168.1.65:3000/wish'),
-  headers: {
-'Content-Type':'application/json'
 
-  }
-       
- );
+  myList = results;
+}
+
+wish(List<Product> g) async {
+  http.Response res = await http.get(Uri.parse('http://192.168.1.65:3000/wish'),
+      headers: {'Content-Type': 'application/json'});
 
   if (res.statusCode == 200) {
     // If the server did return a 200 OK response,
     // then parse the JSON.
-   
 
     var jsonString = json.decode(res.body);
-    List<Product> list = List<Product>.from(jsonString.map((i) => Product.fromJson(i)));
+    List<Product> list =
+        List<Product>.from(jsonString.map((i) => Product.fromJson(i)));
 // List<Product> products = jsonString.map((jsonMap) => Product.fromJson(jsonMap)).toList();
-myList= list;
-
+    myList = list;
   } else {
     // If the server did not return a 200 OK response,
     // then throw an exception.
     throw Exception('Failed to load album');
   }
-
-   
 }
-  
+
 class WishList extends StatefulWidget {
-
-
-
   const WishList({Key? key}) : super(key: key);
   @override
   _MyHomePageState createState() => _MyHomePageState();
 }
 
 class _MyHomePageState extends State<WishList> {
- 
-@override
+  TextEditingController _textEditingController = TextEditingController();
+  var _speechToText = stts.SpeechToText();
+  bool isListening = false;
+  String text = "";
+  void listen() async {
+    if (!isListening) {
+      bool availiable = await _speechToText.initialize(
+        onStatus: ((status) => print("$status")),
+        onError: ((errorNotification) => print("$errorNotification")),
+      );
+      if (availiable) {
+        setState(() {
+          isListening = true;
+        });
+        _speechToText.listen(
+            onResult: (result) => setState(() {
+                  text = result.recognizedWords;
+                  print(text);
+                }));
+      }
+    } else {
+      setState(() {
+        isListening = false;
+      });
+      _speechToText.stop();
+    }
+  }
+
+  @override
   void initState() {
-    
     super.initState();
+    _speechToText = stts.SpeechToText();
+    _textEditingController.text = text;
+
     wish(myList);
     getPostsData();
     controller.addListener(() {
@@ -119,8 +139,7 @@ class _MyHomePageState extends State<WishList> {
       });
     });
   }
-  
-  
+
   // final CategoriesScroller categoriesScroller = CategoriesScroller();
   // final List<Product> myList = [
   //   Product(
@@ -189,15 +208,14 @@ class _MyHomePageState extends State<WishList> {
   // ];
 
   ScrollController controller = ScrollController();
-     
+
   bool closeTopContainer = false;
   double topContainer = 0;
   List<Widget> itemsData = [];
 
   void getPostsData() {
-
     List<Widget> listItems = [];
-  // future: wish(myList);
+    // future: wish(myList);
     myList.forEach((post) {
       listItems.add(Container(
           height: 190,
@@ -248,7 +266,8 @@ class _MyHomePageState extends State<WishList> {
                       ),
                       onPressed: () {
                         print('Pressed');
-                        addadd( post.productName,post.marketName,post.manufacturing);
+                        addadd(post.productName, post.marketName,
+                            post.manufacturing);
                       },
                     )
                   ],
@@ -265,10 +284,6 @@ class _MyHomePageState extends State<WishList> {
       itemsData = listItems;
     });
   }
-  
- 
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -327,50 +342,103 @@ class _MyHomePageState extends State<WishList> {
       ),
     );
   }
+
+  _buildSearchBar() {
+    return Row(
+      children: <Widget>[
+        AvatarGlow(
+          glowColor: Colors.green,
+          endRadius: 45.0,
+          duration: Duration(milliseconds: 2000),
+          repeat: true,
+          showTwoGlows: true,
+          animate: isListening,
+          repeatPauseDuration: Duration(milliseconds: 100),
+          child: FloatingActionButton.small(
+            onPressed: () {
+              listen();
+            },
+            child: const Icon(Icons.mic),
+            backgroundColor: Color.fromARGB(255, 221, 161, 71),
+          ),
+        ), // avatarglow
+
+        Expanded(
+            child: Container(
+          decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(5),
+              boxShadow: [
+                BoxShadow(
+                    color: Colors.grey.shade300,
+                    blurRadius: 30,
+                    offset: const Offset(0, 5)),
+              ]),
+          child: Padding(
+            padding: const EdgeInsets.only(left: 10, top: 4),
+            child: TextField(
+              onChanged: (value) => _runFilter(value),
+              controller: _textEditingController,
+              decoration: InputDecoration(
+                  border: InputBorder.none,
+                  hintText: text,
+                  hintStyle: TextStyle(
+                    color: Color.fromARGB(255, 7, 0, 0),
+                  ),
+                  suffixIcon: Icon(
+                    Icons.search,
+                    color: Color.fromARGB(255, 9, 9, 9).withOpacity(0.30),
+                  )),
+            ),
+          ),
+        )),
+      ],
+    );
+  }
 }
 
-_buildSearchBar() {
-  return Row(
-    children: [
-      Image.asset('assets/icons/delivery.png'),
-      const SizedBox(
-        width: kDefaultPadding,
-      ),
-      Expanded(
-          child: Container(
-        decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(5),
-            boxShadow: [
-              BoxShadow(
-                  color: Colors.grey.shade300,
-                  blurRadius: 30,
-                  offset: const Offset(0, 5)),
-            ]),
+// _buildSearchBar() {
+//   return Row(
+//     children: [
+//       Image.asset('assets/icons/delivery.png'),
+//       const SizedBox(
+//         width: kDefaultPadding,
+//       ),
+//       Expanded(
+//           child: Container(
+//         decoration: BoxDecoration(
+//             color: Colors.white,
+//             borderRadius: BorderRadius.circular(5),
+//             boxShadow: [
+//               BoxShadow(
+//                   color: Colors.grey.shade300,
+//                   blurRadius: 30,
+//                   offset: const Offset(0, 5)),
+//             ]),
 
             
-        child: Padding(
-          padding: const EdgeInsets.only(left: 10, top: 4),
-          child: 
-          TextField(onChanged: (value) => _runFilter(value),
+//         child: Padding(
+//           padding: const EdgeInsets.only(left: 10, top: 4),
+//           child: 
+//           TextField(onChanged: (value) => _runFilter(value),
 
-            decoration: InputDecoration(
-                border: InputBorder.none,
-                hintText: 'Search Product',
-                hintStyle: TextStyle(
-                  color: const Color(0xff434040).withOpacity(0.30),
-                ),
-                suffixIcon: Icon(
-                  Icons.search,
-                  color: const Color(0xff707070).withOpacity(0.30),
-                )),
-          ),
-        ),
+//             decoration: InputDecoration(
+//                 border: InputBorder.none,
+//                 hintText: 'Search Product',
+//                 hintStyle: TextStyle(
+//                   color: const Color(0xff434040).withOpacity(0.30),
+//                 ),
+//                 suffixIcon: Icon(
+//                   Icons.search,
+//                   color: const Color(0xff707070).withOpacity(0.30),
+//                 )),
+//           ),
+//         ),
 
 
-      )),
-    ],
-  );
+//       )),
+//     ],
+//   );
   
-}
+// }
 
