@@ -7,6 +7,9 @@ import 'package:untitled/widgets/base_view.dart';
 import 'package:untitled/widgets/cart_product_item.dart';
 import 'package:untitled/constants/constants.dart';
 import 'dart:ui';
+import 'package:timezone/timezone.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:rxdart/rxdart.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:flutter_login/flutter_login.dart';
@@ -18,13 +21,19 @@ import 'package:flutter_calendar_carousel/classes/event.dart';
 import 'package:filter_list/filter_list.dart';
 import 'package:flutter_session_manager/flutter_session_manager.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:untitled/pages/local_notification_service.dart';
+
 TextEditingController productNameController = TextEditingController();
 TextEditingController productImageURLController = TextEditingController();
 TextEditingController productPriceController = TextEditingController();
 TextEditingController productMarketController = TextEditingController();
 TextEditingController productManufactureingController = TextEditingController();
+
+
    late  List<Product> myList=[];
-    addadd(String productName,String marketName,String manufacturing ) async {
+
+
+    addadd(String productName,String marketName,String manufacturing, String price) async {
    String A=await SessionManager().get("namename") ;
    String A1=await SessionManager().get("current-list") ;
 
@@ -39,7 +48,10 @@ TextEditingController productManufactureingController = TextEditingController();
               '&&marketName=' +
               marketName +
               '&&manufacturing=' +
-              manufacturing),
+              manufacturing+
+              '&&price=' +
+              price
+              ),
           headers: {'Content-Type': 'application/json'});
     } catch (e) {
       print("no filld");
@@ -103,11 +115,23 @@ class WishList extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<WishList> {
- 
+ late final LocalNotificationService service;
+  void listenToNotification() =>
+      service.onNotificationClick.stream.listen(onNoticationListener);
+
+  void onNoticationListener(String? payload) {
+    if (payload != null && payload.isNotEmpty) {
+      print('payload $payload');
+
+    }
+  }
 @override
   void initState() {
     
     super.initState();
+    service = LocalNotificationService();
+    service.intialize();
+ 
     wish(myList);
     getPostsData();
     controller.addListener(() {
@@ -248,7 +272,9 @@ class _MyHomePageState extends State<WishList> {
                       ),
                       onPressed: () {
                         print('Pressed');
-                        addadd( post.productName,post.marketName,post.manufacturing);
+                        addadd( post.productName,post.marketName,post.manufacturing,"\$ ${post.price}");
+                        // update("\$ ${post.price}");
+                        show();
                       },
                     )
                   ],
@@ -265,10 +291,39 @@ class _MyHomePageState extends State<WishList> {
       itemsData = listItems;
     });
   }
-  
- 
+  show () async {
+     try {
+ await service.showNotificationWithPayload(
+                          id: 0,
+                          title: 'Notification Title',
+                          body: 'hii jojo',
+                          payload: '');
+ } catch (e) {
+      print("no filld");
+    }
+  }
 
+   update (String price) async {
+    print("up");
+String A=await SessionManager().get("namename") ;
+   String A1=await SessionManager().get("current-list") ;
+ try {
+      http.Response res = await http.get(
+          Uri.parse('http://192.168.1.65:3000/update?userName=' +
+              A +
+              '&&listName=' +
+              A1+
+              '&&price=' +
+              price
+              ),
+          headers: {'Content-Type': 'application/json'});
+          show();
+            
+    } catch (e) {
+      print("no filld");
+    }
 
+   }
 
   @override
   Widget build(BuildContext context) {

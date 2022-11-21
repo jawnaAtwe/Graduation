@@ -138,10 +138,10 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                 alignment: Alignment.center,
                 padding: const EdgeInsets.all(32),
                 decoration: const BoxDecoration(
-                  // image: DecorationImage(
-                  //     image: NetworkImage(
-                  //         "https://blog.mostaql.com/wp-content/uploads/2020/11/%D8%A3%D8%B3%D8%A8%D8%A7%D8%A8-%D8%AA%D8%AE%D9%84%D9%8A-%D8%A7%D9%84%D9%85%D8%B4%D8%AA%D8%B1%D9%88%D9%86-%D8%B9%D9%86-%D8%B3%D9%84%D8%A9-%D8%A7%D9%84%D8%B4%D8%B1%D8%A7%D8%A1-1.jpg"),
-                  //     fit: BoxFit.cover),
+                  image: DecorationImage(
+                      image: NetworkImage(
+                          "https://blog.mostaql.com/wp-content/uploads/2020/11/%D8%A3%D8%B3%D8%A8%D8%A7%D8%A8-%D8%AA%D8%AE%D9%84%D9%8A-%D8%A7%D9%84%D9%85%D8%B4%D8%AA%D8%B1%D9%88%D9%86-%D8%B9%D9%86-%D8%B3%D9%84%D8%A9-%D8%A7%D9%84%D8%B4%D8%B1%D8%A7%D8%A1-1.jpg"),
+                      fit: BoxFit.cover),
                 ),
                 child: Column(children: <Widget>[
                   Container(
@@ -358,10 +358,10 @@ class _MyStatefulWidgetState1 extends State<MyStatefulWidget1> {
                 alignment: Alignment.center,
                 padding: const EdgeInsets.all(32),
                 decoration: const BoxDecoration(
-                  // image: DecorationImage(
-                  //     image: NetworkImage(
-                  //         "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTAENGXsk5ISiszsV-9gZyxToXE1P1QnZd_oQ&usqp=CAU"),
-                  //     fit: BoxFit.cover),
+                  image: DecorationImage(
+                      image: NetworkImage(
+                          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTAENGXsk5ISiszsV-9gZyxToXE1P1QnZd_oQ&usqp=CAU"),
+                      fit: BoxFit.cover),
                 ),
                 child: Column(children: <Widget>[
                   Container(
@@ -550,11 +550,11 @@ final _formKey = GlobalKey<FormState>();
                 alignment: Alignment.center,
                 padding: const EdgeInsets.all(32),
                 decoration: const BoxDecoration(
-                  // image: DecorationImage(
-                  //     image: NetworkImage(
-                  //         "https://media.istockphoto.com/photos/female-customer-buying-coffee-and-placing-signature-on-tablet-picture-id1138022521?k=20&m=1138022521&s=612x612&w=0&h=64LbjGG21JIx6E5WgyXfUU0SEaVe62PbV_W40T5UGqE="),
+                  image: DecorationImage(
+                      image: NetworkImage(
+                          "https://media.istockphoto.com/photos/female-customer-buying-coffee-and-placing-signature-on-tablet-picture-id1138022521?k=20&m=1138022521&s=612x612&w=0&h=64LbjGG21JIx6E5WgyXfUU0SEaVe62PbV_W40T5UGqE="),
                      
-                  //     fit: BoxFit.cover),
+                      fit: BoxFit.cover),
                 ),
                 child: Column(children: <Widget>[
                   Container(

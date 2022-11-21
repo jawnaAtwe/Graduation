@@ -76,8 +76,19 @@ app.get('/infouser', function(request, response){
 
 app.get('/listelement', function(request, response){
     console.log("backjojo");
-    let query1 = `INSERT INTO listselement (productName,listName,marketName,userName,manufacturing) VALUES ('${request.query.productName}','${request.query.listName}',' ${request.query.marketName}',' ${request.query.userName}',' ${request.query.manufacturing}')`;
+    //compare if less go to insert
+    //else send res notification
+    let query1 = `INSERT INTO listselement (productName,listName,marketName,userName,manufacturing) 
+    VALUES 
+    ('${request.query.productName}','${request.query.listName}'
+    ,' ${request.query.marketName}',' ${request.query.userName}',' ${request.query.manufacturing}')
+   where(SELECT *  FROM list where username='${request.query.userName}' and listname='${request.query.listName}' and price ='${request.query.price}')
+    `;
     
+
+
+
+
     pool.query(query1, function(error, results){
         if ( error ){
             response.status(400).send('Error in database operation');
@@ -87,7 +98,74 @@ app.get('/listelement', function(request, response){
            
         }
     });
+
+    
+
+
+
 });
+
+app.get('/update', function(request, response){
+      //compare if less go to update
+    //else nothing
+    console.log("update");
+let query11 = `SELECT *  FROM list where username='${request.query.userName}' and listname='${request.query.listName}' `;
+ 
+    pool.query(query11, function(error, results){
+        if ( error ){
+            response.status(400).send('Error in database operation');
+        } else {
+            const p= results[0].price;
+            console.log(p);
+            const  j=request.query.price;
+            const y=j.replace(/[$ ,]+/g,"");
+          const j1=parseInt(y);
+            // const fin= subtract(p, p1);
+          
+           
+            console.log( p-j1);
+           
+            if((p>j1)){
+              
+                    
+            console.log("lp");
+  
+
+        //    let query2 = `UPDATE list
+        //    SET price = `+p-j1+`
+        //    where username='${request.query.userName}' and listname='${request.query.listName}' `;
+ 
+ 
+//Server sent message:
+io.on('connection', (socket) => {
+    socket.emit('notificationToClient', 'Message'); //message sent from server to client 
+    });
+
+  
+  //Client receives the message:
+  const socket = io.connect('http://localhost:3000');
+    socket.on('notificationToClient', (data) => { //received message 
+      console.log(data);
+    });
+
+       
+
+
+           
+            }else{
+
+            }
+            response.send("Success");
+           
+        }
+    });
+   
+
+
+
+});
+
+
 app.get('/wish', function(request, response){
     console.log("back");
     let query1 = `SELECT *  FROM products `;
