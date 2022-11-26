@@ -292,7 +292,10 @@ class _MyHomePageState extends State<WishList> {
                           color: Colors.black,
                           fontWeight: FontWeight.bold),
                     ),
-                    ElevatedButton(
+                  Row(  
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly, 
+           
+          children:<Widget>[    ElevatedButton(
                       child: Text('Add To Card'),
                       style: ElevatedButton.styleFrom(
                         primary: Colors.teal,
@@ -302,14 +305,17 @@ class _MyHomePageState extends State<WishList> {
                       onPressed: () {
                         print('Pressed');
 
-                        addadd( post.productName,post.marketName,post.manufacturing,"\$ ${post.price}");
-                        // update("\$ ${post.price}");
-                        show();
+                        // addadd( post.productName,post.marketName,post.manufacturing,"\$ ${post.price}");
+                        update(post.productName,post.marketName,post.manufacturing,"\$ ${post.price}");
+                        
 
                  
 
                       },
                     )
+
+,
+          ]),
                   ],
                 ),
                 // Image.asset(
@@ -329,15 +335,36 @@ class _MyHomePageState extends State<WishList> {
      try {
  await service.showNotificationWithPayload(
                           id: 0,
-                          title: 'Notification Title',
-                          body: 'hii jojo',
+                          title: 'hi',
+                          body: 'u can not add this product because u have not enough mony',
                           payload: '');
  } catch (e) {
       print("no filld");
     }
   }
+ nowupdate (String price) async {
 
-   update (String price) async {
+   String A=await SessionManager().get("namename") ;
+   String A1=await SessionManager().get("current-list") ;
+ try {
+      http.Response res = await http.get(
+          Uri.parse('http://192.168.1.65:3000/nowupdate?userName=' +
+              A +
+              '&&listName=' +
+              A1+
+              '&&price=' +
+              price
+              ),
+          headers: {'Content-Type': 'application/json'});
+       
+       
+
+            
+    } catch (e) {
+      print("no filld");
+    }
+ }
+   update (String productName,String marketName,String manufacturing, String price) async {
     print("up");
 String A=await SessionManager().get("namename") ;
    String A1=await SessionManager().get("current-list") ;
@@ -351,7 +378,21 @@ String A=await SessionManager().get("namename") ;
               price
               ),
           headers: {'Content-Type': 'application/json'});
-          show();
+       
+          var data = "${res.body}";
+          var zero = "0";
+  if ("$data".compareTo("$zero").isNegative){ //compare
+    show();
+         print("nondone");
+   
+      } else {
+        
+    nowupdate("$data");
+    addadd( productName,marketName,manufacturing,"\$ ${price}");
+                        
+       print("done");
+      }
+
             
     } catch (e) {
       print("no filld");

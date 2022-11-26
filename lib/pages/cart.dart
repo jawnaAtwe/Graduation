@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:untitled/models/cart_item.dart';
 import 'package:untitled/models/product.dart';
@@ -13,6 +14,7 @@ import 'dart:convert';
 import 'dart:async';
 import 'dart:ui';
 import 'package:http/http.dart' as http;
+import 'package:no_context_navigation/no_context_navigation.dart';
 var sessionManager = SessionManager();
 
 
@@ -47,6 +49,7 @@ print("kkkk");
     throw Exception('Failed to load album');
   }
 }
+
   join1( String a,String b) async {
    
   String n=await SessionManager().get("namename") ;
@@ -69,7 +72,6 @@ class Cart extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<Cart> {
-
    List<Widget> itemsData = [];
   void getPostsData() {
 
@@ -110,6 +112,16 @@ class _MyHomePageState extends State<Cart> {
                         fontWeight: FontWeight.bold),
                   ),
                 ],
+              ),
+                  ElevatedButton(
+                child: Text('Show items'),
+                style: ElevatedButton.styleFrom(
+                  primary: Color.fromARGB(255, 221, 161, 71),
+                  onPrimary: Colors.white,
+                  onSurface: Colors.grey,
+                ),
+                onPressed: () {
+              },
               ),
               ElevatedButton(
                 child: Text('Add Products'),
@@ -251,6 +263,9 @@ list1(myList1);
 
   @override
   Widget build(BuildContext context) {
+
+    
+
     final Size size = MediaQuery.of(context).size;
     final double categoryHeight = size.height * 0.30;
     return SafeArea(

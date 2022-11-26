@@ -6,6 +6,7 @@ import 'package:timezone/data/latest.dart' as tz;
 class LocalNotificationService {
   LocalNotificationService();
 
+
   final _localNotificationService = FlutterLocalNotificationsPlugin();
 
   final BehaviorSubject<String?> onNotificationClick = BehaviorSubject();
