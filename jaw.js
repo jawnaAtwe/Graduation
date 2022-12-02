@@ -156,7 +156,19 @@ let query11 = `UPDATE list SET price ='${request.query.price}' where username='$
 
 
 
-
+app.get('/listitems', function(request, response){
+    console.log("listitems1");
+    let query1 = `SELECT *  FROM listselement where listName ='${request.query.listname}'`;
+    
+    pool.query(query1, function(error, results){
+        if ( error ){
+            response.status(400).send('Error in database operation');
+        } else {
+             console.log(results);
+            response.send(results);
+        }
+    });
+});
 
 
 
