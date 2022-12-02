@@ -154,7 +154,32 @@ let query11 = `UPDATE list SET price ='${request.query.price}' where username='$
 });
 
 
-
+app.get('/deletelist', function(request, response){
+    console.log("deletelist");
+    let query1 = `DELETE FROM list  where listname ='${request.query.listname}' and username ='${request.query.username}'`;
+    
+    pool.query(query1, function(error, results){
+        if ( error ){
+            response.status(400).send('Error in database operation');
+        } else {
+             
+           
+        }
+    });
+});
+app.get('/deletelistitems', function(request, response){
+    console.log("deletelist");
+    let query1 = `DELETE FROM listselement  where listName ='${request.query.listName}' and userName ='${request.query.userName}'`;
+    
+    pool.query(query1, function(error, results){
+        if ( error ){
+            response.status(400).send('Error in database operation');
+        } else {
+             
+           
+        }
+    });
+});
 
 app.get('/listitems', function(request, response){
     console.log("listitems1");

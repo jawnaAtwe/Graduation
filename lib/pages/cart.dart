@@ -72,6 +72,40 @@ class Cart extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<Cart> {
+
+
+
+    deleteitems(String listname) async {
+   String A=await SessionManager().get("namename") ;
+   
+
+   try {
+      http.Response res = await http.get(
+          Uri.parse('http://192.168.1.65:3000/deletelistitems?listName=' +
+              listname +
+              '&&userName=' +
+              A 
+              ),
+          headers: {'Content-Type': 'application/json'});
+    } catch (e) {
+      print("no filld");
+    }}
+    delete(String listname) async {
+   String A=await SessionManager().get("namename") ;
+   
+
+   try {
+      http.Response res = await http.get(
+          Uri.parse('http://192.168.1.65:3000/deletelist?listname=' +
+              listname +
+              '&&username=' +
+              A 
+              ),
+          headers: {'Content-Type': 'application/json'});
+    } catch (e) {
+      print("no filld");
+    }}
+
    List<Widget> itemsData = [];
   void getPostsData() {
 
@@ -114,13 +148,15 @@ class _MyHomePageState extends State<Cart> {
                 ],
               ),
                   ElevatedButton(
-                child: Text('Show items'),
+                child: Text('delete'),
                 style: ElevatedButton.styleFrom(
                   primary: Color.fromARGB(255, 221, 161, 71),
                   onPrimary: Colors.white,
                   onSurface: Colors.grey,
                 ),
                 onPressed: () {
+                  delete(post.listname);
+                  deleteitems(post.listname);
               },
               ),
               ElevatedButton(
