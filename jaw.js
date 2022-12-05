@@ -181,6 +181,21 @@ app.get('/deletelistitems', function(request, response){
     });
 });
 
+app.get('/updatelist', function(request, response){
+    console.log("updateee");
+    let query1 = `UPDATE list SET listname = '${request.query.listnamenew}' 
+    , price = '${request.query.pricenew}' 
+   where listname ='${request.query.listname}' and username ='${request.query.username}'`;
+    
+    pool.query(query1, function(error, results){
+        if ( error ){
+            response.status(400).send('Error in database operation');
+        } else {
+             
+           
+        }
+    });
+});
 app.get('/listitems', function(request, response){
     console.log("listitems1");
     let query1 = `SELECT *  FROM listselement where listName ='${request.query.listname}'`;

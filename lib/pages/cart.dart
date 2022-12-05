@@ -1,3 +1,4 @@
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:untitled/models/cart_item.dart';
@@ -63,6 +64,28 @@ print("kkkk");
           headers: {'Content-Type': 'application/json'});
      print("register");} catch (e) {
       print("no register");
+    }
+}
+
+  updateinfo( String a,String b) async {
+   
+  String username=await SessionManager().get("namename") ;
+  String listname=await SessionManager().get("current-listup") ;
+     try {
+      http.Response res = await http.get(
+          Uri.parse('http://192.168.1.65:3000/updatelist?username=' +
+              username +
+              '&&listname=' +
+             listname+
+             '&&listnamenew=' +
+             a
+             +
+             '&&pricenew=' +
+             b
+             ),
+          headers: {'Content-Type': 'application/json'});
+   } catch (e) {
+      print("no ");
     }
 }
 class Cart extends StatefulWidget {
@@ -146,9 +169,28 @@ class _MyHomePageState extends State<Cart> {
                         fontWeight: FontWeight.bold),
                   ),
                 ],
-              ),
+              ), Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+
+                      ElevatedButton(
+                child: Text('Update'),
+                style: ElevatedButton.styleFrom(
+                  primary: Color.fromARGB(255, 221, 161, 71),
+                  onPrimary: Colors.white,
+                  onSurface: Colors.grey,
+                ),
+                onPressed: ()async {
+                  await sessionManager.set("current-listup", post.listname);
+                  openDialogeupdate();
+                  controllerText11 = TextEditingController();
+                  controllerText22 = TextEditingController();
+                  
+                 
+              },
+              ),  
                   ElevatedButton(
-                child: Text('delete'),
+                child: Text('-delete'),
                 style: ElevatedButton.styleFrom(
                   primary: Color.fromARGB(255, 221, 161, 71),
                   onPrimary: Colors.white,
@@ -158,7 +200,8 @@ class _MyHomePageState extends State<Cart> {
                   delete(post.listname);
                   deleteitems(post.listname);
               },
-              ),
+              ),  ],
+              ), 
               ElevatedButton(
                 child: Text('Add Products'),
                 style: ElevatedButton.styleFrom(
@@ -181,6 +224,9 @@ class _MyHomePageState extends State<Cart> {
   // final CategoriesScroller categoriesScroller = CategoriesScroller();
  TextEditingController controllerText1=TextEditingController();
  TextEditingController controllerText2=TextEditingController();
+ TextEditingController controllerText11=TextEditingController();
+ TextEditingController controllerText22=TextEditingController();
+
   ScrollController controller = ScrollController();
   bool closeTopContainer = false;
   double topContainer = 0;
@@ -293,6 +339,46 @@ list1(myList1);
 
                 },  
                 child: Text("Create"),
+              ),
+            ],
+          ));
+
+  Future openDialogeupdate() => showDialog(
+      context: this.context,
+      builder: (context) => AlertDialog(
+            backgroundColor: Color.fromARGB(255, 209, 224, 199),
+            title: Text('New List'),
+            content: Container(
+                height: 115,
+                child: Column(
+                  children: [
+                    TextField(
+                      autocorrect: true,
+                      style: const TextStyle(
+                          fontSize: 15, fontWeight: FontWeight.bold),
+                      decoration:
+                          InputDecoration(hintText: 'Enter The New Name'),
+                      controller: controllerText11,
+                    ),
+                    TextField(
+                      autocorrect: true,
+                      style: const TextStyle(
+                          fontSize: 15, fontWeight: FontWeight.bold),
+                      decoration:
+                          InputDecoration(hintText: 'Enter The Total Price'),
+                      controller: controllerText22,
+                    ),
+                  ],
+                )),
+            actions: [
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  primary: Color.fromARGB(255, 221, 161, 71),
+                ),
+                onPressed: () {
+             updateinfo(controllerText11.text , controllerText22.text);
+                },  
+                child: Text("update"),
               ),
             ],
           ));
