@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:untitled/models/cart_item.dart';
-import 'package:untitled/models/product1.dart';
+import 'package:untitled/models/user.dart';
 import 'package:untitled/pages/cart.dart';
 import 'package:untitled/widgets/app_button.dart';
 import 'package:untitled/widgets/base_view.dart';
@@ -38,20 +38,20 @@ TextEditingController productManufactureingController = TextEditingController();
 
 
 
-   late  List<Product1> myList=[];
+   late  List<user> myList=[];
 
 
     
 
 
 void _runFilter(String enteredKeyword) {
-  List<Product1> results = [];
+  List<user> results = [];
   if (enteredKeyword.isEmpty) {
     // if the search field is empty or only contains white-space, we'll display all users
     results = myList;
   } else {
     results = myList
-        .where((user) => user.productName
+        .where((user) => user.username
             .toLowerCase()
             .contains(enteredKeyword.toLowerCase()))
         .toList();
@@ -61,21 +61,17 @@ void _runFilter(String enteredKeyword) {
   myList = results;
 }
 
-wish1(List<Product1> g) async {
-   String A1=await SessionManager().get("current-list") ;
-    String A2=await SessionManager().get("namename") ;
-  http.Response res = await http.get(Uri.parse(fetchdata.apiUrl+'listitems?listname='+A1+'&&userName='+A2),
+online(List<user> g) async {
+  //  String A1=await SessionManager().get("current-list") ;
+  http.Response res = await http.get(Uri.parse(fetchdata.apiUrl+'usersonline'),
       headers: {'Content-Type': 'application/json'});
 
 
   if (res.statusCode == 200) {
-    print("oh");
-    // If the server did return a 200 OK response,
-    // then parse the JSON.
-
+  
     var jsonString = json.decode(res.body);
-    List<Product1> list =
-        List<Product1>.from(jsonString.map((i) => Product1.fromJson(i)));
+    List<user> list =
+        List<user>.from(jsonString.map((i) => user.fromJson(i)));
 
     myList = list;
   } else {
@@ -84,25 +80,59 @@ wish1(List<Product1> g) async {
   }
 }
 
-class listitems extends StatefulWidget {
-  const listitems({Key? key}) : super(key: key);
+share(String person) async {
+  
+   
+  String n=await SessionManager().get("namename") ;
+  String n1=await SessionManager().get("current-list") ;
+  http.Response res = await http.get(Uri.parse(fetchdata.apiUrl+'share?username='+n
+  + '&&person=' +
+              person 
+               + '&&listname=' +
+              n1 ),
+      headers: {'Content-Type': 'application/json'});
+
+
+  if (res.statusCode == 200) {
+    print("oh");
+   
+  } else {
+    
+    throw Exception('Failed to load album');
+  }
+}
+share1(String person) async {
+  
+   
+  String n=await SessionManager().get("namename") ;
+  String n1=await SessionManager().get("current-list") ;
+  http.Response res = await http.get(Uri.parse(fetchdata.apiUrl+'share1?userName='+n
+  + '&&person=' +
+              person 
+               + '&&listName=' +
+              n1 ),
+      headers: {'Content-Type': 'application/json'});
+
+
+  if (res.statusCode == 200) {
+    print("oh");
+   
+  } else {
+    
+    throw Exception('Failed to load album');
+  }
+}
+class users extends StatefulWidget {
+  const users({Key? key}) : super(key: key);
   @override
   _MyHomePageState createState() => _MyHomePageState();
 }
 
-class _MyHomePageState extends State<listitems> {
+class _MyHomePageState extends State<users> {
 
  late final LocalNotificationService service;
-  void listenToNotification() =>
-      service.onNotificationClick.stream.listen(onNoticationListener);
+  
 
-  void onNoticationListener(String? payload) {
-    if (payload != null && payload.isNotEmpty) {
-      print('payload $payload');
-
-    }
-  }
-@override
 
   TextEditingController _textEditingController = TextEditingController();
   var _speechToText = stts.SpeechToText();
@@ -145,7 +175,7 @@ class _MyHomePageState extends State<listitems> {
     _textEditingController.text = text;
 
 
-    wish1(myList);
+    online(myList);
     getPostsData();
     controller.addListener(() {
       double value = controller.offset / 125;
@@ -169,16 +199,17 @@ class _MyHomePageState extends State<listitems> {
     // future: wish(myList);
     myList.forEach((post) {
       listItems.add(Container(
-          height: 190,
-          margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+          height: 110,
+          
+          margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 7),
           decoration: BoxDecoration(
               borderRadius: BorderRadius.all(Radius.circular(20.0)),
-              color: Colors.white,
+                color: Color.fromARGB(255, 221, 161, 71),
               boxShadow: [
                 BoxShadow(color: Colors.black.withAlpha(100), blurRadius: 10.0),
               ]),
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 13),
+            padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 7),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
@@ -186,29 +217,49 @@ class _MyHomePageState extends State<listitems> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Text(
-                      post.productName,
+                      post.username,
                       style: const TextStyle(
-                          fontSize: 23, fontWeight: FontWeight.bold),
+                          fontSize: 26, fontWeight: FontWeight.bold, color: Color.fromARGB(255, 209, 224, 199),),
                     ),
                     Text(
-                      post.marketName,
-                      style: const TextStyle(fontSize: 17, color: Colors.grey),
+                      post.email,
+                      style: const TextStyle(fontSize: 17, color: Color.fromARGB(255, 209, 224, 199),),
                     ),
-                    Text(
-                      post.manufacturing,
-                      style: const TextStyle(fontSize: 17, color: Colors.grey),
-                    ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                
-             
-                  ],
+                 ],
                 ),
                 // Image.asset(
                 //   "assets/images/${post.imageUrl}.png",
                 //   height: double.infinity,
-                // )
+                     Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[    ElevatedButton(
+                child: Text('Share  my  List'),
+                style: ElevatedButton.styleFrom(
+                 
+                   primary: Color.fromARGB(255, 209, 224, 199),
+           
+                  onPrimary: Color.fromARGB(255, 221, 161, 71),
+                  onSurface: Color.fromARGB(255, 221, 161, 71),
+                ),
+                onPressed: () {
+                 share(post.username);
+                  share1(post.username);
+                },
+              )
+                , ElevatedButton(
+                child: Text('Send Massege'),
+                style: ElevatedButton.styleFrom(
+                  primary: Color.fromARGB(255, 209, 224, 199),
+                 
+                  onPrimary: Color.fromARGB(255, 221, 161, 71),
+                  onSurface: Color.fromARGB(255, 221, 161, 71),
+                ),
+                onPressed: () {
+                  
+                },
+              )   
+             
+                     ])   // )
               ],
             ),
           )));
@@ -280,28 +331,14 @@ class _MyHomePageState extends State<listitems> {
   _buildSearchBar() {
     return Row(
       children: <Widget>[
-        // AvatarGlow(
-        //   glowColor: Colors.green,
-        //   endRadius: 45.0,
-        //   duration: Duration(milliseconds: 2000),
-        //   repeat: true,
-        //   showTwoGlows: true,
-        //   animate: isListening,
-        //   repeatPauseDuration: Duration(milliseconds: 100),
-        //   child: FloatingActionButton.small(
-        //     onPressed: () {
-        //       listen();
-        //     },
-        //     child: const Icon(Icons.mic),
-        //     backgroundColor: Color.fromARGB(255, 221, 161, 71),
-        //   ),
-        // ), // avatarglow
+  
 
         Expanded(
             child: Container(
           decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(5),
+            
+              color: Color.fromARGB(255, 209, 224, 199),
+              borderRadius: BorderRadius.all(Radius.circular(20.0)),
               boxShadow: [
                 BoxShadow(
                     color: Colors.grey.shade300,

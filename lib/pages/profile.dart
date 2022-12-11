@@ -9,6 +9,7 @@ import 'package:untitled/widgets/base_view.dart';
 import 'package:untitled/widgets/cart_product_item.dart';
 import 'package:untitled/constants/constants.dart';
 import 'dart:ui';
+import 'package:untitled/pages/fetchdata.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:flutter_login/flutter_login.dart';
@@ -36,7 +37,7 @@ Future getinfo() async {
     try {
     
       http.Response res = await http.get(
-          Uri.parse('http://192.168.1.65:3000/infouser?username=' +
+          Uri.parse(fetchdata.apiUrl+'infouser?username=' +
               A +
               '&&userpass=' +
              'B'),

@@ -7,6 +7,7 @@ import 'package:untitled/widgets/base_view.dart';
 import 'package:untitled/widgets/cart_product_item.dart';
 import 'package:untitled/constants/constants.dart';
 import 'dart:ui';
+import 'package:untitled/pages/fetchdata.dart';
 import 'package:timezone/timezone.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:rxdart/rxdart.dart';
@@ -41,13 +42,35 @@ TextEditingController productManufactureingController = TextEditingController();
 
 
     addadd(String productName,String marketName,String manufacturing, String price) async {
+
+
    String A=await SessionManager().get("namename") ;
    String A1=await SessionManager().get("current-list") ;
 
+try {
+      http.Response res = await http.get(
+          Uri.parse(fetchdata.apiUrl+'listelementselect?listname=' +
+              A1+'&&username=' +A ),
+          headers: {'Content-Type': 'application/json'});
+
+             
+          var data = "${res.body}";
+         addadd1(data,productName,marketName,manufacturing,price);
+
+
+    } catch (e) {
+      print("no filld");
+    }
+////
+    }
+
+    
+    addadd1(String name,String productName,String marketName,String manufacturing, String price) async {
+       String A1=await SessionManager().get("current-list") ;
    try {
       http.Response res = await http.get(
-          Uri.parse('http://192.168.1.65:3000/listelement?userName=' +
-              A +
+          Uri.parse(fetchdata.apiUrl+'listelement?userName=' +
+              name +
               '&&listName=' +
               A1 +
               '&&productName=' +
@@ -83,7 +106,7 @@ void _runFilter(String enteredKeyword) {
 }
 
 wish(List<Product> g) async {
-  http.Response res = await http.get(Uri.parse('http://192.168.1.65:3000/wish'),
+  http.Response res = await http.get(Uri.parse(fetchdata.apiUrl+'wish'),
       headers: {'Content-Type': 'application/json'});
 
   if (res.statusCode == 200) {
@@ -348,7 +371,7 @@ class _MyHomePageState extends State<WishList> {
    String A1=await SessionManager().get("current-list") ;
  try {
       http.Response res = await http.get(
-          Uri.parse('http://192.168.1.65:3000/nowupdate?userName=' +
+          Uri.parse(fetchdata.apiUrl+'nowupdate?userName=' +
               A +
               '&&listName=' +
               A1+
@@ -370,7 +393,7 @@ String A=await SessionManager().get("namename") ;
    String A1=await SessionManager().get("current-list") ;
  try {
       http.Response res = await http.get(
-          Uri.parse('http://192.168.1.65:3000/update?userName=' +
+          Uri.parse(fetchdata.apiUrl+'update?userName=' +
               A +
               '&&listName=' +
               A1+

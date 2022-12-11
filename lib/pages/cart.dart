@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:untitled/models/cart_item.dart';
 import 'package:untitled/models/product.dart';
+import 'package:untitled/pages/fetchdata.dart';
 import 'package:untitled/pages/wish_list.dart';
 import 'package:untitled/widgets/app_button.dart';
 import 'package:untitled/widgets/base_view.dart';
@@ -16,13 +17,14 @@ import 'dart:async';
 import 'dart:ui';
 import 'package:http/http.dart' as http;
 import 'package:no_context_navigation/no_context_navigation.dart';
+
 var sessionManager = SessionManager();
-
-
+fetchdata fetch=new fetchdata();
+ 
   late  List<CartItem> myList1=[];
   list1( List<CartItem> g) async {
   String k=await SessionManager().get("namename") ;
-    http.Response res = await http.get(Uri.parse('http://192.168.1.65:3000/showlist?username='+k),
+    http.Response res = await http.get(Uri.parse(fetchdata.apiUrl+'showlist?username='+k),
   headers: {
 'Content-Type':'application/json'
 
@@ -56,7 +58,7 @@ print("kkkk");
   String n=await SessionManager().get("namename") ;
      try {
       http.Response res = await http.get(
-          Uri.parse('http://192.168.1.65:3000/reglist?username=' +
+          Uri.parse(fetchdata.apiUrl+'reglist?username=' +
               n +
               '&&listname=' +
              a+
@@ -73,7 +75,7 @@ print("kkkk");
   String listname=await SessionManager().get("current-listup") ;
      try {
       http.Response res = await http.get(
-          Uri.parse('http://192.168.1.65:3000/updatelist?username=' +
+          Uri.parse(fetchdata.apiUrl+'updatelist?username=' +
               username +
               '&&listname=' +
              listname+
@@ -104,7 +106,7 @@ class _MyHomePageState extends State<Cart> {
 
    try {
       http.Response res = await http.get(
-          Uri.parse('http://192.168.1.65:3000/deletelistitems?listName=' +
+          Uri.parse(fetchdata.apiUrl+'deletelistitems?listName=' +
               listname +
               '&&userName=' +
               A 
@@ -119,7 +121,7 @@ class _MyHomePageState extends State<Cart> {
 
    try {
       http.Response res = await http.get(
-          Uri.parse('http://192.168.1.65:3000/deletelist?listname=' +
+          Uri.parse(fetchdata.apiUrl+'deletelist?listname=' +
               listname +
               '&&username=' +
               A 
@@ -190,7 +192,7 @@ class _MyHomePageState extends State<Cart> {
               },
               ),  
                   ElevatedButton(
-                child: Text('-delete'),
+                child: Text('*delete'),
                 style: ElevatedButton.styleFrom(
                   primary: Color.fromARGB(255, 221, 161, 71),
                   onPrimary: Colors.white,
@@ -202,7 +204,9 @@ class _MyHomePageState extends State<Cart> {
               },
               ),  ],
               ), 
-              ElevatedButton(
+             Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[  ElevatedButton(
                 child: Text('Add Products'),
                 style: ElevatedButton.styleFrom(
                   primary: Color.fromARGB(255, 221, 161, 71),
@@ -212,7 +216,19 @@ class _MyHomePageState extends State<Cart> {
                 onPressed: () {
                   openDialoge1( post.listname,  "\$ ${post.price}");
                 },
-              )
+              ),
+              // ElevatedButton(
+              //   child: Text('Share my List'),
+              //   style: ElevatedButton.styleFrom(
+              //     primary: Color.fromARGB(255, 221, 161, 71),
+              //     onPrimary: Colors.white,
+              //     onSurface: Colors.grey,
+              //   ),
+              //   onPressed: () {
+              //     openDialoge1( post.listname,  "\$ ${post.price}");
+              //   },
+              // )
+              ])
             ],
           ),
         )));

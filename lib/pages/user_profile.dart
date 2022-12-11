@@ -3,8 +3,10 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:untitled/constants/constants.dart';
 import 'package:untitled/pages/listitems.dart';
+import 'package:untitled/pages/users.dart';
 import 'package:untitled/widgets/base_view.dart';
 import 'package:untitled/pages/profile.dart';
+import 'package:untitled/pages/fetchdata.dart';
 class UserProfile extends StatelessWidget {
   const UserProfile({Key? key}) : super(key: key);
 
@@ -14,8 +16,8 @@ class UserProfile extends StatelessWidget {
         title: 'You',
         body: ListView(children: [
           _buildListItem('list', 'My Orders', () => {Navigator.of(context).push(MaterialPageRoute(builder: (c) => listitems()))}),
-          _buildListItem('wish_list', 'My Favorite', () => {}),
-          _buildListItem('wallet', 'Payment Details', () => {}),
+          _buildListItem('wish_list', 'users', () => {Navigator.of(context).push(MaterialPageRoute(builder: (c) => users()))}),
+       
           _buildListItem('settings', 'My Account', () =>{  Navigator.of(context).push(MaterialPageRoute(builder: (c) => pro()))}),
           
           // Navigator.of(context).push(MaterialPageRoute(builder: (c) => homm()));

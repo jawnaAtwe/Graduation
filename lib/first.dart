@@ -8,6 +8,7 @@ import 'dart:convert';
 import 'dart:async';
 import 'package:flutter_session_manager/flutter_session_manager.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:untitled/pages/fetchdata.dart';
 var sessionManager = SessionManager();
 
 //UI USER INTERFACs
@@ -87,7 +88,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
     print(p);
     try {
       http.Response res = await http.get(
-          Uri.parse('http://192.168.1.65:3000/login?username=' +
+          Uri.parse(fetchdata.apiUrl+'login?username=' +
               n +
               '&&userpass=' +
               p),
@@ -317,7 +318,7 @@ class _MyStatefulWidgetState1 extends State<MyStatefulWidget1> {
     print(p);
     try {
       http.Response res = await http.get(
-          Uri.parse('http://192.168.1.65:3000/loginadmin?AdminName=' +
+          Uri.parse(fetchdata.apiUrl+'loginadmin?AdminName=' +
               n +
               '&&AdminPass=' +
               p),
@@ -520,7 +521,7 @@ class _MyStatefulWidgetState2 extends State<MyStatefulWidget2> {
       String phone1) async {
     try {
       http.Response res = await http.get(
-          Uri.parse('http://192.168.1.65:3000/register?username=' +
+          Uri.parse(fetchdata.apiUrl+'register?username=' +
               name +
               '&&userpass=' +
               pass +

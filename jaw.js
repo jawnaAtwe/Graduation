@@ -73,6 +73,9 @@ app.get('/infouser', function(request, response){
         }
     });
 });
+//1
+
+
 
 app.get('/listelement', function(request, response){
     console.log("backjojo");
@@ -83,10 +86,6 @@ app.get('/listelement', function(request, response){
     ('${request.query.productName}','${request.query.listName}'
     ,' ${request.query.marketName}',' ${request.query.userName}',' ${request.query.manufacturing}')`;
     
-
-
-
-
     pool.query(query1, function(error, results){
         if ( error ){
             response.status(400).send('Error in database operation');
@@ -94,20 +93,36 @@ app.get('/listelement', function(request, response){
              console.log(results);
             response.send("Success");
            
-        }
-    });
-
-    
+        }});});
 
 
 
-});
+    app.get('/listelementselect', function(request, response){
+            console.log("select");
+           
+            let query1 = `SELECT *  FROM list where listname LIKE '%${request.query.listname}%' `;
+            
+            pool.query(query1, function(error, results){
+                if ( error ){
+                    response.status(400).send('Error in database operation');
+                } else {
+                     
+                     const p= results[0].username;
+                     var number = p;
+                     response.send((number).toString());
+               
+                   
+                }
+            });
+        
+        
+        });
 
 app.get('/update', function(request, response){
       //compare if less go to update
     //else nothing
     console.log("update");
-let query11 = `SELECT *  FROM list where username='${request.query.userName}' and listname='${request.query.listName}' `;
+let query11 = `SELECT *  FROM list where username LIKE '%${request.query.userName}%' and listname='${request.query.listName}' `;
  
     pool.query(query11, function(error, results){
         if ( error ){
@@ -138,7 +153,7 @@ let query11 = `SELECT *  FROM list where username='${request.query.userName}' an
 app.get('/nowupdate', function(request, response){
  
   console.log("nowupdate");
-let query11 = `UPDATE list SET price ='${request.query.price}' where username='${request.query.userName}' and listname='${request.query.listName}' `;
+let query11 = `UPDATE list SET price ='${request.query.price}' where username LIKE '%${request.query.userName}%' and listname='${request.query.listName}' `;
 
   pool.query(query11, function(error, results){
       if ( error ){
@@ -156,7 +171,7 @@ let query11 = `UPDATE list SET price ='${request.query.price}' where username='$
 
 app.get('/deletelist', function(request, response){
     console.log("deletelist");
-    let query1 = `DELETE FROM list  where listname ='${request.query.listname}' and username ='${request.query.username}'`;
+    let query1 = `DELETE FROM list  where listname ='${request.query.listname}' and username LIKE '%${request.query.username}%'`;
     
     pool.query(query1, function(error, results){
         if ( error ){
@@ -169,7 +184,7 @@ app.get('/deletelist', function(request, response){
 });
 app.get('/deletelistitems', function(request, response){
     console.log("deletelist");
-    let query1 = `DELETE FROM listselement  where listName ='${request.query.listName}' and userName ='${request.query.userName}'`;
+    let query1 = `DELETE FROM listselement  where listName ='${request.query.listName}' and username LIKE '%${request.query.userName}%'`;
     
     pool.query(query1, function(error, results){
         if ( error ){
@@ -185,7 +200,7 @@ app.get('/updatelist', function(request, response){
     console.log("updateee");
     let query1 = `UPDATE list SET listname = '${request.query.listnamenew}' 
     , price = '${request.query.pricenew}' 
-   where listname ='${request.query.listname}' and username ='${request.query.username}'`;
+   where listname ='${request.query.listname}' and username LIKE '%${request.query.username}%'`;
     
     pool.query(query1, function(error, results){
         if ( error ){
@@ -196,9 +211,10 @@ app.get('/updatelist', function(request, response){
         }
     });
 });
+//1
 app.get('/listitems', function(request, response){
     console.log("listitems1");
-    let query1 = `SELECT *  FROM listselement where listName ='${request.query.listname}'`;
+    let query1 = `SELECT *  FROM listselement where listName='${request.query.listname}' and userName LIKE '%${request.query.userName}%' `;
     
     pool.query(query1, function(error, results){
         if ( error ){
@@ -209,7 +225,6 @@ app.get('/listitems', function(request, response){
         }
     });
 });
-
 
 
 app.get('/wish', function(request, response){
@@ -225,6 +240,20 @@ app.get('/wish', function(request, response){
         }
     });
 });
+app.get('/usersonline', function(request, response){
+    console.log("users");
+    let query1 = `SELECT *  FROM users`;
+    
+    pool.query(query1, function(error, results){
+        if ( error ){
+            response.status(400).send('Error in database operation');
+        } else {
+             console.log(results);
+            response.send(results);
+        }
+    });
+});
+
 
 app.get('/login', function(request, response){
     console.log("back");
@@ -240,12 +269,39 @@ app.get('/login', function(request, response){
     });
 });
 
+app.get('/share', function(request, response){
+ 
+    let query1 = `UPDATE list SET username = '${request.query.username}+${request.query.person}'where 
+     username LIKE '%${request.query.username}%' and listname='${request.query.listname}'`;
+    
+    
+    pool.query(query1, function(error, results){
+        if ( error ){
+            response.status(400).send('Error in database operation');
+        } else {
+             
+        }
+    });
+});
 
 
-
+app.get('/share1', function(request, response){
+ 
+    let query1 = `UPDATE listselement SET userName = '${request.query.userName}+${request.query.person}'where 
+     userName LIKE '%${request.query.userName}%' and listName='${request.query.listName}'`;
+    
+    
+    pool.query(query1, function(error, results){
+        if ( error ){
+            response.status(400).send('Error in database operation');
+        } else {
+             
+        }
+    });
+});
 app.get('/showlist', function(request, response){
     console.log("backshow");
-    let query1 = `SELECT *  FROM list where username='${request.query.username}'`;
+    let query1 = `SELECT *  FROM list where username LIKE '%${request.query.username}%'`;
     
     pool.query(query1, function(error, results){
         if ( error ){
