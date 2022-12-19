@@ -135,7 +135,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                 alignment: Alignment.center,
                 padding: const EdgeInsets.all(32),
                 decoration: const BoxDecoration(
-                  color: AppColors.DARK_GREEN,
+                  color: Color.fromARGB(255, 53, 78, 67),
                   image: DecorationImage(
                     image: AssetImage('assets/images/of_main_bg.png'),
                     fit: BoxFit.fill,
@@ -152,7 +152,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                       child: TextFormField(
                         decoration: InputDecoration(
                           filled: true,
-                          fillColor: Color.fromARGB(255, 172, 190, 90),
+                          fillColor: Color.fromARGB(255, 202, 218, 131),
                           focusedBorder: OutlineInputBorder(
                             borderSide: const BorderSide(
                                 color: AppColors.DARK_GREEN, width: 2.0),
@@ -188,7 +188,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                           TextStyle(color: AppColors.DARK_GREEN, fontSize: 13),
                       decoration: InputDecoration(
                         filled: true,
-                        fillColor: Color.fromARGB(255, 172, 190, 90),
+                        fillColor: Color.fromARGB(255, 202, 218, 131),
                         focusedBorder: OutlineInputBorder(
                           borderSide: const BorderSide(
                               color: Color.fromARGB(255, 181, 207, 162),
@@ -229,33 +229,33 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                     padding: const EdgeInsets.all(10),
                   ),
                   Container(
-                    height: 50,
-                    padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
-                    child:  ThemeButton(
-                        label: "Test",
-                        labelColor: Color.fromARGB(255, 255, 255, 255),
-                        color: Colors.transparent,
-                        highlight:
-                            Color.fromARGB(255, 172, 190, 90).withOpacity(0.5),
-                        borderColor: Color.fromARGB(255, 172, 190, 90),
-                        borderWidth: 4,
-                        onClick: () {
-                          Navigator.of(context)
-                              .push(MaterialPageRoute(builder: (context) {
-                            return first();
-                          }));
-                        },
-                      )
-                  ),
+                      child: ThemeButton(
+                    label: "Login",
+                    labelColor: Color.fromARGB(255, 255, 255, 255),
+                    color: Colors.transparent,
+                    highlight:
+                        Color.fromARGB(255, 172, 190, 90).withOpacity(0.5),
+                    borderColor: Color.fromARGB(255, 172, 190, 90),
+                    borderWidth: 4,
+                    onClick: () async {
+                      login1(name, pass);
+                    },
+                  )),
                   Row(
                     children: <Widget>[
-                      const Text('Does not have account?'),
+                      const Text(
+                        'Does not have account?',
+                        style: TextStyle(
+                          fontSize: 18,
+                          color: Color.fromARGB(255, 252, 252, 251),
+                        ),
+                      ),
                       TextButton(
                         child: const Text(
                           'Sign up',
                           style: TextStyle(
                             fontSize: 21,
-                            color: Color.fromARGB(255, 193, 132, 40),
+                            color: Color.fromARGB(255, 202, 218, 131),
                           ),
                         ),
                         onPressed: () {

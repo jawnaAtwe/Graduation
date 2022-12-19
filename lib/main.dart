@@ -66,7 +66,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     return Scaffold(
         body: Container(
-            color: Color.fromARGB(255, 32, 81, 60),
+            color: Color.fromARGB(255, 53, 78, 67),
             child: Stack(
               children: [
                 Positioned.fill(
