@@ -4,6 +4,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:untitled/constants/constants.dart';
 import 'package:untitled/pages/cart.dart';
 import 'package:untitled/pages/home.dart';
+import 'package:untitled/pages/main.dart';
 import 'package:untitled/pages/user_profile.dart';
 import 'package:untitled/pages/wish_list.dart';
 
@@ -67,6 +68,10 @@ class _MyHomePageState extends State<MyHomePage1> {
               icon: _createBarIcon('user_profile', 3),
               label: 'You',
             ),
+            BottomNavigationBarItem(
+              icon: _createBarIcon('user_profile', 4),
+              label: 'Map',
+            ),
           ],
         ),
       ),
@@ -83,6 +88,8 @@ class _MyHomePageState extends State<MyHomePage1> {
         return const WishList();
       case 3:
         return const UserProfile();
+      case 4:
+        return MapScreen();
       default:
         return const Home();
     }
