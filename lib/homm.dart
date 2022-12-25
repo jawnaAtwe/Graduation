@@ -58,11 +58,11 @@ class _MyHomePageState extends State<MyHomePage1> {
               label: 'Home',
             ),
             BottomNavigationBarItem(
-              icon: _createBarIcon('cart', 1),
+              icon: _createBarIcon('wish_list', 1),
               label: 'Cart',
             ),
             BottomNavigationBarItem(
-              icon: _createBarIcon('wish_list', 2),
+              icon: _createBarIcon('cart', 2),
               label: 'Shopping',
             ),
             BottomNavigationBarItem(
@@ -70,7 +70,7 @@ class _MyHomePageState extends State<MyHomePage1> {
               label: 'You',
             ),
             BottomNavigationBarItem(
-              icon: _createBarIcon('user_profile', 4),
+              icon: _createBarIcon('wallet', 4),
               label: 'Map',
             ),
           ],

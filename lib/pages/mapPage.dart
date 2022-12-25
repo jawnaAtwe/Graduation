@@ -39,7 +39,7 @@ class _MapPageState extends State<MapPage> {
           width: 3,
           points: [
             LatLng(widget.currentLat, widget.currentLng),
-            LatLng(29.999000, 31.149900),
+            LatLng(32.18333, 35.149900),
           ]),
     );
   }
@@ -67,8 +67,8 @@ class _MapPageState extends State<MapPage> {
   Set<Circle> myCircles = Set.from([
     Circle(
       circleId: CircleId('1'),
-      center: LatLng(29.990940, 31.149248),
-      radius: 200,
+      center: LatLng(32.18333, 35.149900),
+      radius: 250,
       strokeWidth: 3,
       strokeColor: Color.fromARGB(255, 41, 161, 63),
     )
@@ -78,20 +78,22 @@ class _MapPageState extends State<MapPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text('First Google Map'),
+          title: Text('Google Map'),
+          backgroundColor: Color.fromARGB(255, 172, 190, 90),
         ),
         body: Stack(
           children: [
             GoogleMap(
               mapType: MapType.normal,
               initialCameraPosition: CameraPosition(
-                  target: LatLng(29.999000, 31.149900), zoom: 14),
+                  target: LatLng(widget.currentLat, widget.currentLng),
+                  zoom: 14),
               onMapCreated: (GoogleMapController googleMapController) {
                 setState(() {
                   myMarkers.add(
                     Marker(
                       markerId: MarkerId('1'),
-                      position: LatLng(29.990940, 31.149248),
+                      position: LatLng(32.18333, 35.149900),
                       infoWindow: InfoWindow(
                           title: 'Market',
                           snippet:
@@ -106,11 +108,12 @@ class _MapPageState extends State<MapPage> {
                   myMarkers.add(
                     Marker(
                       markerId: MarkerId('2'),
-                      position: LatLng(29.999000, 31.149900),
+                      position: LatLng(widget.currentLat, widget.currentLng),
                       infoWindow: InfoWindow(
                           title: 'Your current location', snippet: ''),
                       onTap: () {
-                        print('Marker tabed');
+                        print(widget.currentLat);
+                        print(widget.currentLng);
                       },
                       icon: currentMarker,
                     ),
