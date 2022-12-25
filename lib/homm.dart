@@ -3,8 +3,9 @@ import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:untitled/constants/constants.dart';
 import 'package:untitled/pages/cart.dart';
+import 'package:untitled/pages/getCurrentLocation.dart';
 import 'package:untitled/pages/home.dart';
-import 'package:untitled/pages/main.dart';
+import 'package:untitled/pages/mapPage.dart';
 import 'package:untitled/pages/user_profile.dart';
 import 'package:untitled/pages/wish_list.dart';
 
