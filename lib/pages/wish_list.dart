@@ -29,64 +29,59 @@ import 'package:avatar_glow/avatar_glow.dart';
 import 'package:speech_to_text/speech_to_text.dart' as stts;
 import 'package:highlight_text/highlight_text.dart';
 
-
 TextEditingController productNameController = TextEditingController();
 TextEditingController productImageURLController = TextEditingController();
 TextEditingController productPriceController = TextEditingController();
 TextEditingController productMarketController = TextEditingController();
 TextEditingController productManufactureingController = TextEditingController();
 
+late List<Product> myList = [];
 
+addadd(String productName, String marketName, String manufacturing,
+    String price) async {
+  String A = await SessionManager().get("namename");
+  String A1 = await SessionManager().get("current-list");
 
-   late  List<Product> myList=[];
+  try {
+    http.Response res = await http.get(
+        Uri.parse(fetchdata.apiUrl +
+            'listelementselect?listname=' +
+            A1 +
+            '&&username=' +
+            A),
+        headers: {'Content-Type': 'application/json'});
 
-
-    addadd(String productName,String marketName,String manufacturing, String price) async {
-
-
-   String A=await SessionManager().get("namename") ;
-   String A1=await SessionManager().get("current-list") ;
-
-try {
-      http.Response res = await http.get(
-          Uri.parse(fetchdata.apiUrl+'listelementselect?listname=' +
-              A1+'&&username=' +A ),
-          headers: {'Content-Type': 'application/json'});
-
-             
-          var data = "${res.body}";
-         addadd1(data,productName,marketName,manufacturing,price);
-
-
-    } catch (e) {
-      print("no filld");
-    }
+    var data = "${res.body}";
+    addadd1(data, productName, marketName, manufacturing, price);
+  } catch (e) {
+    print("no filld");
+  }
 ////
-    }
+}
 
-    
-    addadd1(String name,String productName,String marketName,String manufacturing, String price) async {
-       String A1=await SessionManager().get("current-list") ;
-   try {
-      http.Response res = await http.get(
-          Uri.parse(fetchdata.apiUrl+'listelement?userName=' +
-              name +
-              '&&listName=' +
-              A1 +
-              '&&productName=' +
-              productName +
-              '&&marketName=' +
-              marketName +
-              '&&manufacturing=' +
-              manufacturing+
-              '&&price=' +
-              price
-              ),
-          headers: {'Content-Type': 'application/json'});
-    } catch (e) {
-      print("no filld");
-    }}
-
+addadd1(String name, String productName, String marketName,
+    String manufacturing, String price) async {
+  String A1 = await SessionManager().get("current-list");
+  try {
+    http.Response res = await http.get(
+        Uri.parse(fetchdata.apiUrl +
+            'listelement?userName=' +
+            name +
+            '&&listName=' +
+            A1 +
+            '&&productName=' +
+            productName +
+            '&&marketName=' +
+            marketName +
+            '&&manufacturing=' +
+            manufacturing +
+            '&&price=' +
+            price),
+        headers: {'Content-Type': 'application/json'});
+  } catch (e) {
+    print("no filld");
+  }
+}
 
 void _runFilter(String enteredKeyword) {
   List<Product> results = [];
@@ -106,7 +101,7 @@ void _runFilter(String enteredKeyword) {
 }
 
 wish(List<Product> g) async {
-  http.Response res = await http.get(Uri.parse(fetchdata.apiUrl+'wish'),
+  http.Response res = await http.get(Uri.parse(fetchdata.apiUrl + 'wish'),
       headers: {'Content-Type': 'application/json'});
 
   if (res.statusCode == 200) {
@@ -132,19 +127,17 @@ class WishList extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<WishList> {
-
- late final LocalNotificationService service;
+  late final LocalNotificationService service;
   void listenToNotification() =>
       service.onNotificationClick.stream.listen(onNoticationListener);
 
   void onNoticationListener(String? payload) {
     if (payload != null && payload.isNotEmpty) {
       print('payload $payload');
-
     }
   }
-@override
 
+  @override
   TextEditingController _textEditingController = TextEditingController();
   var _speechToText = stts.SpeechToText();
   bool isListening = false;
@@ -174,17 +167,14 @@ class _MyHomePageState extends State<WishList> {
   }
 
   @override
-
   void initState() {
     super.initState();
 
     service = LocalNotificationService();
     service.intialize();
- 
 
     _speechToText = stts.SpeechToText();
     _textEditingController.text = text;
-
 
     wish(myList);
     getPostsData();
@@ -315,30 +305,25 @@ class _MyHomePageState extends State<WishList> {
                           color: Colors.black,
                           fontWeight: FontWeight.bold),
                     ),
-                  Row(  
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly, 
-           
-          children:<Widget>[    ElevatedButton(
-                      child: Text('Add To Card'),
-                      style: ElevatedButton.styleFrom(
-                        primary: Colors.teal,
-                        onPrimary: Colors.white,
-                        onSurface: Colors.grey,
-                      ),
-                      onPressed: () {
-                        print('Pressed');
+                    Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: <Widget>[
+                          ElevatedButton(
+                            child: Text('Add To Card'),
+                            style: ElevatedButton.styleFrom(
+                              primary: Colors.teal,
+                              onPrimary: Colors.white,
+                              onSurface: Colors.grey,
+                            ),
+                            onPressed: () {
+                              print('Pressed');
 
-                        // addadd( post.productName,post.marketName,post.manufacturing,"\$ ${post.price}");
-                        update(post.productName,post.marketName,post.manufacturing,"\$ ${post.price}");
-                        
-
-                 
-
-                      },
-                    )
-
-,
-          ]),
+                              // addadd( post.productName,post.marketName,post.manufacturing,"\$ ${post.price}");
+                              update(post.productName, post.marketName,
+                                  post.manufacturing, "\$ ${post.price}");
+                            },
+                          ),
+                        ]),
                   ],
                 ),
                 // Image.asset(
@@ -354,74 +339,68 @@ class _MyHomePageState extends State<WishList> {
     });
   }
 
-  show () async {
-     try {
- await service.showNotificationWithPayload(
-                          id: 0,
-                          title: 'hi',
-                          body: 'u can not add this product because u have not enough mony',
-                          payload: '');
- } catch (e) {
+  show() async {
+    try {
+      await service.showNotificationWithPayload(
+          id: 0,
+          title: 'hi',
+          body: 'u can not add this product because u have not enough mony',
+          payload: '');
+    } catch (e) {
       print("no filld");
     }
   }
- nowupdate (String price) async {
 
-   String A=await SessionManager().get("namename") ;
-   String A1=await SessionManager().get("current-list") ;
- try {
+  nowupdate(String price) async {
+    String A = await SessionManager().get("namename");
+    String A1 = await SessionManager().get("current-list");
+    try {
       http.Response res = await http.get(
-          Uri.parse(fetchdata.apiUrl+'nowupdate?userName=' +
+          Uri.parse(fetchdata.apiUrl +
+              'nowupdate?userName=' +
               A +
               '&&listName=' +
-              A1+
+              A1 +
               '&&price=' +
-              price
-              ),
+              price),
           headers: {'Content-Type': 'application/json'});
-       
-       
-
-            
     } catch (e) {
       print("no filld");
     }
- }
-   update (String productName,String marketName,String manufacturing, String price) async {
+  }
+
+  update(String productName, String marketName, String manufacturing,
+      String price) async {
     print("up");
-String A=await SessionManager().get("namename") ;
-   String A1=await SessionManager().get("current-list") ;
- try {
+    String A = await SessionManager().get("namename");
+    String A1 = await SessionManager().get("current-list");
+    try {
       http.Response res = await http.get(
-          Uri.parse(fetchdata.apiUrl+'update?userName=' +
+          Uri.parse(fetchdata.apiUrl +
+              'update?userName=' +
               A +
               '&&listName=' +
-              A1+
+              A1 +
               '&&price=' +
-              price
-              ),
+              price),
           headers: {'Content-Type': 'application/json'});
-       
-          var data = "${res.body}";
-          var zero = "0";
-  if ("$data".compareTo("$zero").isNegative){ //compare
-    show();
-         print("nondone");
-   
-      } else {
-        
-    nowupdate("$data");
-    addadd( productName,marketName,manufacturing,"\$ ${price}");
-                        
-       print("done");
-      }
 
-            
+      var data = "${res.body}";
+      var zero = "0";
+      if ("$data".compareTo("$zero").isNegative) {
+        //compare
+        show();
+        print("nondone");
+      } else {
+        nowupdate("$data");
+        addadd(productName, marketName, manufacturing, "\$ ${price}");
+
+        print("done");
+      }
     } catch (e) {
       print("no filld");
     }
-
-   }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -429,11 +408,11 @@ String A=await SessionManager().get("namename") ;
     final double categoryHeight = size.height * 0.30;
     return SafeArea(
       child: Scaffold(
-        backgroundColor: Colors.white,
+        backgroundColor: Color.fromARGB(255, 233, 245, 206),
         appBar: AppBar(
           title: const Text('Shopping'),
-          backgroundColor: Colors.white,
-          foregroundColor: Colors.black,
+          backgroundColor: Color.fromARGB(255, 172, 190, 90),
+          foregroundColor: Colors.white,
         ),
         body: Container(
           height: size.height,

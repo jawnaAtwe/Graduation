@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:untitled/constants/constants.dart';
 import 'package:untitled/pages/cart.dart';
+import 'package:untitled/pages/chat.dart';
 import 'package:untitled/pages/getCurrentLocation.dart';
 import 'package:untitled/pages/home.dart';
 import 'package:untitled/pages/mapPage.dart';
@@ -71,7 +72,7 @@ class _MyHomePageState extends State<MyHomePage1> {
             ),
             BottomNavigationBarItem(
               icon: _createBarIcon('wallet', 4),
-              label: 'Map',
+              label: 'Chat',
             ),
           ],
         ),
@@ -90,7 +91,7 @@ class _MyHomePageState extends State<MyHomePage1> {
       case 3:
         return const UserProfile();
       case 4:
-        return MapScreen();
+        return ChatScreen();
       default:
         return const Home();
     }

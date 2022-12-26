@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 import 'dart:ui';
 import 'package:untitled/homm.dart';
+import 'package:untitled/pages/getCurrentLocation.dart';
+
 import 'package:http/http.dart' as http;
 import 'package:untitled/first.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
@@ -14,8 +16,12 @@ import 'package:untitled/widgets/iconfont.dart';
 import 'package:untitled/helper/iconhelper.dart';
 import 'package:untitled/helper/appcolors.dart';
 import 'package:untitled/widgets/themebutton.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:untitled/firstWithFireBase.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(MyApp());
 }
 
@@ -124,7 +130,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                         onClick: () {
                           Navigator.of(context)
                               .push(MaterialPageRoute(builder: (context) {
-                            return homm();
+                            return MapScreen();
                           }));
                         },
                       ),
@@ -135,7 +141,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                         onClick: () {
                           Navigator.of(context)
                               .push(MaterialPageRoute(builder: (context) {
-                            return first();
+                            return firstWithFireBase();
                           }));
                         },
                       ),
@@ -150,7 +156,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                         onClick: () {
                           Navigator.of(context)
                               .push(MaterialPageRoute(builder: (context) {
-                            return first();
+                            return homm();
                           }));
                         },
                       )
