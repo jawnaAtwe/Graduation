@@ -15,6 +15,7 @@ import 'package:untitled/widgets/myButton.dart';
 import 'package:untitled/widgets/themebutton.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:untitled/pages/chat.dart';
+import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 
 var sessionManager = SessionManager();
 
@@ -73,6 +74,11 @@ class MyStatefulWidget extends StatefulWidget {
 }
 
 class _MyStatefulWidgetState extends State<MyStatefulWidget> {
+  final _auth = FirebaseAuth.instance;
+  late String email;
+  late String password;
+  bool showSpinner = false;
+
   TextEditingController nameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
@@ -123,38 +129,80 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-        padding: const EdgeInsets.all(0),
-        child: ListView(
-          children: <Widget>[
-            //     BackgroundImage(
-            //   image: 'images/file.jpg',
-            // ),
-            Container(
-                alignment: Alignment.center,
-                padding: const EdgeInsets.all(32),
-                decoration: const BoxDecoration(
-                  color: Color.fromARGB(255, 53, 78, 67),
-                  image: DecorationImage(
-                    image: AssetImage('assets/images/of_main_bg.png'),
-                    fit: BoxFit.fill,
-                    opacity: 0.3,
+    return ModalProgressHUD(
+      inAsyncCall: showSpinner,
+      child: Padding(
+          padding: const EdgeInsets.all(0),
+          child: ListView(
+            children: <Widget>[
+              //     BackgroundImage(
+              //   image: 'images/file.jpg',
+              // ),
+              Container(
+                  alignment: Alignment.center,
+                  padding: const EdgeInsets.all(32),
+                  decoration: const BoxDecoration(
+                    color: Color.fromARGB(255, 53, 78, 67),
+                    image: DecorationImage(
+                      image: AssetImage('assets/images/of_main_bg.png'),
+                      fit: BoxFit.fill,
+                      opacity: 0.3,
+                    ),
                   ),
-                ),
-                child: Column(children: <Widget>[
-                  Container(
-                    alignment: Alignment.center,
-                  ),
-                  Container(
-                    padding: const EdgeInsets.fromLTRB(10, 40, 10, 0),
-                    child: SizedBox(
-                      child: TextFormField(
+                  child: Column(children: <Widget>[
+                    Container(
+                      alignment: Alignment.center,
+                    ),
+                    Container(
+                      padding: const EdgeInsets.fromLTRB(10, 40, 10, 0),
+                      child: SizedBox(
+                        child: TextFormField(
+                          decoration: InputDecoration(
+                            filled: true,
+                            fillColor: Color.fromARGB(255, 202, 218, 131),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: const BorderSide(
+                                  color: AppColors.DARK_GREEN, width: 2.0),
+                              borderRadius: BorderRadius.circular(25.0),
+                            ),
+                            border: OutlineInputBorder(
+                              borderSide: const BorderSide(
+                                  color: AppColors.DARK_GREEN, width: 2.0),
+                              borderRadius: BorderRadius.circular(25.0),
+                            ),
+                            labelText: 'Email',
+                            prefixIcon: Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 20.0),
+                              child: Icon(
+                                Icons.person,
+                                size: 28,
+                                color: AppColors.DARK_GREEN,
+                              ),
+                            ),
+                          ),
+                          onChanged: (value) {
+                            email = value;
+                            name = value;
+                          },
+                        ),
+                      ),
+                    ),
+                    Container(
+                      padding: const EdgeInsets.fromLTRB(10, 40, 10, 0),
+                      child: TextField(
+                        obscureText: true,
+                        enableSuggestions: false,
+                        autocorrect: false,
+                        style: TextStyle(
+                            color: AppColors.DARK_GREEN, fontSize: 13),
                         decoration: InputDecoration(
                           filled: true,
                           fillColor: Color.fromARGB(255, 202, 218, 131),
                           focusedBorder: OutlineInputBorder(
                             borderSide: const BorderSide(
-                                color: AppColors.DARK_GREEN, width: 2.0),
+                                color: Color.fromARGB(255, 181, 207, 162),
+                                width: 2.0),
                             borderRadius: BorderRadius.circular(25.0),
                           ),
                           border: OutlineInputBorder(
@@ -162,115 +210,102 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                                 color: AppColors.DARK_GREEN, width: 2.0),
                             borderRadius: BorderRadius.circular(25.0),
                           ),
-                          labelText: 'User Name',
+                          labelText: 'Password',
                           prefixIcon: Padding(
                             padding:
                                 const EdgeInsets.symmetric(horizontal: 20.0),
                             child: Icon(
-                              Icons.person,
+                              Icons.lock,
                               size: 28,
                               color: AppColors.DARK_GREEN,
                             ),
                           ),
                         ),
-                        onChanged: (value) => name = value,
-                      ),
-                    ),
-                  ),
-                  Container(
-                    padding: const EdgeInsets.fromLTRB(10, 40, 10, 0),
-                    child: TextField(
-                      obscureText: true,
-                      enableSuggestions: false,
-                      autocorrect: false,
-                      style:
-                          TextStyle(color: AppColors.DARK_GREEN, fontSize: 13),
-                      decoration: InputDecoration(
-                        filled: true,
-                        fillColor: Color.fromARGB(255, 202, 218, 131),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: const BorderSide(
-                              color: Color.fromARGB(255, 181, 207, 162),
-                              width: 2.0),
-                          borderRadius: BorderRadius.circular(25.0),
-                        ),
-                        border: OutlineInputBorder(
-                          borderSide: const BorderSide(
-                              color: AppColors.DARK_GREEN, width: 2.0),
-                          borderRadius: BorderRadius.circular(25.0),
-                        ),
-                        labelText: 'Password',
-                        prefixIcon: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                          child: Icon(
-                            Icons.lock,
-                            size: 28,
-                            color: AppColors.DARK_GREEN,
-                          ),
-                        ),
-                      ),
-                      onChanged: (value) => pass = value,
-                    ),
-                  ),
-                  TextButton(
-                    onPressed: () {
-                      //forgot password screen
-                    },
-                    child: const Text(
-                      'Forgot Password',
-                      style: TextStyle(
-                          fontSize: 16,
-                          color: Color.fromARGB(255, 244, 242, 239)),
-                    ),
-                  ),
-                  Container(
-                    alignment: Alignment.center,
-                    padding: const EdgeInsets.all(10),
-                  ),
-                  Container(
-                      child: ThemeButton(
-                    label: "Login",
-                    labelColor: Color.fromARGB(255, 255, 255, 255),
-                    color: Colors.transparent,
-                    highlight:
-                        Color.fromARGB(255, 172, 190, 90).withOpacity(0.5),
-                    borderColor: Color.fromARGB(255, 172, 190, 90),
-                    borderWidth: 4,
-                    onClick: () async {
-                      login1(name, pass);
-                    },
-                  )),
-                  Row(
-                    children: <Widget>[
-                      const Text(
-                        'Does not have account?',
-                        style: TextStyle(
-                          fontSize: 18,
-                          color: Color.fromARGB(255, 252, 252, 251),
-                        ),
-                      ),
-                      TextButton(
-                        child: const Text(
-                          'Sign up',
-                          style: TextStyle(
-                            fontSize: 21,
-                            color: Color.fromARGB(255, 202, 218, 131),
-                          ),
-                        ),
-                        onPressed: () {
-                          //signup screen
+                        onChanged: (value) {
+                          password = value;
+                          pass = value;
                         },
-                      )
-                    ],
-                    mainAxisAlignment: MainAxisAlignment.center,
-                  ),
-                  Container(
-                    alignment: Alignment.center,
-                    padding: const EdgeInsets.all(140),
-                  ),
-                ])),
-          ],
-        ));
+                      ),
+                    ),
+                    TextButton(
+                      onPressed: () {
+                        //forgot password screen
+                      },
+                      child: const Text(
+                        'Forgot Password',
+                        style: TextStyle(
+                            fontSize: 16,
+                            color: Color.fromARGB(255, 244, 242, 239)),
+                      ),
+                    ),
+                    Container(
+                      alignment: Alignment.center,
+                      padding: const EdgeInsets.all(10),
+                    ),
+                    Container(
+                        child: ThemeButton(
+                      label: "Login",
+                      labelColor: Color.fromARGB(255, 255, 255, 255),
+                      color: Colors.transparent,
+                      highlight:
+                          Color.fromARGB(255, 172, 190, 90).withOpacity(0.5),
+                      borderColor: Color.fromARGB(255, 172, 190, 90),
+                      borderWidth: 4,
+                      onClick: () async {
+                        login1(name, pass);
+
+                        setState(() {
+                          showSpinner = true;
+                        });
+                        try {
+                          final user = await _auth.signInWithEmailAndPassword(
+                              email: email, password: password);
+                          if (user != null) {
+                            Navigator.of(context)
+                                .push(MaterialPageRoute(builder: (context) {
+                              return homm();
+                            }));
+                            setState(() {
+                              showSpinner = false;
+                            });
+                          }
+                        } catch (e) {
+                          print(e);
+                        }
+                      },
+                    )),
+                    Row(
+                      children: <Widget>[
+                        const Text(
+                          'Does not have account?',
+                          style: TextStyle(
+                            fontSize: 18,
+                            color: Color.fromARGB(255, 252, 252, 251),
+                          ),
+                        ),
+                        TextButton(
+                          child: const Text(
+                            'Sign up',
+                            style: TextStyle(
+                              fontSize: 21,
+                              color: Color.fromARGB(255, 202, 218, 131),
+                            ),
+                          ),
+                          onPressed: () {
+                            //signup screen
+                          },
+                        )
+                      ],
+                      mainAxisAlignment: MainAxisAlignment.center,
+                    ),
+                    Container(
+                      alignment: Alignment.center,
+                      padding: const EdgeInsets.all(140),
+                    ),
+                  ])),
+            ],
+          )),
+    );
   }
 }
 
@@ -340,207 +375,169 @@ class _MyStatefulWidgetState2 extends State<MyStatefulWidget2> {
   final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
-    return Form(
-        key: _formKey,
-        child: ListView(
-          children: <Widget>[
-            //     BackgroundImage(
-            //   image: 'images/file.jpg',
-            // ),
+    return ModalProgressHUD(
+      inAsyncCall: showSpinner,
+      child: Form(
+          key: _formKey,
+          child: ListView(
+            children: <Widget>[
+              //     BackgroundImage(
+              //   image: 'images/file.jpg',
+              // ),
 
-            Container(
-                alignment: Alignment.center,
-                padding: const EdgeInsets.all(32),
-                decoration: const BoxDecoration(
-                  image: DecorationImage(
-                      image: NetworkImage(
-                          "https://media.istockphoto.com/photos/female-customer-buying-coffee-and-placing-signature-on-tablet-picture-id1138022521?k=20&m=1138022521&s=612x612&w=0&h=64LbjGG21JIx6E5WgyXfUU0SEaVe62PbV_W40T5UGqE="),
-                      fit: BoxFit.cover),
-                ),
-                child: Column(children: <Widget>[
-                  Container(
-                    alignment: Alignment.center,
+              Container(
+                  alignment: Alignment.center,
+                  padding: const EdgeInsets.all(32),
+                  decoration: const BoxDecoration(
+                    image: DecorationImage(
+                        image: NetworkImage(
+                            "https://media.istockphoto.com/photos/female-customer-buying-coffee-and-placing-signature-on-tablet-picture-id1138022521?k=20&m=1138022521&s=612x612&w=0&h=64LbjGG21JIx6E5WgyXfUU0SEaVe62PbV_W40T5UGqE="),
+                        fit: BoxFit.cover),
                   ),
-                  Container(
-                    padding: const EdgeInsets.fromLTRB(10, 20, 10, 0),
-                    child: SizedBox(
-                      child: TextFormField(
-                        textInputAction: TextInputAction.next,
-                        controller: nameController2,
-                        decoration: InputDecoration(
-                          filled: true,
-                          fillColor: Colors.grey[500]!.withOpacity(0.4),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: const BorderSide(
-                              color: Color.fromARGB(255, 214, 152, 59),
+                  child: Column(children: <Widget>[
+                    Container(
+                      alignment: Alignment.center,
+                    ),
+                    Container(
+                      padding: const EdgeInsets.fromLTRB(10, 20, 10, 0),
+                      child: SizedBox(
+                        child: TextFormField(
+                          textInputAction: TextInputAction.next,
+                          controller: nameController2,
+                          decoration: InputDecoration(
+                            filled: true,
+                            fillColor: Colors.grey[500]!.withOpacity(0.4),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: const BorderSide(
+                                color: Color.fromARGB(255, 214, 152, 59),
+                              ),
+                              borderRadius: BorderRadius.circular(25.0),
                             ),
-                            borderRadius: BorderRadius.circular(25.0),
-                          ),
-                          border: OutlineInputBorder(
-                            borderSide: const BorderSide(
-                              color: Color.fromARGB(255, 214, 152, 59),
+                            border: OutlineInputBorder(
+                              borderSide: const BorderSide(
+                                color: Color.fromARGB(255, 214, 152, 59),
+                              ),
+                              borderRadius: BorderRadius.circular(25.0),
                             ),
-                            borderRadius: BorderRadius.circular(25.0),
-                          ),
-                          labelText: 'Enter Your Name',
-                          prefixIcon: Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 20.0),
-                            child: Icon(
-                              Icons.person,
-                              size: 28,
-                              color: Color.fromARGB(255, 214, 152, 59),
+                            labelText: 'Enter Your Name',
+                            prefixIcon: Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 20.0),
+                              child: Icon(
+                                Icons.person,
+                                size: 28,
+                                color: Color.fromARGB(255, 214, 152, 59),
+                              ),
                             ),
                           ),
+                          validator: (val) {
+                            if ((val!.isEmpty)) {
+                              return "Enter a name";
+                            }
+                            return null;
+                          },
+                          onChanged: (value) {
+                            name = value;
+                          },
                         ),
-                        validator: (val) {
-                          if ((val!.isEmpty)) {
-                            return "Enter a name";
-                          }
-                          return null;
-                        },
-                        onChanged: (value) {
-                          name = value;
-                        },
                       ),
                     ),
-                  ),
-                  Container(
-                    padding: const EdgeInsets.fromLTRB(10, 20, 10, 0),
-                    child: SizedBox(
-                      child: TextFormField(
-                        textInputAction: TextInputAction.next,
-                        keyboardType: TextInputType.emailAddress,
-                        decoration: InputDecoration(
-                          filled: true,
-                          fillColor: Colors.grey[500]!.withOpacity(0.4),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: const BorderSide(
-                              color: Color.fromARGB(255, 214, 152, 59),
+                    Container(
+                      padding: const EdgeInsets.fromLTRB(10, 20, 10, 0),
+                      child: SizedBox(
+                        child: TextFormField(
+                          textInputAction: TextInputAction.next,
+                          keyboardType: TextInputType.emailAddress,
+                          decoration: InputDecoration(
+                            filled: true,
+                            fillColor: Colors.grey[500]!.withOpacity(0.4),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: const BorderSide(
+                                color: Color.fromARGB(255, 214, 152, 59),
+                              ),
+                              borderRadius: BorderRadius.circular(25.0),
                             ),
-                            borderRadius: BorderRadius.circular(25.0),
-                          ),
-                          border: OutlineInputBorder(
-                            borderSide: const BorderSide(
-                              color: Color.fromARGB(255, 214, 152, 59),
+                            border: OutlineInputBorder(
+                              borderSide: const BorderSide(
+                                color: Color.fromARGB(255, 214, 152, 59),
+                              ),
+                              borderRadius: BorderRadius.circular(25.0),
                             ),
-                            borderRadius: BorderRadius.circular(25.0),
-                          ),
-                          labelText: 'Enter Your Email',
-                          prefixIcon: Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 20.0),
-                            child: Icon(
-                              Icons.email,
-                              size: 28,
-                              color: Color.fromARGB(255, 214, 152, 59),
-                            ),
-                          ),
-                        ),
-                        validator: (val) {
-                          if ((val!.isEmpty) ||
-                              !RegExp(r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?)*$")
-                                  .hasMatch(val)) {
-                            return "Enter a valid email address";
-                          }
-                          return null;
-                        },
-                        onChanged: (value) {
-                          email = value;
-                        },
-                      ),
-                    ),
-                  ),
-                  Container(
-                    padding: const EdgeInsets.fromLTRB(10, 20, 10, 0),
-                    child: SizedBox(
-                      child: TextFormField(
-                        textInputAction: TextInputAction.next,
-                        controller: placeController2,
-                        decoration: InputDecoration(
-                          filled: true,
-                          fillColor: Colors.grey[500]!.withOpacity(0.4),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: const BorderSide(
-                              color: Color.fromARGB(255, 214, 152, 59),
-                            ),
-                            borderRadius: BorderRadius.circular(25.0),
-                          ),
-                          border: OutlineInputBorder(
-                            borderSide: const BorderSide(
-                                color: Color.fromARGB(255, 214, 152, 59)),
-                            borderRadius: BorderRadius.circular(25.0),
-                          ),
-                          labelText: 'place',
-                          prefixIcon: Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 20.0),
-                            child: Icon(
-                              Icons.place,
-                              size: 28,
-                              color: Color.fromARGB(255, 214, 152, 59),
+                            labelText: 'Enter Your Email',
+                            prefixIcon: Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 20.0),
+                              child: Icon(
+                                Icons.email,
+                                size: 28,
+                                color: Color.fromARGB(255, 214, 152, 59),
+                              ),
                             ),
                           ),
-                        ),
-                        validator: (val) {
-                          if ((val!.isEmpty)) {
-                            return "Enter a valid place";
-                          }
-                          return null;
-                        },
-                        onChanged: (value) {
-                          place = value;
-                        },
-                      ),
-                    ),
-                  ),
-                  Container(
-                    padding: const EdgeInsets.fromLTRB(10, 20, 10, 0),
-                    child: TextFormField(
-                      textInputAction: TextInputAction.next,
-                      obscureText: true,
-                      enableSuggestions: false,
-                      autocorrect: false,
-                      decoration: InputDecoration(
-                        filled: true,
-                        fillColor: Colors.grey[500]!.withOpacity(0.4),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: const BorderSide(
-                              color: Color.fromARGB(255, 214, 152, 59)),
-                          borderRadius: BorderRadius.circular(25.0),
-                        ),
-                        border: OutlineInputBorder(
-                          borderSide: const BorderSide(
-                              color: Color.fromARGB(255, 214, 152, 59)),
-                          borderRadius: BorderRadius.circular(25.0),
-                        ),
-                        labelText: 'Password',
-                        prefixIcon: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                          child: Icon(
-                            Icons.lock,
-                            size: 28,
-                            color: Color.fromARGB(255, 214, 152, 59),
-                          ),
+                          validator: (val) {
+                            if ((val!.isEmpty) ||
+                                !RegExp(r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?)*$")
+                                    .hasMatch(val)) {
+                              return "Enter a valid email address";
+                            }
+                            return null;
+                          },
+                          onChanged: (value) {
+                            email = value;
+                          },
                         ),
                       ),
-                      validator: (val) {
-                        if ((val!.isEmpty)) {
-                          return "Enter a valid password";
-                        }
-                        return null;
-                      },
-                      onChanged: (value) {
-                        password = value;
-                      },
                     ),
-                  ),
-                  Container(
-                    padding: const EdgeInsets.fromLTRB(10, 20, 10, 0),
-                    child: SizedBox(
+                    Container(
+                      padding: const EdgeInsets.fromLTRB(10, 20, 10, 0),
+                      child: SizedBox(
+                        child: TextFormField(
+                          textInputAction: TextInputAction.next,
+                          controller: placeController2,
+                          decoration: InputDecoration(
+                            filled: true,
+                            fillColor: Colors.grey[500]!.withOpacity(0.4),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: const BorderSide(
+                                color: Color.fromARGB(255, 214, 152, 59),
+                              ),
+                              borderRadius: BorderRadius.circular(25.0),
+                            ),
+                            border: OutlineInputBorder(
+                              borderSide: const BorderSide(
+                                  color: Color.fromARGB(255, 214, 152, 59)),
+                              borderRadius: BorderRadius.circular(25.0),
+                            ),
+                            labelText: 'place',
+                            prefixIcon: Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 20.0),
+                              child: Icon(
+                                Icons.place,
+                                size: 28,
+                                color: Color.fromARGB(255, 214, 152, 59),
+                              ),
+                            ),
+                          ),
+                          validator: (val) {
+                            if ((val!.isEmpty)) {
+                              return "Enter a valid place";
+                            }
+                            return null;
+                          },
+                          onChanged: (value) {
+                            place = value;
+                          },
+                        ),
+                      ),
+                    ),
+                    Container(
+                      padding: const EdgeInsets.fromLTRB(10, 20, 10, 0),
                       child: TextFormField(
                         textInputAction: TextInputAction.next,
-                        controller: phoneController2,
+                        obscureText: true,
+                        enableSuggestions: false,
+                        autocorrect: false,
                         decoration: InputDecoration(
                           filled: true,
                           fillColor: Colors.grey[500]!.withOpacity(0.4),
@@ -554,12 +551,12 @@ class _MyStatefulWidgetState2 extends State<MyStatefulWidget2> {
                                 color: Color.fromARGB(255, 214, 152, 59)),
                             borderRadius: BorderRadius.circular(25.0),
                           ),
-                          labelText: 'phone',
+                          labelText: 'Password',
                           prefixIcon: Padding(
                             padding:
                                 const EdgeInsets.symmetric(horizontal: 20.0),
                             child: Icon(
-                              Icons.phone,
+                              Icons.lock,
                               size: 28,
                               color: Color.fromARGB(255, 214, 152, 59),
                             ),
@@ -567,74 +564,117 @@ class _MyStatefulWidgetState2 extends State<MyStatefulWidget2> {
                         ),
                         validator: (val) {
                           if ((val!.isEmpty)) {
-                            return "Enter a valid phone";
+                            return "Enter a valid password";
                           }
                           return null;
                         },
                         onChanged: (value) {
-                          phone = value;
+                          password = value;
                         },
                       ),
                     ),
-                  ),
-                  Container(
-                    alignment: Alignment.center,
-                    padding: const EdgeInsets.all(10),
-                  ),
-                  Container(
-                      height: 50,
-                      padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          primary: Color.fromARGB(
-                              255, 214, 152, 59), // Background color
-                          // Text Color (Foreground color)
+                    Container(
+                      padding: const EdgeInsets.fromLTRB(10, 20, 10, 0),
+                      child: SizedBox(
+                        child: TextFormField(
+                          textInputAction: TextInputAction.next,
+                          controller: phoneController2,
+                          decoration: InputDecoration(
+                            filled: true,
+                            fillColor: Colors.grey[500]!.withOpacity(0.4),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: const BorderSide(
+                                  color: Color.fromARGB(255, 214, 152, 59)),
+                              borderRadius: BorderRadius.circular(25.0),
+                            ),
+                            border: OutlineInputBorder(
+                              borderSide: const BorderSide(
+                                  color: Color.fromARGB(255, 214, 152, 59)),
+                              borderRadius: BorderRadius.circular(25.0),
+                            ),
+                            labelText: 'phone',
+                            prefixIcon: Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 20.0),
+                              child: Icon(
+                                Icons.phone,
+                                size: 28,
+                                color: Color.fromARGB(255, 214, 152, 59),
+                              ),
+                            ),
+                          ),
+                          validator: (val) {
+                            if ((val!.isEmpty)) {
+                              return "Enter a valid phone";
+                            }
+                            return null;
+                          },
+                          onChanged: (value) {
+                            phone = value;
+                          },
                         ),
-                        child: const Text('Register'),
-                        onPressed: () async {
-                          if (_formKey.currentState!.validate()) {
-                            register(
-                                nameController2.text,
-                                passwordController2.text,
-                                emailController2.text,
-                                placeController2.text,
-                                phoneController2.text);
+                      ),
+                    ),
+                    Container(
+                      alignment: Alignment.center,
+                      padding: const EdgeInsets.all(10),
+                    ),
+                    Container(
+                        height: 50,
+                        padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            primary: Color.fromARGB(
+                                255, 214, 152, 59), // Background color
+                            // Text Color (Foreground color)
+                          ),
+                          child: const Text('Register'),
+                          onPressed: () async {
+                            if (_formKey.currentState!.validate()) {
+                              register(
+                                  nameController2.text,
+                                  passwordController2.text,
+                                  emailController2.text,
+                                  placeController2.text,
+                                  phoneController2.text);
 
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(content: Text('Processing Data')),
-                            );
-                          }
-                          // print(email);
-                          // print(password);
-                          setState(() {
-                            showSpinner = true;
-                          });
-                          try {
-                            final newUser =
-                                await _auth.createUserWithEmailAndPassword(
-                                    email: email, password: password);
-
-                            Navigator.of(context)
-                                .push(MaterialPageRoute(builder: (context) {
-                              return firstWithFireBase();
-                            }));
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                    content: Text('Processing Data')),
+                              );
+                            }
+                            // print(email);
+                            // print(password);
                             setState(() {
-                              showSpinner = false;
+                              showSpinner = true;
                             });
-                          } catch (e) {
-                            print(e);
-                          }
-                        },
-                      )),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                  ),
-                  Container(
-                    alignment: Alignment.center,
-                    padding: const EdgeInsets.all(100),
-                  ),
-                ])),
-          ],
-        ));
+                            try {
+                              final newUser =
+                                  await _auth.createUserWithEmailAndPassword(
+                                      email: email, password: password);
+
+                              Navigator.of(context)
+                                  .push(MaterialPageRoute(builder: (context) {
+                                return firstWithFireBase();
+                              }));
+                              setState(() {
+                                showSpinner = false;
+                              });
+                            } catch (e) {
+                              print(e);
+                            }
+                          },
+                        )),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                    ),
+                    Container(
+                      alignment: Alignment.center,
+                      padding: const EdgeInsets.all(100),
+                    ),
+                  ])),
+            ],
+          )),
+    );
   }
 }
