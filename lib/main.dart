@@ -91,7 +91,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                 return homm();
               }));
             },
-            child: Text("map1"),
+            child: Text("map"),
           ),
           Container(
             alignment: Alignment.center,

@@ -43,10 +43,9 @@ TextEditingController productManufactureingController = TextEditingController();
 
     addadd(String productName,String marketName,String manufacturing, String price) async {
 
-
-   String A=await SessionManager().get("namename") ;
-   String A1=await SessionManager().get("current-list") ;
-
+    final prefs = await SharedPreferences.getInstance();
+    String A1=prefs.get("current-list").toString() ;
+   String A=prefs.get("namename").toString() ;
 try {
       http.Response res = await http.get(
           Uri.parse(fetchdata.apiUrl+'listelementselect?listname=' +
@@ -66,7 +65,8 @@ try {
 
     
     addadd1(String name,String productName,String marketName,String manufacturing, String price) async {
-       String A1=await SessionManager().get("current-list") ;
+        final prefs = await SharedPreferences.getInstance();
+    String A1=prefs.get("current-list").toString() ;
    try {
       http.Response res = await http.get(
           Uri.parse(fetchdata.apiUrl+'listelement?userName=' +
@@ -99,31 +99,32 @@ void _runFilter(String enteredKeyword) {
             .toLowerCase()
             .contains(enteredKeyword.toLowerCase()))
         .toList();
-    // we use the toLowerCase() method to make it case-insensitive
+    
   }
 
   myList = results;
+  
 }
 
-wish(List<Product> g) async {
-  http.Response res = await http.get(Uri.parse(fetchdata.apiUrl+'wish'),
-      headers: {'Content-Type': 'application/json'});
+// wish(List<Product> g) async {
+//   http.Response res = await http.get(Uri.parse(fetchdata.apiUrl+'wish'),
+//       headers: {'Content-Type': 'application/json'});
 
-  if (res.statusCode == 200) {
-    // If the server did return a 200 OK response,
-    // then parse the JSON.
+//   if (res.statusCode == 200) {
+//     // If the server did return a 200 OK response,
+//     // then parse the JSON.
 
-    var jsonString = json.decode(res.body);
-    List<Product> list =
-        List<Product>.from(jsonString.map((i) => Product.fromJson(i)));
-// List<Product> products = jsonString.map((jsonMap) => Product.fromJson(jsonMap)).toList();
-    myList = list;
-  } else {
-    // If the server did not return a 200 OK response,
-    // then throw an exception.
-    throw Exception('Failed to load album');
-  }
-}
+//     var jsonString = json.decode(res.body);
+//     List<Product> list =
+//         List<Product>.from(jsonString.map((i) => Product.fromJson(i)));
+// // List<Product> products = jsonString.map((jsonMap) => Product.fromJson(jsonMap)).toList();
+//     myList = list;
+//   } else {
+//     // If the server did not return a 200 OK response,
+//     // then throw an exception.
+//     throw Exception('Failed to load album');
+//   }
+// }
 
 class WishList extends StatefulWidget {
   const WishList({Key? key}) : super(key: key);
@@ -174,8 +175,8 @@ class _MyHomePageState extends State<WishList> {
   }
 
   @override
-
-  void initState() {
+fetchdata fetch=new fetchdata();
+  void initState()  {
     super.initState();
 
     service = LocalNotificationService();
@@ -184,10 +185,7 @@ class _MyHomePageState extends State<WishList> {
 
     _speechToText = stts.SpeechToText();
     _textEditingController.text = text;
-
-
-    wish(myList);
-    getPostsData();
+getPostsData();
     controller.addListener(() {
       double value = controller.offset / 125;
 
@@ -198,82 +196,20 @@ class _MyHomePageState extends State<WishList> {
     });
   }
 
-  // final CategoriesScroller categoriesScroller = CategoriesScroller();
-  // final List<Product> myList = [
-  //   Product(
-  //       name: 'Deshi Mango',
-  //       imageUrl: 'broccoli',
-  //       price: 300,
-  //       quantity: '1Kg',
-  //       manufactureing: 'pravo',
-  //       market: 'pravo'),
-  //   Product(
-  //       name: 'Deshi Mango',
-  //       imageUrl: 'broccoli',
-  //       price: 300,
-  //       quantity: '1Kg',
-  //       manufactureing: 'pravo',
-  //       market: 'pravo'),
-  //   Product(
-  //       name: 'Deshi Mango',
-  //       imageUrl: 'mango',
-  //       price: 300,
-  //       quantity: '1Kg',
-  //       manufactureing: 'pravo',
-  //       market: 'pravo'),
-  //   Product(
-  //       name: 'Deshi Mango',
-  //       imageUrl: 'mango',
-  //       price: 300,
-  //       quantity: '1Kg',
-  //       manufactureing: 'pravo',
-  //       market: 'pravo'),
-  //   Product(
-  //       name: 'Deshi Mango',
-  //       imageUrl: 'mango',
-  //       price: 300,
-  //       quantity: '1Kg',
-  //       manufactureing: 'pravo',
-  //       market: 'pravo'),
-  //   Product(
-  //       name: 'Deshi Mango',
-  //       imageUrl: 'mango',
-  //       price: 300,
-  //       quantity: '1Kg',
-  //       manufactureing: 'pravo',
-  //       market: 'pravo'),
-  //   Product(
-  //       name: 'Deshi Mango',
-  //       imageUrl: 'mango',
-  //       price: 300,
-  //       quantity: '1Kg',
-  //       manufactureing: 'pravo',
-  //       market: 'pravo'),
-  //   Product(
-  //       name: 'Deshi Mango',
-  //       imageUrl: 'mango',
-  //       price: 300,
-  //       quantity: '1Kg',
-  //       manufactureing: 'pravo',
-  //       market: 'pravo'),
-  //   Product(
-  //       name: 'Deshi Mango',
-  //       imageUrl: 'mango',
-  //       price: 300,
-  //       quantity: '1Kg',
-  //       manufactureing: 'pravo',
-  //       market: 'pravo')
-  // ];
-
   ScrollController controller = ScrollController();
 
   bool closeTopContainer = false;
   double topContainer = 0;
   List<Widget> itemsData = [];
-
-  void getPostsData() {
+ void getlist() async{
+  myList=await fetch.wish();
+ }
+  void getPostsData() async{
     List<Widget> listItems = [];
-    // future: wish(myList);
+      List<Product> A = [];
+    if(myList.isEmpty)
+myList=await fetch.wish();
+   
     myList.forEach((post) {
       listItems.add(Container(
           height: 190,
@@ -351,6 +287,8 @@ class _MyHomePageState extends State<WishList> {
     });
     setState(() {
       itemsData = listItems;
+      
+
     });
   }
 
@@ -366,9 +304,10 @@ class _MyHomePageState extends State<WishList> {
     }
   }
  nowupdate (String price) async {
-
-   String A=await SessionManager().get("namename") ;
-   String A1=await SessionManager().get("current-list") ;
+final prefs = await SharedPreferences.getInstance();
+    String A1=prefs.get("current-list").toString() ;
+   String A=prefs.get("namename").toString() ;
+ 
  try {
       http.Response res = await http.get(
           Uri.parse(fetchdata.apiUrl+'nowupdate?userName=' +
@@ -389,8 +328,9 @@ class _MyHomePageState extends State<WishList> {
  }
    update (String productName,String marketName,String manufacturing, String price) async {
     print("up");
-String A=await SessionManager().get("namename") ;
-   String A1=await SessionManager().get("current-list") ;
+final prefs = await SharedPreferences.getInstance();
+    String A1=prefs.get("current-list").toString() ;
+   String A=prefs.get("namename").toString() ;
  try {
       http.Response res = await http.get(
           Uri.parse(fetchdata.apiUrl+'update?userName=' +
@@ -515,7 +455,7 @@ String A=await SessionManager().get("namename") ;
           child: Padding(
             padding: const EdgeInsets.only(left: 10, top: 4),
             child: TextField(
-              onChanged: (value) => _runFilter(value),
+              onChanged: (value) => {_runFilter(value),getPostsData(),getlist()},
               controller: _textEditingController,
               decoration: InputDecoration(
                   border: InputBorder.none,
@@ -534,53 +474,5 @@ String A=await SessionManager().get("namename") ;
     );
   }
 }
-
-// _buildSearchBar() {
-//   return Row(
-//     children: [
-//       Image.asset('assets/icons/delivery.png'),
-//       const SizedBox(
-//         width: kDefaultPadding,
-//       ),
-//       Expanded(
-//           child: Container(
-//         decoration: BoxDecoration(
-//             color: Colors.white,
-//             borderRadius: BorderRadius.circular(5),
-//             boxShadow: [
-//               BoxShadow(
-//                   color: Colors.grey.shade300,
-//                   blurRadius: 30,
-//                   offset: const Offset(0, 5)),
-//             ]),
-
-            
-//         child: Padding(
-//           padding: const EdgeInsets.only(left: 10, top: 4),
-//           child: 
-//           TextField(onChanged: (value) => _runFilter(value),
-
-//             decoration: InputDecoration(
-//                 border: InputBorder.none,
-//                 hintText: 'Search Product',
-//                 hintStyle: TextStyle(
-//                   color: const Color(0xff434040).withOpacity(0.30),
-//                 ),
-//                 suffixIcon: Icon(
-//                   Icons.search,
-//                   color: const Color(0xff707070).withOpacity(0.30),
-//                 )),
-//           ),
-//         ),
-
-
-
-
-
-//       )),
-//     ],
-//   );
-  
-// }
 
   

@@ -74,36 +74,30 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
   TextEditingController nameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
-  String name = "No Value Entered";
-  String pass = "No Value Entered";
   bool loading = false;
 
+  
+  @override
+  void dispose() {
+    nameController.dispose();
+    passwordController.dispose();
+    super.dispose();
+  }
   @override
   void initState() {
     super.initState();
   }
 
   Future login1(String n, String p) async {
-    print(n);
-    print(p);
+   fetchdata fetch=new fetchdata();
     try {
-      http.Response res = await http.get(
-          Uri.parse(fetchdata.apiUrl+'login?username=' +
-              n +
-              '&&userpass=' +
-              p),
-          headers: {'Content-Type': 'application/json'});
+//await
+var res=await fetch.login(n,p);
+print(res);
       if (res.body.contains("@")) {
         // Map<String, dynamic> map = json.decode(res.body);
         // List<dynamic> data = map["result"];
 
-
-
-
-        
-        print("sucess");
-        await sessionManager.set("namename", n);
-        await sessionManager.set("passpass", p);
         Navigator.of(context).push(MaterialPageRoute(builder: (c) => homm()));
 
         return const homm();
@@ -152,6 +146,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                     padding: const EdgeInsets.fromLTRB(10, 40, 10, 0),
                     child: SizedBox(
                       child: TextFormField(
+                         controller: nameController,
                         decoration: InputDecoration(
                           filled: true,
                           fillColor: Colors.grey[500]!.withOpacity(0.4),
@@ -176,13 +171,19 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                             ),
                           ),
                         ),
-                        onChanged: (value) => name = value,
-                      ),
+                      
+                       validator: (val) {
+                              if((val!.isEmpty) ){
+                                return "Enter a name";
+                              }
+                              return null;
+                            },  ),
                     ),
                   ),
                   Container(
                     padding: const EdgeInsets.fromLTRB(10, 40, 10, 0),
-                    child: TextField(
+                    child: TextFormField(
+                       controller: passwordController,
                       obscureText: true,
                       enableSuggestions: false,
                       autocorrect: false,
@@ -209,8 +210,13 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                           ),
                         ),
                       ),
-                      onChanged: (value) => pass = value,
-                    ),
+                     
+                  validator: (val) {
+                              if((val!.isEmpty) ){
+                                return "Enter a pass";
+                              }
+                              return null;
+                            },  ),
                   ),
                   TextButton(
                     onPressed: () {
@@ -234,7 +240,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                         // Text Color (Foreground color)
                       ),
                       onPressed: () async {
-                        login1(name, pass);
+                        login1(nameController.text, passwordController.text);
                       },
                       child: Text("login"),
                     ),

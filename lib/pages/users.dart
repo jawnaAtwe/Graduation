@@ -61,66 +61,12 @@ void _runFilter(String enteredKeyword) {
   myList = results;
 }
 
-online(List<user> g) async {
-  //  String A1=await SessionManager().get("current-list") ;
-  http.Response res = await http.get(Uri.parse(fetchdata.apiUrl+'usersonline'),
-      headers: {'Content-Type': 'application/json'});
-
-
-  if (res.statusCode == 200) {
-  
-    var jsonString = json.decode(res.body);
-    List<user> list =
-        List<user>.from(jsonString.map((i) => user.fromJson(i)));
-
-    myList = list;
-  } else {
-    
-    throw Exception('Failed to load album');
-  }
+void share(String person) async {
+  myList=await fetch.share(person);
+   
 }
-
-share(String person) async {
-  
-   
-  String n=await SessionManager().get("namename") ;
-  String n1=await SessionManager().get("current-list") ;
-  http.Response res = await http.get(Uri.parse(fetchdata.apiUrl+'share?username='+n
-  + '&&person=' +
-              person 
-               + '&&listname=' +
-              n1 ),
-      headers: {'Content-Type': 'application/json'});
-
-
-  if (res.statusCode == 200) {
-    print("oh");
-   
-  } else {
-    
-    throw Exception('Failed to load album');
-  }
-}
-share1(String person) async {
-  
-   
-  String n=await SessionManager().get("namename") ;
-  String n1=await SessionManager().get("current-list") ;
-  http.Response res = await http.get(Uri.parse(fetchdata.apiUrl+'share1?userName='+n
-  + '&&person=' +
-              person 
-               + '&&listName=' +
-              n1 ),
-      headers: {'Content-Type': 'application/json'});
-
-
-  if (res.statusCode == 200) {
-    print("oh");
-   
-  } else {
-    
-    throw Exception('Failed to load album');
-  }
+void share1(String person) async {
+  myList=await fetch.share1(person);
 }
 class users extends StatefulWidget {
   const users({Key? key}) : super(key: key);
@@ -175,7 +121,6 @@ class _MyHomePageState extends State<users> {
     _textEditingController.text = text;
 
 
-    online(myList);
     getPostsData();
     controller.addListener(() {
       double value = controller.offset / 125;
@@ -193,10 +138,15 @@ class _MyHomePageState extends State<users> {
   bool closeTopContainer = false;
   double topContainer = 0;
   List<Widget> itemsData = [];
-
-  void getPostsData() {
-    List<Widget> listItems = [];
-    // future: wish(myList);
+void getlist() async{
+  myList=await fetch.online();
+ }
+  void getPostsData() async{
+   List<Widget> listItems = [];
+      List<user> A = [];
+    if(myList.isEmpty)
+myList=await fetch.online();
+   
     myList.forEach((post) {
       listItems.add(Container(
           height: 110,
@@ -348,7 +298,7 @@ class _MyHomePageState extends State<users> {
           child: Padding(
             padding: const EdgeInsets.only(left: 10, top: 4),
             child: TextField(
-              onChanged: (value) => _runFilter(value),
+              onChanged: (value) =>{_runFilter(value),getPostsData(),getlist()},
               controller: _textEditingController,
               decoration: InputDecoration(
                   border: InputBorder.none,

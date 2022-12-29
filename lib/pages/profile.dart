@@ -1,4 +1,4 @@
-
+import 'package:untitled/pages/fetchdata.dart';
 import 'package:flutter/material.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 import 'package:untitled/models/cart_item.dart';
@@ -27,69 +27,9 @@ late String passjaw="";
 late String emailjaw="";
 late String placejaw="";
 late String phonejaw="";
+fetchdata fetch1=new fetchdata();
+  var jsonString;
 
-Future getinfo() async {
-   
-      String A=await SessionManager().get("namename") ;
-        int B=await SessionManager().get("passpass") ;
-        print( A);
-        print(B);
-    try {
-    
-      http.Response res = await http.get(
-          Uri.parse(fetchdata.apiUrl+'infouser?username=' +
-              A +
-              '&&userpass=' +
-             'B'),
-          headers: {'Content-Type': 'application/json'});
-            
-
-            
-      // Userprofile record = Userprofile.fromJson(jsonDecode(value.body));
-      // setState(() {
-      //   namejaw =
-      //   record.records!.elementAt(0).totalRate.toString().substring(0, 3);
-        
-      // });
-         
-//  final data = json.decode(res.body);
-//  namejaw= data['username'];
-   
-  
-    if (res.statusCode == 200) {
-      var jsonString = json.decode(res.body)as List;
-      // jsonDecode(res.body).map((item) => Userprofile.fromJson(item));
-
-namejaw=jsonString.elementAt(0)['username'];
-passjaw=jsonString.elementAt(0)['userpass'];
-emailjaw=jsonString.elementAt(0)['email'];
-placejaw=jsonString.elementAt(0)['place'];
-phonejaw=jsonString.elementAt(0)['phone'].toString();
-
-
-print(namejaw);
-    // List<Userprofile> list1 = List<Userprofile>.from(jsonString.map((i) => Userprofile.fromJson(i)));
-   
-    //   Map<String, dynamic> res1 = json.decode(res.body) ;
-    
-      //insert data into ModelClass
-      //  final  Userprofile _jawnaa = Userprofile.fromJson(res1);
-      //   namejaw=_jawnaa.username;
-   
-        // var jsonString = json.decode(res.body);
-    // List<Userprofile> list1= List<Userprofile>.from(jsonString.map((i) => Userprofile.fromJson(i)));
- 
-    } else {
-      // show error
-      print("Try Again");
-    }
-   
-   
-   
-    } catch (e) {
-      print("no info");
-    }
-  }
 
 class pro extends StatefulWidget {
   const pro({Key? key}) : super(key: key);
@@ -101,13 +41,9 @@ class pro extends StatefulWidget {
 
 class profilee extends State<pro> {
 
-  
- 
-
-  
-
   @override
   void initState() {
+    
   int h=1;
     super.initState();
      WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -120,10 +56,20 @@ class profilee extends State<pro> {
 //   {
 // if(namejaw!="")h=0;
 // else h=1;
-
-//   }
+//   
+// }
   } 
+   void getinfo() async {
+jsonString=await fetch1.getinfo1();
+namejaw=jsonString.elementAt(0)['username'];
+passjaw=jsonString.elementAt(0)['userpass'];
+emailjaw=jsonString.elementAt(0)['email'];
+placejaw=jsonString.elementAt(0)['place'];
+phonejaw=jsonString.elementAt(0)['phone'].toString();
+print(namejaw);
+  }
 Widget build(BuildContext context) {
+  
  return Scaffold(
       appBar: AppBar(
        backgroundColor: Colors.cyan[900],

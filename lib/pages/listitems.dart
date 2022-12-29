@@ -61,28 +61,7 @@ void _runFilter(String enteredKeyword) {
   myList = results;
 }
 
-wish1(List<Product1> g) async {
-   String A1=await SessionManager().get("current-list") ;
-    String A2=await SessionManager().get("namename") ;
-  http.Response res = await http.get(Uri.parse(fetchdata.apiUrl+'listitems?listname='+A1+'&&userName='+A2),
-      headers: {'Content-Type': 'application/json'});
 
-
-  if (res.statusCode == 200) {
-    print("oh");
-    // If the server did return a 200 OK response,
-    // then parse the JSON.
-
-    var jsonString = json.decode(res.body);
-    List<Product1> list =
-        List<Product1>.from(jsonString.map((i) => Product1.fromJson(i)));
-
-    myList = list;
-  } else {
-    
-    throw Exception('Failed to load album');
-  }
-}
 
 class listitems extends StatefulWidget {
   const listitems({Key? key}) : super(key: key);
@@ -143,10 +122,8 @@ class _MyHomePageState extends State<listitems> {
 
     _speechToText = stts.SpeechToText();
     _textEditingController.text = text;
-
-
-    wish1(myList);
-    getPostsData();
+myList=[];
+getPostsData();
     controller.addListener(() {
       double value = controller.offset / 125;
 
@@ -163,9 +140,15 @@ class _MyHomePageState extends State<listitems> {
   bool closeTopContainer = false;
   double topContainer = 0;
   List<Widget> itemsData = [];
+void getlistitem() async {
+ myList=await fetch.showlistitem();
 
-  void getPostsData() {
+}
+  void getPostsData() async{
     List<Widget> listItems = [];
+     List<Product1> A = [];
+    if(myList.isEmpty)
+myList=await fetch.showlistitem();
     // future: wish(myList);
     myList.forEach((post) {
       listItems.add(Container(
@@ -311,7 +294,7 @@ class _MyHomePageState extends State<listitems> {
           child: Padding(
             padding: const EdgeInsets.only(left: 10, top: 4),
             child: TextField(
-              onChanged: (value) => _runFilter(value),
+              onChanged: (value) => {_runFilter(value),getPostsData(),getlistitem()},
               controller: _textEditingController,
               decoration: InputDecoration(
                   border: InputBorder.none,

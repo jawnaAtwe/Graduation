@@ -1,4 +1,4 @@
-
+import 'package:untitled/pages/Sharedsession.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:untitled/models/cart_item.dart';
@@ -17,45 +17,17 @@ import 'dart:async';
 import 'dart:ui';
 import 'package:http/http.dart' as http;
 import 'package:no_context_navigation/no_context_navigation.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 var sessionManager = SessionManager();
 fetchdata fetch=new fetchdata();
  
   late  List<CartItem> myList1=[];
-  list1( List<CartItem> g) async {
-  String k=await SessionManager().get("namename") ;
-    http.Response res = await http.get(Uri.parse(fetchdata.apiUrl+'showlist?username='+k),
-  headers: {
-'Content-Type':'application/json'
-
-  }
-       
- );
-//     http.Response res = await http.get(Uri.parse('http://192.168.1.65:3000/showlist?username='+k ),
-//           headers: {'Content-Type': 'application/json'}
-       
-//  );
-print("kkkk");
-  if (res.statusCode == 200) {
-    // If the server did return a 200 OK response,
-    // then parse the JSON.
-   
-
-    var jsonString = json.decode(res.body);
-    List<CartItem> list = List<CartItem>.from(jsonString.map((i) => CartItem.fromJson(i)));
-// List<Product> products = jsonString.map((jsonMap) => Product.fromJson(jsonMap)).toList();
-     myList1= list;  
-
-  } else {
-    // If the server did not return a 200 OK response,
-    // then throw an exception.
-    throw Exception('Failed to load album');
-  }
-}
 
   join1( String a,String b) async {
-   
-  String n=await SessionManager().get("namename") ;
+    final prefs1 = await SharedPreferences.getInstance();
+   String n=prefs1.get("namename").toString() ;
+
      try {
       http.Response res = await http.get(
           Uri.parse(fetchdata.apiUrl+'reglist?username=' +
@@ -70,25 +42,7 @@ print("kkkk");
 }
 
   updateinfo( String a,String b) async {
-   
-  String username=await SessionManager().get("namename") ;
-  String listname=await SessionManager().get("current-listup") ;
-     try {
-      http.Response res = await http.get(
-          Uri.parse(fetchdata.apiUrl+'updatelist?username=' +
-              username +
-              '&&listname=' +
-             listname+
-             '&&listnamenew=' +
-             a
-             +
-             '&&pricenew=' +
-             b
-             ),
-          headers: {'Content-Type': 'application/json'});
-   } catch (e) {
-      print("no ");
-    }
+      await fetch.updateinfolist(a,b);
 }
 class Cart extends StatefulWidget {
   const Cart({Key? key}) : super(key: key);
@@ -101,8 +55,10 @@ class _MyHomePageState extends State<Cart> {
 
 
     deleteitems(String listname) async {
-   String A=await SessionManager().get("namename") ;
+  
+    final prefs = await SharedPreferences.getInstance();
    
+    String A=prefs.get("namename").toString() ;
 
    try {
       http.Response res = await http.get(
@@ -114,29 +70,17 @@ class _MyHomePageState extends State<Cart> {
           headers: {'Content-Type': 'application/json'});
     } catch (e) {
       print("no filld");
-    }}
+    } }
     delete(String listname) async {
-   String A=await SessionManager().get("namename") ;
-   
-
-   try {
-      http.Response res = await http.get(
-          Uri.parse(fetchdata.apiUrl+'deletelist?listname=' +
-              listname +
-              '&&username=' +
-              A 
-              ),
-          headers: {'Content-Type': 'application/json'});
-    } catch (e) {
-      print("no filld");
-    }}
+         await fetch.deletelist(listname);
+  }
 
    List<Widget> itemsData = [];
-  void getPostsData() {
+  void getPostsData() async{
 
 
  List<Widget> listItems = [];
-
+ myList1=await fetch.wish1();
      myList1.forEach((post) {
     listItems.add(Container(
         height: 140,
@@ -183,7 +127,9 @@ class _MyHomePageState extends State<Cart> {
                   onSurface: Colors.grey,
                 ),
                 onPressed: ()async {
-                  await sessionManager.set("current-listup", post.listname);
+                 
+                  Sharedsession shared=new Sharedsession();
+                  await shared.saveupdatelist(post.listname);
                   openDialogeupdate();
                   controllerText11 = TextEditingController();
                   controllerText22 = TextEditingController();
@@ -201,6 +147,7 @@ class _MyHomePageState extends State<Cart> {
                 onPressed: () {
                   delete(post.listname);
                   deleteitems(post.listname);
+                   getPostsData();
               },
               ),  ],
               ), 
@@ -217,17 +164,7 @@ class _MyHomePageState extends State<Cart> {
                   openDialoge1( post.listname,  "\$ ${post.price}");
                 },
               ),
-              // ElevatedButton(
-              //   child: Text('Share my List'),
-              //   style: ElevatedButton.styleFrom(
-              //     primary: Color.fromARGB(255, 221, 161, 71),
-              //     onPrimary: Colors.white,
-              //     onSurface: Colors.grey,
-              //   ),
-              //   onPressed: () {
-              //     openDialoge1( post.listname,  "\$ ${post.price}");
-              //   },
-              // )
+             
               ])
             ],
           ),
@@ -237,7 +174,7 @@ class _MyHomePageState extends State<Cart> {
       itemsData = listItems;
     });
   }
-  // final CategoriesScroller categoriesScroller = CategoriesScroller();
+ 
  TextEditingController controllerText1=TextEditingController();
  TextEditingController controllerText2=TextEditingController();
  TextEditingController controllerText11=TextEditingController();
@@ -257,7 +194,7 @@ class _MyHomePageState extends State<Cart> {
   @override
   void initState() {
     super.initState();
-list1(myList1);
+
  getPostsData();
     controller.addListener(() {
       double value = controller.offset / 125;
@@ -286,8 +223,9 @@ list1(myList1);
                   primary: Color.fromARGB(255, 221, 161, 71),
                 ),
                 onPressed: ()async {
-                    await sessionManager.set("current-list", s1);
-                      await sessionManager.set("current-price", s2);
+                   Sharedsession shared=new Sharedsession();
+                   await shared.savelist(s1,s2);
+                   
                   Navigator.of(context).pop();
                   Navigator.of(context)
                       .push(MaterialPageRoute(builder: (context) {
@@ -393,6 +331,7 @@ list1(myList1);
                 ),
                 onPressed: () {
              updateinfo(controllerText11.text , controllerText22.text);
+             getPostsData();
                 },  
                 child: Text("update"),
               ),
