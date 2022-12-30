@@ -60,6 +60,15 @@ dependencies:
   highlight_text: ^1.6.0
   avatar_glow: ^2.0.2
   speech_to_text: ^6.1.0
+  google_place: ^0.4.7
+  flutter_polyline_points: ^1.0.0
+  google_maps_flutter: ^2.2.2
+  dio: ^4.0.6
+  geolocator: ^9.0.2
+  firebase_core: ^2.4.0
+  firebase_auth: ^4.2.3
+  cloud_firestore: ^4.3.0
+  modal_progress_hud_nsn: ^0.3.0
   
 dev_dependencies:
   flutter_test:

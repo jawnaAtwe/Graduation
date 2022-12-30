@@ -4,6 +4,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:untitled/constants/constants.dart';
 import 'package:untitled/pages/cart.dart';
 import 'package:untitled/pages/home.dart';
+import 'package:untitled/pages/chat.dart';
 import 'package:untitled/pages/user_profile.dart';
 import 'package:untitled/pages/wish_list.dart';
 
@@ -60,8 +61,8 @@ class _MyHomePageState extends State<MyHomePage1> {
               label: 'Cart',
             ),
             BottomNavigationBarItem(
-              icon: _createBarIcon('wish_list', 2),
-              label: 'Shopping',
+               icon: _createBarIcon('wallet', 4),
+              label: 'Chat',
             ),
             BottomNavigationBarItem(
               icon: _createBarIcon('user_profile', 3),
@@ -80,7 +81,7 @@ class _MyHomePageState extends State<MyHomePage1> {
       case 1:
         return const Cart();
       case 2:
-        return const WishList();
+        return const ChatScreen();
       case 3:
         return const UserProfile();
       default:

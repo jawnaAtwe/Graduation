@@ -1,4 +1,5 @@
 import 'package:untitled/pages/Sharedsession.dart';
+import 'package:untitled/pages/listitems.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:untitled/models/cart_item.dart';
@@ -154,14 +155,18 @@ class _MyHomePageState extends State<Cart> {
              Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[  ElevatedButton(
-                child: Text('Add Products'),
+                child: Text('Choose'),
                 style: ElevatedButton.styleFrom(
                   primary: Color.fromARGB(255, 221, 161, 71),
                   onPrimary: Colors.white,
                   onSurface: Colors.grey,
                 ),
-                onPressed: () {
+                onPressed: () async{
+                 
+                   
                   openDialoge1( post.listname,  "\$ ${post.price}");
+                   Sharedsession shared=new Sharedsession();
+                   await shared.savelist(post.listname,  "\$ ${post.price}");
                 },
               ),
              
@@ -215,7 +220,7 @@ class _MyHomePageState extends State<Cart> {
       context: this.context,
       builder: (context) => AlertDialog(
             backgroundColor: Color.fromARGB(255, 209, 224, 199),
-            title: Text('ADD ITEMS USING :'),
+            title: Text('hi in this list u can :'),
             //content: Text('ADD ITEMS USING :'),
             actions: [
               ElevatedButton(
@@ -223,8 +228,6 @@ class _MyHomePageState extends State<Cart> {
                   primary: Color.fromARGB(255, 221, 161, 71),
                 ),
                 onPressed: ()async {
-                   Sharedsession shared=new Sharedsession();
-                   await shared.savelist(s1,s2);
                    
                   Navigator.of(context).pop();
                   Navigator.of(context)
@@ -232,7 +235,7 @@ class _MyHomePageState extends State<Cart> {
                     return WishList();
                   }));
                 },
-                child: Text("Search For Items"),
+                child: Text("Add Items"),
               ),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
@@ -242,10 +245,10 @@ class _MyHomePageState extends State<Cart> {
                   Navigator.of(context).pop();
                   Navigator.of(context)
                       .push(MaterialPageRoute(builder: (context) {
-                    return WishList();
+                    return listitems();
                   }));
                 },
-                child: Text("Scanning"),
+                child: Text("show items"),
               ),
             ],
           ));

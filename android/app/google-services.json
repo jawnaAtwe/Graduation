@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "329418922332",
+    "project_id": "chattingappetizing",
+    "storage_bucket": "chattingappetizing.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:329418922332:android:f65614aff61a28253c4999",
+        "android_client_info": {
+          "package_name": "com.graduation.appetizing"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "329418922332-87u368uio01idd4amh7hbnmhreq8ug3d.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAlDxMZAK96xNu8DKjLTZkX_RBOAQtKP_E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "329418922332-87u368uio01idd4amh7hbnmhreq8ug3d.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
