@@ -167,14 +167,7 @@ SizedBox(height:20),
                   )), 
               
                        
-              
-              // InfoCard(text: phone, icon: Icons.phone, onPressed: () async {}),
-              // InfoCard(text: url, icon: Icons.web, onPressed: () async {}),
-              // InfoCard(
-              //     text: location,
-              //     icon: Icons.location_city,
-              //     onPressed: () async {}),
-              // InfoCard(text: email, icon: Icons.email, onPressed: () async {}),
+       
             ],
           ),
         ));

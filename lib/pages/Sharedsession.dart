@@ -39,8 +39,6 @@ final prefs = await SharedPreferences.getInstance();
  prefs.setString("namename", A);
  prefs.setString("passpass", B);
 
-//  await sessionManager.set("namename", A);
-//  await sessionManager.set("passpass", B);
 }
  saveupdatelist(String A) async{
 final prefs = await SharedPreferences.getInstance();
@@ -56,7 +54,12 @@ final prefs = await SharedPreferences.getInstance();
 
 }
 
+delete()async{
 
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  await prefs.clear();
+
+}
 
 
 

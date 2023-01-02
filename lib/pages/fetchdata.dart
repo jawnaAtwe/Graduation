@@ -11,6 +11,7 @@ import 'package:untitled/widgets/base_view.dart';
 import 'package:untitled/widgets/cart_product_item.dart';
 import 'package:untitled/constants/constants.dart';
 import 'dart:ui';
+import 'package:flutter_email_sender/flutter_email_sender.dart';
 import 'package:untitled/pages/fetchdata.dart';
 import 'package:timezone/timezone.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -32,7 +33,7 @@ import 'package:untitled/pages/local_notification_service.dart';
 import 'package:avatar_glow/avatar_glow.dart';
 import 'package:speech_to_text/speech_to_text.dart' as stts;
 import 'package:highlight_text/highlight_text.dart';
-
+import 'package:url_launcher/url_launcher.dart';
 class fetchdata {
 
 
@@ -209,6 +210,11 @@ Future login(String A,String B) async {
 
 }
 
+
+
+
+
+
 Future <List<user>>  online() async {
    List<user> list1;
   //  String A1=await SessionManager().get("current-list") ;
@@ -229,17 +235,18 @@ Future <List<user>>  online() async {
   } return list1;
 }
 
-Future share(String person) async {
+Future share(String n,String person) async {
   
      final prefs = await SharedPreferences.getInstance();
-  String n=prefs.get("namename").toString() ;
+  String n2=prefs.get("namename").toString() ;
   String n1=prefs.get("current-list").toString() ;
 
   http.Response res = await http.get(Uri.parse(fetchdata.apiUrl+'share?username='+n
   + '&&person=' +
               person 
                + '&&listname=' +
-              n1 ),
+              n1+ '&&username1=' +
+              n2 ),
       headers: {'Content-Type': 'application/json'});
 
 
@@ -251,17 +258,18 @@ Future share(String person) async {
     throw Exception('Failed to load album');
   }
 }
-Future share1(String person) async {
+Future share1(String n,String person) async {
   
      final prefs = await SharedPreferences.getInstance();
-  String n=prefs.get("namename").toString() ;
+  String n2=prefs.get("namename").toString() ;
   String n1=prefs.get("current-list").toString() ;
 
   http.Response res = await http.get(Uri.parse(fetchdata.apiUrl+'share1?userName='+n
   + '&&person=' +
               person 
                + '&&listName=' +
-              n1 ),
+              n1 + '&&userName1=' +
+              n2),
       headers: {'Content-Type': 'application/json'});
 
 
@@ -273,5 +281,95 @@ Future share1(String person) async {
     throw Exception('Failed to load album');
   }
 }
+
+
+Future deleteitems(String nameproduct)async{
+   final prefs = await SharedPreferences.getInstance();
+  String n=prefs.get("namename").toString() ;
+  String n1=prefs.get("current-list").toString() ;
+
+
+  http.Response res = await http.get(Uri.parse(fetchdata.apiUrl+'deleteproduct?username='+n
+  + '&&listname=' +
+              n1 +'&&nameproduct=' +
+              nameproduct 
+             ),
+
+             
+      headers: {'Content-Type': 'application/json'});
+if (res.statusCode == 200) {
+   } else {
+    
+    throw Exception('Failed to load album');
+  }
+}
+
+
+
+
+
+Future   sendemail(String n1) async {
+  final prefs = await SharedPreferences.getInstance();
+  String n=prefs.get("namename").toString() ;
+ 
+  //  String A1=await SessionManager().get("current-list") ;
+  http.Response res = await http.get(Uri.parse(fetchdata.apiUrl+'sendemail?username='+n
+  + '&&listname=' +
+              n1 
+             ),
+      headers: {'Content-Type': 'application/json'});
+
+
+  if (res.statusCode == 200) {
+//     final Email send_email = Email(
+//   body: 'body of email',
+//   subject: 'subject of email',
+//   recipients: ['appetizingapplication@gmail.com'],
+//   // cc: ['jawnaamjad@gmail.com'],
+//   // bcc: ['jawnaamjad@gmail.com'],
+//   // attachmentPaths: ['C:\Users\MIX-IT\Desktop\jo.txt'],
+//   // isHTML: false,
+// );
+
+// String platformResponse;
+
+//     try {
+//       await FlutterEmailSender.send(send_email);
+      
+//     } catch (error) {
+//       print("no email");
+//     }
+       var jsonString = json.decode(res.body)as List;
+      var jojo='';
+      int num=0;
+      jojo=jojo+' ProductName '+'|  price'+'\n';
+       jojo=jojo+'\n';
+      for(int i=0;i<jsonString.length;i++){
+      jojo=jojo +(i+1).toString()+'. '+jsonString.elementAt(i)['productName']+' | '+jsonString.elementAt(i)['price'].toString()+'\n';
+
+      }
+      
+      var url = 'mailto:appetizingapplication@gmail.com?subject=this is '+n+' order from Appetizing App&body=$jojo';
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
+  } else {
+    throw Exception('Failed to load album');
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
 
 }

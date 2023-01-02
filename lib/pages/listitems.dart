@@ -142,8 +142,15 @@ getPostsData();
   List<Widget> itemsData = [];
 void getlistitem() async {
  myList=await fetch.showlistitem();
+ 
 
 }
+  void delete(String nameproduct) async {
+  
+         await fetch.deleteitems(nameproduct);
+     
+        
+  }
   void getPostsData() async{
     List<Widget> listItems = [];
      List<Product1> A = [];
@@ -184,7 +191,24 @@ myList=await fetch.showlistitem();
                     SizedBox(
                       height: 20,
                     ),
-                
+                  Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[  ElevatedButton(
+                child: Text('delete'),
+                style: ElevatedButton.styleFrom(
+                  primary: Color.fromARGB(255, 221, 161, 71),
+                  onPrimary: Colors.white,
+                  onSurface: Colors.grey,
+                ),
+                onPressed: () async{
+                 delete(post.productName);
+                 getlistitem();
+                 getPostsData();
+                },
+              ),
+             
+              ])
+             
              
                   ],
                 ),

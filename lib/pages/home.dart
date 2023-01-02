@@ -102,68 +102,11 @@ class Home extends StatelessWidget {
   }
 
   _buildNewArrivals() {
-  //   List<Product> products = [
-  //     Product(
 
-  //       productName: 'Deshi Mango',
-  //       // imageUrl: 'mango',
-  //       price: 300,
-  //       quantity: 1,
-  //       manufacturing: '',
-  //       marketName: '',
-  //       shade: Shade.orange,
-  //     ),
-  //     Product(
-  //       name: 'Brocolli',
-  //       // imageUrl: 'broccoli',
-  //       price: 450,
-  //       quantity: '5 in pack',
-  //       manufactureing: '',
-  //       market: '',
-  //       inCart: true,
-  //     ),
-  //   ];
-  //   return _buildProductWrapper(
-  //       title: 'NEW ARRIVALS',
-  //       color: const Color(0xfffc5455),
-  //       child: GridView.builder(
-  //         clipBehavior: Clip.none,
-  //         physics: const NeverScrollableScrollPhysics(),
-  //         shrinkWrap: true,
-  //         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-  //             crossAxisCount: 2,
-  //             crossAxisSpacing: 25.0,
-  //             childAspectRatio: 3 / 4),
-  //         itemCount: products.length,
-  //         itemBuilder: (context, index) {
-  //           return Padding(
-  //             padding: const EdgeInsets.only(bottom: 8.0),
-  //             child: ProductGridItem(product: products[index]),
-  //           );
-  //         },
-  //       ));
   }
 
   _buildDailyNeeds() {
-    // List<Product> products = [
-    //   Product(
-    //    productName: 'Cabbage',
-    //     // imageUrl: 'cabbage',
-    //     price: 300,
-    //     quantity: 1,
-    //     manufactureing: '',
-    //     marketName: '',
-    //   ),
-    //   Product(
-    //     name: 'Red/yellow capsicum',
-    //     // imageUrl: 'capscium',
-    //     price: 450,
-    //     quantity: '5 in pack',
-    //     manufactureing: '',
-    //     market: '',
-    //     inCart: true,
-    //   ),
-    // ];
+    
     return _buildProductWrapper(
         title: 'DAILY NEEDS',
         color: const Color(0xff03506C),

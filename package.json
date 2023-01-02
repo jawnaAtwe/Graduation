@@ -1,6 +1,6 @@
 {
   "homepage": "https://github.com/jawnaAtwe/Graduation",
-  "name": "Graduation",
+  "name": "jawna-project",
   "scripts": {
     "start": "node jaw.js",
     "dev": "nodemon jaw.js"
@@ -13,9 +13,9 @@
     "mssql": "^9.0.1",
     "mysql": "^2.18.1",
     "nodejs-currency-converter": "^1.0.2",
+    "nodemailer": "^6.8.0",
     "nodemon": "^2.0.19"
   },
-  "name": "jawna-project",
   "description": "A new Flutter project.",
   "version": "1.0.0",
   "main": "jaw.js",

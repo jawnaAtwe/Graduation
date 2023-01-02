@@ -465,6 +465,7 @@ class _MyStatefulWidgetState2 extends State<MyStatefulWidget2> {
                       child: SizedBox(
                         child: TextFormField(
                           textInputAction: TextInputAction.next,
+                          controller: emailController2,
                           keyboardType: TextInputType.emailAddress,
                           decoration: InputDecoration(
                             filled: true,
@@ -557,6 +558,7 @@ class _MyStatefulWidgetState2 extends State<MyStatefulWidget2> {
                       padding: const EdgeInsets.fromLTRB(10, 20, 10, 0),
                       child: TextFormField(
                         textInputAction: TextInputAction.next,
+                        controller: passwordController2,
                         obscureText: true,
                         enableSuggestions: false,
                         autocorrect: false,

@@ -129,15 +129,7 @@ class ProductDisplayPage extends StatelessWidget {
                 )),
           ),
           spacer,
-          // Center(
-          //   child: 
-          //   Image.asset(
-          //     'assets/images/${product.imageUrl}.png',
-          //     fit: BoxFit.cover,
-          //     width: imageSize,
-          //     height: imageSize,
-          //   ),
-          // ),
+          
           Text(
             product.getFormattedPrice(),
             style: TextStyle(
@@ -146,16 +138,7 @@ class ProductDisplayPage extends StatelessWidget {
                 color: kTextColor.withOpacity(0.68)),
           ),
           spacer,
-          // Text(
-          //   product.name,
-          //   overflow: TextOverflow.ellipsis,
-          //   style: const TextStyle(fontSize: 23, fontWeight: FontWeight.bold),
-          // ),
-          // spacer,
-          // Text(
-          //   product.quantity,
-          //   style: TextStyle(fontSize: 19, color: kTextColor.withOpacity(0.30)),
-          // ),
+         
         ],
       ),
     );
@@ -196,47 +179,7 @@ class ProductDisplayPage extends StatelessWidget {
   }
 
   _buildRelatedItems() {
-    // List<Product> products = product.shade == Shade.green
-    //     ? [
-    //         Product(
-    //           name: 'Brocolli',
-    //           // imageUrl: 'broccoli',
-    //           price: 300,
-    //           quantity: '1Kg',
-    //           manufactureing: '',
-    //           market: '',
-    //         ),
-    //         Product(
-    //           name: 'Deshi Cabbage',
-    //           // imageUrl: 'cabbage',
-    //           price: 450,
-    //           quantity: '5 in pack',
-    //           manufactureing: '',
-    //           market: '',
-    //           inCart: true,
-    //         ),
-    //       ]
-    //     : [
-    //         Product(
-    //           name: 'Pineapple',
-    //           // imageUrl: 'pineapple',
-    //           price: 300,
-    //           quantity: '1Kg',
-    //           manufactureing: '',
-    //           market: '',
-    //           shade: Shade.orange,
-    //         ),
-    //         Product(
-    //           name: 'Mango',
-    //           // imageUrl: 'mango',
-    //           price: 450,
-    //           quantity: '5 in pack',
-    //           manufactureing: '',
-    //           market: '',
-    //           inCart: true,
-    //           shade: Shade.orange,
-    //         ),
-    //       ];
+  
     return Column(
       children: [
         // for (Product product in products) ProductControlItem(product: product)
@@ -260,7 +203,7 @@ class ProductDisplayPage extends StatelessWidget {
 }
 
 class HeaderClipper extends CustomClipper<Path> {
-  // const HeaderClipper();
+
 
   @override
   getClip(Size size) {

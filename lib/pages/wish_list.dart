@@ -7,6 +7,13 @@ import 'package:untitled/widgets/base_view.dart';
 import 'package:untitled/widgets/cart_product_item.dart';
 import 'package:untitled/constants/constants.dart';
 import 'dart:ui';
+import 'package:flutter/cupertino.dart';
+import 'dart:math';
+import 'dart:typed_data';
+import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
+import 'dart:convert';
+
+// import 'package:image_utils_class/image_utils_class.dart';
 import 'package:untitled/pages/fetchdata.dart';
 import 'package:timezone/timezone.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -22,7 +29,7 @@ import 'package:flutter_calendar_carousel/classes/event.dart';
 import 'package:filter_list/filter_list.dart';
 import 'package:flutter_session_manager/flutter_session_manager.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
+import 'package:image_picker/image_picker.dart';
 import 'package:untitled/pages/local_notification_service.dart';
 
 import 'package:avatar_glow/avatar_glow.dart';
@@ -203,14 +210,31 @@ getPostsData();
   List<Widget> itemsData = [];
  void getlist() async{
   myList=await fetch.wish();
- }
+ }  
+//  void getimg(String image) async{
+//   Uint8List fileBytes = await http.readBytes(Uri.parse(image));
+
+//  }
+
+
+Uint8List convertBase64Image(String base64String) {
+  return Base64Decoder().convert(base64String.split(',').last);
+}
   void getPostsData() async{
+   
     List<Widget> listItems = [];
       List<Product> A = [];
     if(myList.isEmpty)
 myList=await fetch.wish();
-   
+// XFile? file = await ImagePicker().pickImage(source: ImageSource.gallery);
+   // urlImageBlob is the URL where our file is hosted.
+
+
+// Display if are image. Image.memory(fileBytes);
     myList.forEach((post) {
+    
+    
+
       listItems.add(Container(
           height: 190,
           margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
@@ -277,10 +301,25 @@ myList=await fetch.wish();
           ]),
                   ],
                 ),
-                // Image.asset(
-                //   "assets/images/${post.imageUrl}.png",
-                //   height: double.infinity,
-                // )
+                
+                // new Image.memory(post.image);
+        //  CircleAvatar(
+        //         radius: 25,
+        //         backgroundImage: ImageUtils.base64ToImage(post.image),
+                
+        //       ),   
+      //   Image.memory(
+      //   Uint8List.fromList(post.image!),
+      //   height: 88,
+      //   width: 88,
+      //   fit: BoxFit.cover,
+      // )    
+// convertBase64Image(post.image) ==null? Container():Image.memory(
+//         base64Decode(post.image),
+//         height: 88,
+//         width: 88,  
+//         fit: BoxFit.cover,
+//       )   
               ],
             ),
           )));

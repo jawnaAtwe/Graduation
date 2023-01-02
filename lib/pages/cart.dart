@@ -1,6 +1,7 @@
 import 'package:untitled/pages/Sharedsession.dart';
 import 'package:untitled/pages/listitems.dart';
 import 'package:flutter/foundation.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter/material.dart';
 import 'package:untitled/models/cart_item.dart';
 import 'package:untitled/models/product.dart';
@@ -44,6 +45,9 @@ fetchdata fetch=new fetchdata();
 
   updateinfo( String a,String b) async {
       await fetch.updateinfolist(a,b);
+}
+ sendemail( String list) async {
+      await fetch.sendemail(list);
 }
 class Cart extends StatefulWidget {
   const Cart({Key? key}) : super(key: key);
@@ -152,6 +156,7 @@ class _MyHomePageState extends State<Cart> {
               },
               ),  ],
               ), 
+              
              Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[  ElevatedButton(
@@ -170,7 +175,17 @@ class _MyHomePageState extends State<Cart> {
                 },
               ),
              
-              ])
+               ElevatedButton(
+                child: Text('send'),
+                style: ElevatedButton.styleFrom(
+                  primary: Color.fromARGB(255, 221, 161, 71),
+                  onPrimary: Colors.white,
+                  onSurface: Colors.grey,
+                ),
+                onPressed: () {
+                   sendemail(post.listname);
+              },
+              ), ]),
             ],
           ),
         )));

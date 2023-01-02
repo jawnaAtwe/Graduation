@@ -60,13 +60,37 @@ void _runFilter(String enteredKeyword) {
 
   myList = results;
 }
+void getname(String person) async {
+                  var username;
+                  final prefs = await SharedPreferences.getInstance();
+                   String A1=prefs.get("current-list").toString() ;
+   String A=prefs.get("namename").toString() ;
+try{
+  http.Response res = await http.get(
+          Uri.parse(fetchdata.apiUrl+'getusernametoshare?username=' +
+              A +
+              '&&listname=' +
+              A1
+              
+              ),
+          headers: {'Content-Type': 'application/json'});
+       
+          username = "${res.body}";
+          print(username);
+}catch (e) {
+      print("no filld");
+    }
 
-void share(String person) async {
-  myList=await fetch.share(person);
+                  share(username,person);
+                  share1(username,person);
    
 }
-void share1(String person) async {
-  myList=await fetch.share1(person);
+void share(String username,String person) async {
+  myList=await fetch.share(username,person);
+   
+}
+void share1(String username,String person) async {
+  myList=await fetch.share1(username,person);
 }
 class users extends StatefulWidget {
   const users({Key? key}) : super(key: key);
@@ -192,8 +216,8 @@ myList=await fetch.online();
                   onSurface: Color.fromARGB(255, 221, 161, 71),
                 ),
                 onPressed: () {
-                 share(post.username);
-                  share1(post.username);
+                 getname(post.username);
+                  
                 },
               )
                 , ElevatedButton(

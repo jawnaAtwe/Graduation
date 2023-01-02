@@ -1,9 +1,9 @@
-
-
 const mysql = require("mysql");
 const util = require("util");
 var express = require('express');
 var app       = express();
+// const sendemail = require("./route/sendemail");
+
 const pool = mysql.createConnection({
 
     host: 'localhost',
@@ -95,8 +95,23 @@ app.get('/listelement', function(request, response){
            
         }});});
 
-
-
+        app.get('/deleteproduct', function(request, response){
+            console.log("yes");
+           
+            let query1 = `DELETE FROM listselement  where listName ='${request.query.listname}' and productName='${request.query.nameproduct}' and username LIKE '%${request.query.username}%'`;
+    
+            pool.query(query1, function(error, results){
+                if ( error ){
+                    response.status(400).send('Error in database operation');
+                } else {
+                     
+                   
+                }
+            });
+        
+        
+        });
+        
     app.get('/listelementselect', function(request, response){
             console.log("select");
            
@@ -269,12 +284,28 @@ app.get('/login', function(request, response){
     });
 });
 
+
+app.get('/getusernametoshare', function(request, response){
+ 
+    let query1 = `SELECT * FROM list Where username LIKE '%${request.query.username}%' and listname='${request.query.listname}'`;
+    
+    
+    pool.query(query1, function(error, results){
+        if ( error ){
+            response.status(400).send('Error in database operation');
+        } else {
+            const p= results[0].username;
+            response.send((p).toString());
+             
+        }
+    });
+});
 app.get('/share', function(request, response){
  
-    let query1 = `UPDATE list SET username = '${request.query.username}+${request.query.person}'where 
-     username LIKE '%${request.query.username}%' and listname='${request.query.listname}'`;
+    let query1 = `UPDATE list SET username = '${request.query.username}+${request.query.person}' where 
+     username LIKE '%${request.query.username1}%' and listname='${request.query.listname}'`;
     
-    
+    console.log(request.query.username);
     pool.query(query1, function(error, results){
         if ( error ){
             response.status(400).send('Error in database operation');
@@ -288,7 +319,7 @@ app.get('/share', function(request, response){
 app.get('/share1', function(request, response){
  
     let query1 = `UPDATE listselement SET userName = '${request.query.userName}+${request.query.person}'where 
-     userName LIKE '%${request.query.userName}%' and listName='${request.query.listName}'`;
+     userName LIKE '%${request.query.userName1}%' and listName='${request.query.listName}'`;
     
     
     pool.query(query1, function(error, results){
@@ -327,6 +358,25 @@ app.get('/loginadmin', function(request, response){
     });
 });
 
+app.get('/sendemail', function(request, response){
+    console.log("email");
+    let query1 = `SELECT *  FROM listselement where listName='${request.query.listname}' and userName LIKE '%${request.query.username}%' `;
+    
+    pool.query(query1, function(error, results){
+        if ( error ){
+            response.status(400).send('Error in database operation');
+        } else {
+             console.log(results);
+            response.send(results);
+            
+
+
+
+        }
+    });
+
+    // app.use('/sendemail', sendemail);
+});
 app.get('/reglist', function(request, response){
     console.log("backjojo");
     let query1 = `INSERT INTO list (username,listname,price) VALUES ('${request.query.username}','${request.query.listname}',' ${request.query.price}')`;
