@@ -18,6 +18,7 @@ import 'package:untitled/pages/chat.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:untitled/pages/fetchdata.dart';
+
 var sessionManager = SessionManager();
 
 //UI USER INTERFACs
@@ -80,29 +81,31 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
   late String password;
   bool showSpinner = false;
 
-   TextEditingController nameController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
+
+  TextEditingController nameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
   bool loading = false;
 
-  
   @override
   void dispose() {
     nameController.dispose();
     passwordController.dispose();
     super.dispose();
   }
+
   @override
   void initState() {
     super.initState();
   }
 
- Future login1(String n, String p) async {
-   fetchdata fetch=new fetchdata();
+  Future login1(String n, String p) async {
+    fetchdata fetch = new fetchdata();
     try {
 //await
-var res=await fetch.login(n,p);
-print(res);
+      var res = await fetch.login(n, p);
+      print(res);
       if (res.body.contains("@")) {
         // Map<String, dynamic> map = json.decode(res.body);
         // List<dynamic> data = map["result"];
@@ -128,7 +131,7 @@ print(res);
     }
   }
 
- @override
+  @override
   Widget build(BuildContext context) {
     return Padding(
         padding: const EdgeInsets.all(0),
@@ -156,7 +159,7 @@ print(res);
                     padding: const EdgeInsets.fromLTRB(10, 40, 10, 0),
                     child: SizedBox(
                       child: TextFormField(
-                         controller: nameController,
+                        controller: nameController,
                         decoration: InputDecoration(
                           filled: true,
                           fillColor: Color.fromARGB(255, 202, 218, 131),
@@ -181,23 +184,22 @@ print(res);
                             ),
                           ),
                         ),
-                      onChanged: (value) {
-                            email = value;
-                            
-                          },
-
-                       validator: (val) {
-                              if((val!.isEmpty) ){
-                                return "Enter a name";
-                              }
-                              return null;
-                            },  ),
+                        onChanged: (value) {
+                          email = value;
+                        },
+                        validator: (val) {
+                          if ((val!.isEmpty)) {
+                            return "Enter a name";
+                          }
+                          return null;
+                        },
+                      ),
                     ),
                   ),
                   Container(
                     padding: const EdgeInsets.fromLTRB(10, 40, 10, 0),
                     child: TextFormField(
-                       controller: passwordController,
+                      controller: passwordController,
                       obscureText: true,
                       enableSuggestions: false,
                       autocorrect: false,
@@ -227,17 +229,16 @@ print(res);
                           ),
                         ),
                       ),
-                     onChanged: (value) {
-                          password = value;
-                          
-                        },
-
-                  validator: (val) {
-                              if((val!.isEmpty) ){
-                                return "Enter a pass";
-                              }
-                              return null;
-                            },  ),
+                      onChanged: (value) {
+                        password = value;
+                      },
+                      validator: (val) {
+                        if ((val!.isEmpty)) {
+                          return "Enter a pass";
+                        }
+                        return null;
+                      },
+                    ),
                   ),
                   TextButton(
                     onPressed: () {
@@ -254,8 +255,7 @@ print(res);
                     alignment: Alignment.center,
                     padding: const EdgeInsets.all(10),
                   ),
-       
-                        Container(
+                  Container(
                       child: ThemeButton(
                     label: "Login",
                     labelColor: Color.fromARGB(255, 255, 255, 255),
@@ -266,32 +266,33 @@ print(res);
                     borderWidth: 4,
                     onClick: () async {
                       login1(nameController.text, passwordController.text);
-                   setState(() {
+                      if (emailController.text.isNotEmpty &&
+                          passwordController.text.isNotEmpty) {
+                        setState(() {
                           showSpinner = true;
                         });
-                        try {
-                          final user = await _auth.signInWithEmailAndPassword(
-                              email: email, password: password);
+
+                        logIn(emailController.text, passwordController.text)
+                            .then((user) {
                           if (user != null) {
-                            Navigator.of(context)
-                                .push(MaterialPageRoute(builder: (context) {
-                              return homm();
-                            }));
+                            print("Login Sucessfull");
+                            setState(() {
+                              showSpinner = false;
+                            });
+                            Navigator.push(context,
+                                MaterialPageRoute(builder: (_) => homm()));
+                          } else {
+                            print("Login Failed");
                             setState(() {
                               showSpinner = false;
                             });
                           }
-                        } catch (e) {
-                          print(e);
-                        }
-                      },
-                    )),
-
-
-
-
-
-
+                        });
+                      } else {
+                        print("Please fill form correctly");
+                      }
+                    },
+                  )),
                   Row(
                     children: <Widget>[
                       const Text(
@@ -345,11 +346,11 @@ class _MyStatefulWidgetState2 extends State<MyStatefulWidget2> {
   late String password;
   bool showSpinner = false;
 
-  TextEditingController nameController2 = TextEditingController();
+  final TextEditingController nameController2 = TextEditingController();
 
-  TextEditingController emailController2 = TextEditingController();
+  final TextEditingController emailController2 = TextEditingController();
   TextEditingController placeController2 = TextEditingController();
-  TextEditingController passwordController2 = TextEditingController();
+  final TextEditingController passwordController2 = TextEditingController();
   TextEditingController phoneController2 = TextEditingController();
 
   @override
@@ -447,7 +448,6 @@ class _MyStatefulWidgetState2 extends State<MyStatefulWidget2> {
                               ),
                             ),
                           ),
-
                           validator: (val) {
                             if ((val!.isEmpty)) {
                               return "Enter a name";
@@ -493,9 +493,6 @@ class _MyStatefulWidgetState2 extends State<MyStatefulWidget2> {
                               ),
                             ),
                           ),
-
-
-
                           validator: (val) {
                             if ((val!.isEmpty) ||
                                 !RegExp(r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?)*$")
@@ -541,7 +538,6 @@ class _MyStatefulWidgetState2 extends State<MyStatefulWidget2> {
                               ),
                             ),
                           ),
-                          
                           validator: (val) {
                             if ((val!.isEmpty)) {
                               return "Enter a valid place";
@@ -669,23 +665,36 @@ class _MyStatefulWidgetState2 extends State<MyStatefulWidget2> {
                             }
                             // print(email);
                             // print(password);
-                            setState(() {
-                              showSpinner = true;
-                            });
-                            try {
-                              final newUser =
-                                  await _auth.createUserWithEmailAndPassword(
-                                      email: email, password: password);
-
-                              Navigator.of(context)
-                                  .push(MaterialPageRoute(builder: (context) {
-                                return firstWithFireBase();
-                              }));
+                            if (nameController2.text.isNotEmpty &&
+                                emailController2.text.isNotEmpty &&
+                                passwordController2.text.isNotEmpty) {
                               setState(() {
-                                showSpinner = false;
+                                showSpinner = true;
                               });
-                            } catch (e) {
-                              print(e);
+
+                              createAccount(
+                                      nameController2.text,
+                                      emailController2.text,
+                                      passwordController2.text)
+                                  .then((user) {
+                                if (user != null) {
+                                  setState(() {
+                                    showSpinner = false;
+                                  });
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (_) => firstWithFireBase()));
+                                  print("Account Created Sucessfull");
+                                } else {
+                                  print("Login Failed");
+                                  setState(() {
+                                    showSpinner = false;
+                                  });
+                                }
+                              });
+                            } else {
+                              print("Please enter Fields");
                             }
                           },
                         )),
