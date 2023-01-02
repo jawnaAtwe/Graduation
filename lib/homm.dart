@@ -7,6 +7,7 @@ import 'package:untitled/pages/home.dart';
 import 'package:untitled/pages/chat.dart';
 import 'package:untitled/pages/user_profile.dart';
 import 'package:untitled/pages/wish_list.dart';
+import 'package:untitled/pages/homeScreenChat.dart';
 
 class homm extends StatelessWidget {
   const homm({Key? key}) : super(key: key);
@@ -61,7 +62,7 @@ class _MyHomePageState extends State<MyHomePage1> {
               label: 'Cart',
             ),
             BottomNavigationBarItem(
-               icon: _createBarIcon('wallet', 4),
+              icon: _createBarIcon('wallet', 4),
               label: 'Chat',
             ),
             BottomNavigationBarItem(
@@ -81,7 +82,7 @@ class _MyHomePageState extends State<MyHomePage1> {
       case 1:
         return const Cart();
       case 2:
-        return const ChatScreen();
+        return const HomeScreenChat();
       case 3:
         return const UserProfile();
       default:
