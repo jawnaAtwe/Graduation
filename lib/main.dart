@@ -22,7 +22,7 @@ import 'package:untitled/firstWithFireBase.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  
+
   runApp(MyApp());
 }
 
@@ -166,6 +166,5 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                 )
               ],
             )));
-    
   }
 }
