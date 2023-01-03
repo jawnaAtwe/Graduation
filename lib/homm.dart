@@ -82,7 +82,7 @@ class _MyHomePageState extends State<MyHomePage1> {
       case 1:
         return const Cart();
       case 2:
-        return const HomeScreenChat();
+        return  HomeScreenChat();
       case 3:
         return const UserProfile();
       default:

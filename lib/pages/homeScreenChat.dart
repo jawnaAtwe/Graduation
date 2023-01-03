@@ -20,7 +20,7 @@ class _HomeScreenState extends State<HomeScreenChat>
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance!.addObserver(this);
+    WidgetsBinding.instance.addObserver(this);
     setStatus("Online");
   }
 
@@ -138,9 +138,9 @@ class _HomeScreenState extends State<HomeScreenChat>
                               radius: 300,
                               backgroundColor:
                                   Color.fromARGB(255, 251, 240, 227),
-                              child: Image(
-                                  image:
-                                      AssetImage('assets/images/search2.png')),
+                              // child: Image(
+                              //     image:
+                              //         AssetImage('assets/images/search2.png')),
                             ),
                           ),
                         ),

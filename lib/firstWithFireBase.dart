@@ -2,6 +2,7 @@ import 'dart:ui';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:flutter_login/flutter_login.dart';
+import 'package:untitled/chatFiles/Methods.dart';
 import 'package:untitled/homm.dart';
 import 'package:async/async.dart';
 import 'dart:convert';
@@ -159,7 +160,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                     padding: const EdgeInsets.fromLTRB(10, 40, 10, 0),
                     child: SizedBox(
                       child: TextFormField(
-                        controller: nameController,
+                        controller: emailController,
                         decoration: InputDecoration(
                           filled: true,
                           fillColor: Color.fromARGB(255, 202, 218, 131),
