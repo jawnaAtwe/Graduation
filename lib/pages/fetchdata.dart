@@ -37,7 +37,7 @@ import 'package:url_launcher/url_launcher.dart';
 class fetchdata {
 
 
- static const String apiUrl = "http://192.168.1.65:3000/";
+ static const String apiUrl = "http://172.19.211.90:3000/";
 
 
 Future <List<CartItem>> wish1() async  {
@@ -339,15 +339,22 @@ Future   sendemail(String n1) async {
 //     } catch (error) {
 //       print("no email");
 //     }
-       var jsonString = json.decode(res.body)as List;
-      var jojo='';
+       
+       
+       var jsonString = json.decode(res.body);
+    List<Product> jawna = List<Product>.from(jsonString.map((i) => Product.fromJson(i)));
+      String jojo='';
       int num=0;
+      int i1=0;
       jojo=jojo+' ProductName '+'|  price'+'\n';
        jojo=jojo+'\n';
-      for(int i=0;i<jsonString.length;i++){
-      jojo=jojo +(i+1).toString()+'. '+jsonString.elementAt(i)['productName']+' | '+jsonString.elementAt(i)['price'].toString()+'\n';
-
-      }
+      
+        jawna.forEach((post) {
+           
+          jojo=jojo +(i1=i1+1).toString()+'. '+post.productName+' | '+ "\$ ${post.price}"+'\n';
+        
+        });
+      
       
       var url = 'mailto:appetizingapplication@gmail.com?subject=this is '+n+' order from Appetizing App&body=$jojo';
     if (await canLaunch(url)) {
