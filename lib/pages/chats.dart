@@ -110,10 +110,10 @@ class ChatRoom extends StatelessWidget {
               return Container(
                 child: Row(
                   children: [
-                    CircleAvatar(
-                      backgroundImage: AssetImage(
-                          "assets/images/icon2.PNG"), // no matter how big it is, it won't overflow
-                    ),
+                    // CircleAvatar(
+                    //   backgroundImage: AssetImage(
+                    //       "assets/images/icon2.PNG"), // no matter how big it is, it won't overflow
+                    // ),
                     SizedBox(width: 17),
                     Container(
                       child: Column(

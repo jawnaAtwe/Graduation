@@ -37,7 +37,7 @@ import 'package:url_launcher/url_launcher.dart';
 class fetchdata {
 
 
- static const String apiUrl = "http://172.19.211.90:3000/";
+ static const String apiUrl = "http://192.168.1.65:3000/";
 
 
 Future <List<CartItem>> wish1() async  {

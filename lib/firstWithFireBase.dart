@@ -160,7 +160,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                     padding: const EdgeInsets.fromLTRB(10, 40, 10, 0),
                     child: SizedBox(
                       child: TextFormField(
-                        controller: emailController,
+                        controller: nameController,
                         decoration: InputDecoration(
                           filled: true,
                           fillColor: Color.fromARGB(255, 202, 218, 131),

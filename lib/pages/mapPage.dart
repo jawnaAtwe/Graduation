@@ -39,6 +39,9 @@ class _MapPageState extends State<MapPage> {
           width: 3,
           points: [
             LatLng(widget.currentLat, widget.currentLng),
+
+
+            
             LatLng(32.18333, 35.149900),
           ]),
     );
