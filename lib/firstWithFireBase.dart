@@ -102,15 +102,42 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
   }
 
   Future login1(String n, String p) async {
+     
     fetchdata fetch = new fetchdata();
     try {
 //await
       var res = await fetch.login(n, p);
+      
       print(res);
       if (res.body.contains("@")) {
-        // Map<String, dynamic> map = json.decode(res.body);
-        // List<dynamic> data = map["result"];
+      var jsonString = json.decode(res.body)as List;
+      String  emailc=jsonString.elementAt(0)['email'];
+ if (emailc!='' &&p!='') {
+                           
+                        setState(() {
+                          showSpinner = true;
+                        });
 
+                        logIn(emailc.replaceAll(' ', ''), p)
+                            .then((user) {
+                               print(emailc);
+                          if (user != null) {
+                            print("Login Sucessfull");
+                            setState(() {
+                              showSpinner = false;
+                            });
+                            Navigator.push(context,
+                                MaterialPageRoute(builder: (_) => homm()));
+                          } else {
+                            print("Login Failed");
+                            setState(() {
+                              showSpinner = false;
+                            });
+                          }
+                        });
+                      } else {
+                        print("Please fill form correctly");
+                      }
         Navigator.of(context).push(MaterialPageRoute(builder: (c) => homm()));
 
         return const homm();
@@ -267,31 +294,31 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                     borderWidth: 4,
                     onClick: () async {
                       login1(nameController.text, passwordController.text);
-                      if (emailController.text.isNotEmpty &&
-                          passwordController.text.isNotEmpty) {
-                        setState(() {
-                          showSpinner = true;
-                        });
+                      // if (emailController.text.isNotEmpty &&
+                      //     passwordController.text.isNotEmpty) {
+                      //   setState(() {
+                      //     showSpinner = true;
+                      //   });
 
-                        logIn(emailController.text, passwordController.text)
-                            .then((user) {
-                          if (user != null) {
-                            print("Login Sucessfull");
-                            setState(() {
-                              showSpinner = false;
-                            });
-                            Navigator.push(context,
-                                MaterialPageRoute(builder: (_) => homm()));
-                          } else {
-                            print("Login Failed");
-                            setState(() {
-                              showSpinner = false;
-                            });
-                          }
-                        });
-                      } else {
-                        print("Please fill form correctly");
-                      }
+                      //   logIn(emailController.text, passwordController.text)
+                      //       .then((user) {
+                      //     if (user != null) {
+                      //       print("Login Sucessfull");
+                      //       setState(() {
+                      //         showSpinner = false;
+                      //       });
+                      //       Navigator.push(context,
+                      //           MaterialPageRoute(builder: (_) => homm()));
+                      //     } else {
+                      //       print("Login Failed");
+                      //       setState(() {
+                      //         showSpinner = false;
+                      //       });
+                      //     }
+                      //   });
+                      // } else {
+                      //   print("Please fill form correctly");
+                      // }
                     },
                   )),
                   Row(

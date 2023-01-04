@@ -43,12 +43,12 @@ TextEditingController productPriceController = TextEditingController();
 TextEditingController productMarketController = TextEditingController();
 TextEditingController productManufactureingController = TextEditingController();
 
-
+ late int count=1;
 
    late  List<Product> myList=[];
 
 
-    addadd(String productName,String marketName,String manufacturing, String price) async {
+    addadd(String productName,String marketName,String manufacturing, int price,int amount) async {
 
     final prefs = await SharedPreferences.getInstance();
     String A1=prefs.get("current-list").toString() ;
@@ -61,7 +61,7 @@ try {
 
              
           var data = "${res.body}";
-         addadd1(data,productName,marketName,manufacturing,price);
+         addadd1(data,productName,marketName,manufacturing,price,amount);
 
 
     } catch (e) {
@@ -71,7 +71,9 @@ try {
     }
 
     
-    addadd1(String name,String productName,String marketName,String manufacturing, String price) async {
+    addadd1(String name,String productName,String marketName,String manufacturing, int price,int count) async {
+        print(price.toInt());
+      
         final prefs = await SharedPreferences.getInstance();
     String A1=prefs.get("current-list").toString() ;
    try {
@@ -87,7 +89,9 @@ try {
               '&&manufacturing=' +
               manufacturing+
               '&&price=' +
-              price
+              '${price}'+
+               '&&amount=' +
+              '${count}'
               ),
           headers: {'Content-Type': 'application/json'});
     } catch (e) {
@@ -197,6 +201,7 @@ getPostsData();
       double value = controller.offset / 125;
 
       setState(() {
+       
         topContainer = value;
         closeTopContainer = controller.offset > 30;
       });
@@ -215,7 +220,20 @@ getPostsData();
 //   Uint8List fileBytes = await http.readBytes(Uri.parse(image));
 
 //  }
+void add() {
+    setState(() {
+      if (count != 10) count=count+1;
+    });
+    print(count);
+    
+     getPostsData();
+  }
 
+void minus() {
+    setState(() {
+      if (count != 0) count=count-1;
+    }); getPostsData();
+  }
 
 Uint8List convertBase64Image(String base64String) {
   return Base64Decoder().convert(base64String.split(',').last);
@@ -278,7 +296,44 @@ myList=await fetch.wish();
                   Row(  
           mainAxisAlignment: MainAxisAlignment.spaceEvenly, 
            
-          children:<Widget>[    ElevatedButton(
+          children:<Widget>[
+              FloatingActionButton.small(
+                heroTag: Text("btn1"),
+                                      onPressed: add,
+                                      child: Icon(
+                                        Icons.add,
+                                        color: Colors.black,
+                                        size: 10,
+                                      ),
+                                      backgroundColor:
+                                          Color.fromARGB(255, 241, 241, 241),
+                                    ),
+                                    SizedBox(
+                                      width: 10,
+                                    ),
+                                    Text('$count',
+                                        style: TextStyle(
+                                            fontSize: 14,
+                                            color: Colors.black,
+                                            
+                                            fontWeight: FontWeight.bold)),
+                                    SizedBox(
+                                      width: 10,
+                                    ),
+                                    FloatingActionButton.small(
+                                      heroTag: Text("btn2"),
+                                      onPressed: minus,
+                                      child: Text('-',
+                                          style: TextStyle(
+                                              fontSize: 10,
+                                              color: Colors.black,
+                                              
+                                              fontWeight: FontWeight.bold)),
+                                      backgroundColor:
+                                          Color.fromARGB(255, 241, 241, 241),
+                                    ),  
+                                    
+                    ElevatedButton(
                       child: Text('Add To Card'),
                       style: ElevatedButton.styleFrom(
                         primary: Colors.teal,
@@ -289,7 +344,7 @@ myList=await fetch.wish();
                         print('Pressed');
 
                         // addadd( post.productName,post.marketName,post.manufacturing,"\$ ${post.price}");
-                        update(post.productName,post.marketName,post.manufacturing,"\$ ${post.price}");
+                        update(post.productName,post.marketName,post.manufacturing,"\$ ${post.price*count}", post.price,count);
                         
 
                  
@@ -329,6 +384,7 @@ myList=await fetch.wish();
       
 
     });
+    
   }
 
   show () async {
@@ -365,7 +421,7 @@ final prefs = await SharedPreferences.getInstance();
       print("no filld");
     }
  }
-   update (String productName,String marketName,String manufacturing, String price) async {
+   update (String productName,String marketName,String manufacturing, String price,int p,int amount) async {
     print("up");
 final prefs = await SharedPreferences.getInstance();
     String A1=prefs.get("current-list").toString() ;
@@ -390,7 +446,7 @@ final prefs = await SharedPreferences.getInstance();
       } else {
         
     nowupdate("$data");
-    addadd( productName,marketName,manufacturing,"\$ ${price}");
+    addadd( productName,marketName,manufacturing,p*count,count);
                         
        print("done");
       }

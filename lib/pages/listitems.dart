@@ -145,9 +145,9 @@ void getlistitem() async {
  
 
 }
-  void delete(String nameproduct) async {
+  void delete(String nameproduct,int amount) async {
   
-         await fetch.deleteitems(nameproduct);
+         await fetch.deleteitems(nameproduct,amount);
      
         
   }
@@ -187,10 +187,16 @@ myList=await fetch.showlistitem();
                     Text(
                       post.manufacturing,
                       style: const TextStyle(fontSize: 17, color: Colors.grey),
+                    ),  Text(
+                      "mount: ${post.amount}",
+                      style: const TextStyle(
+                          fontSize: 17, fontWeight: FontWeight.bold),
+                    ),Text(
+                      "price: ${post.price}",
+                      style: const TextStyle(
+                          fontSize: 17, fontWeight: FontWeight.bold),
                     ),
-                    SizedBox(
-                      height: 20,
-                    ),
+                   
                   Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[  ElevatedButton(
@@ -201,7 +207,7 @@ myList=await fetch.showlistitem();
                   onSurface: Colors.grey,
                 ),
                 onPressed: () async{
-                 delete(post.productName);
+                 delete(post.productName,post.amount);
                  getlistitem();
                  getPostsData();
                 },

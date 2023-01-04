@@ -45,6 +45,7 @@ fetchdata fetch=new fetchdata();
 
   updateinfo( String a,String b) async {
       await fetch.updateinfolist(a,b);
+      
 }
  sendemail( String list) async {
       await fetch.sendemail(list);

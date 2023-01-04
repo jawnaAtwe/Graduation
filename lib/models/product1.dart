@@ -3,8 +3,9 @@ enum Shade { orange, green }
 class Product1 {
   final String marketName;
   final String productName;
-  // final int  quantity;
-  // final int price;
+ 
+  final int price;
+   final int  amount;
   final String manufacturing;
   // final String expiryDate;
   // final int productNumber;
@@ -16,8 +17,8 @@ class Product1 {
 factory Product1.fromJson(Map<String,dynamic> json) => Product1(
     marketName: json['marketName']  == null ? '' : json['marketName']as String,
   productName: json['productName']  == null ? '' : json['productName']as String,
-    // quantity: json['quantity']  == null ? 0 : json['quantity'] as int,
-    // price: json['price'] == null ? 0 : json['price'] as int,
+    amount: json['amount']  == null ? 0 : json['amount'] as int,
+    price: json['price'] == null ? 0 : json['price'] as int,
     manufacturing: json['manufacturing']  == null ? '' : json['manufacturing']as String,
     // expiryDate: json['expiryDate']  == null ? '' : json['expiryDate']as String,
     // productNumber: json['productNumber']   == null ? 0 : json['productNumber'] as int,
@@ -26,8 +27,8 @@ factory Product1.fromJson(Map<String,dynamic> json) => Product1(
   Product1({
     required this.marketName,
     required this.productName,
-    // required this.quantity,
-    // required this.price,
+    required this.amount,
+    required this.price,
     required this.manufacturing,
     // required this.expiryDate,
     // required this.productNumber,
@@ -44,8 +45,8 @@ factory Product1.fromJson(Map<String,dynamic> json) => Product1(
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['marketName'] = this.marketName;
      data['productName'] = this.productName;
-    //  data['quantity'] = this.quantity;
-    // data['price'] = this.price;
+     data['amount'] = this.amount;
+    data['price'] = this.price;
 
 data['manufacturing'] = this.manufacturing;
     // data['expiryDate'] = this.expiryDate;

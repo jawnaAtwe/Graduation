@@ -18,7 +18,7 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
-import 'package:flutter_login/flutter_login.dart';
+
 import 'package:untitled/homm.dart';
 import 'package:async/async.dart';
 import 'dart:convert';
@@ -205,7 +205,7 @@ Future login(String A,String B) async {
      
       }return res;
     } catch (e) {
-      
+      print('no');
     }
 
 }
@@ -283,7 +283,7 @@ Future share1(String n,String person) async {
 }
 
 
-Future deleteitems(String nameproduct)async{
+Future deleteitems(String nameproduct,int amount)async{
    final prefs = await SharedPreferences.getInstance();
   String n=prefs.get("namename").toString() ;
   String n1=prefs.get("current-list").toString() ;
@@ -292,7 +292,8 @@ Future deleteitems(String nameproduct)async{
   http.Response res = await http.get(Uri.parse(fetchdata.apiUrl+'deleteproduct?username='+n
   + '&&listname=' +
               n1 +'&&nameproduct=' +
-              nameproduct 
+              nameproduct +'&&amount=' +
+               '${amount}'
              ),
 
              
@@ -342,19 +343,21 @@ Future   sendemail(String n1) async {
        
        
        var jsonString = json.decode(res.body);
-    List<Product> jawna = List<Product>.from(jsonString.map((i) => Product.fromJson(i)));
+    List<Product1> jawna = List<Product1>.from(jsonString.map((i) => Product1.fromJson(i)));
       String jojo='';
       int num=0;
       int i1=0;
-      jojo=jojo+' ProductName '+'|  price'+'\n';
+      jojo=jojo+' ProductName '+'|  amount'+' | price\n';
        jojo=jojo+'\n';
       
         jawna.forEach((post) {
            
-          jojo=jojo +(i1=i1+1).toString()+'. '+post.productName+' | '+ "\$ ${post.price}"+'\n';
-        
+          jojo=jojo +(i1=i1+1).toString()+'. '+post.productName+' | '+ "\ ${post.amount}"+'  price--->'+ "\$ ${post.price}"+'\n';
+        num=num+post.price;
         });
-      
+         jojo=jojo+'\n';
+        
+       jojo=jojo+' total price: '+num.toString();
       
       var url = 'mailto:appetizingapplication@gmail.com?subject=this is '+n+' order from Appetizing App&body=$jojo';
     if (await canLaunch(url)) {

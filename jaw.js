@@ -77,14 +77,14 @@ app.get('/infouser', function(request, response){
 
 
 
+
 app.get('/listelement', function(request, response){
     console.log("backjojo");
     //compare if less go to insert
     //else send res notification
-    let query1 = `INSERT INTO listselement (productName,listName,marketName,userName,manufacturing) 
-    VALUES 
-    ('${request.query.productName}','${request.query.listName}'
-    ,' ${request.query.marketName}',' ${request.query.userName}',' ${request.query.manufacturing}')`;
+    let query1 = `INSERT INTO listselement (productName,listName,marketName,userName,manufacturing,price,amount) 
+    VALUES ('${request.query.productName}','${request.query.listName}'
+    ,' ${request.query.marketName}',' ${request.query.userName}',' ${request.query.manufacturing}', '${request.query.price}','${request.query.amount}')`;
     
     pool.query(query1, function(error, results){
         if ( error ){
@@ -98,7 +98,8 @@ app.get('/listelement', function(request, response){
         app.get('/deleteproduct', function(request, response){
             console.log("yes");
            
-            let query1 = `DELETE FROM listselement  where listName ='${request.query.listname}' and productName='${request.query.nameproduct}' and username LIKE '%${request.query.username}%'`;
+            let query1 = `DELETE FROM listselement  where listName ='${request.query.listname}' and productName='${request.query.nameproduct}' and username LIKE '%${request.query.username}%'
+            and amount ='${request.query.amount}'`;
     
             pool.query(query1, function(error, results){
                 if ( error ){
