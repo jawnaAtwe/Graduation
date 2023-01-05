@@ -96,8 +96,50 @@ try {
           headers: {'Content-Type': 'application/json'});
     } catch (e) {
       print("no filld");
-    }}
+    }
+    getnumber( marketName,count);
+    
+    }
+    getnumber(String marketName,int count)async{
 
+
+   try{ http.Response res = await http.get(
+          Uri.parse(fetchdata.apiUrl+'getnumbersales?AdminName=' +
+              marketName +
+              '&&NumberSales=' +
+              '${count}' 
+              ),
+      headers: {'Content-Type': 'application/json'});
+
+
+  if (res.statusCode == 200) {
+ print("lplplplp");
+       var jsonString = json.decode(res.body)as List;
+   int count1=jsonString.elementAt(0)['NumberSales'];
+    int A=count1+count;
+     print(A);
+    addadd2(marketName,A);
+    
+    }else { print("noo");}
+     } catch (e) {
+      print("no filld");
+    }
+    
+    }
+addadd2(String marketName,int count)async{
+print("numberrr");
+ try {
+      http.Response res = await http.get(
+          Uri.parse(fetchdata.apiUrl+'numbersales?AdminName=' +
+              marketName +
+              '&&NumberSales=' +
+              '${count}' 
+              ),
+          headers: {'Content-Type': 'application/json'});
+    } catch (e) {
+      print("no filld");
+    }
+}
 
 void _runFilter(String enteredKeyword) {
   List<Product> results = [];

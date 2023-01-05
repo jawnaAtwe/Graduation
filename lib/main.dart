@@ -125,7 +125,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                           style: TextStyle(color: Colors.white, fontSize: 18)),
                       SizedBox(height: 40),
                       ThemeButton(
-                        label: 'Map',
+                        label: 'Map1',
                         highlight: Colors.green[900],
                         color: Color.fromARGB(255, 172, 190, 90),
                         onClick: () {

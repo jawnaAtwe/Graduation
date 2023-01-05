@@ -113,6 +113,44 @@ app.get('/listelement', function(request, response){
         
         });
         
+
+        app.get('/numbersales', function(request, response){
+           console.log('numbersales');
+            let query1= `UPDATE admin SET NumberSales ='${request.query.NumberSales}' where AdminName LIKE '%${request.query.AdminName}%'  `;
+
+           
+    
+            pool.query(query1, function(error, results){
+                if ( error ){
+                    response.status(400).send('Error in database operation');
+                } else {
+                     
+                   
+                }
+            });
+        
+        
+        });
+        
+        app.get('/getnumbersales', function(request, response){
+            console.log("get");
+           
+             let query1= `SELECT * FROM admin where AdminName LIKE '%${request.query.AdminName}%'  `;
+ 
+            
+     
+             pool.query(query1, function(error, results){
+                 if ( error ){
+                     response.status(400).send('Error in database operation');
+                 } else {
+                    response.send(results);
+                 }
+             });
+         
+         
+         });
+
+
     app.get('/listelementselect', function(request, response){
             console.log("select");
            
