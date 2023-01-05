@@ -416,6 +416,34 @@ app.get('/sendemail', function(request, response){
 
     // app.use('/sendemail', sendemail);
 });
+
+
+app.get('/getlocation', function(request, response){
+    console.log("getlocation");
+    let query1 = `SELECT *  FROM locations  `;
+    
+    pool.query(query1, function(error, results){
+        if ( error ){
+            response.status(400).send('Error in database operation');
+        } else {
+             console.log(results);
+            response.send(results);
+            
+
+
+
+        }
+    });
+
+    // app.use('/sendemail', sendemail);
+});
+
+
+
+
+
+
+
 app.get('/reglist', function(request, response){
     console.log("backjojo");
     let query1 = `INSERT INTO list (username,listname,price) VALUES ('${request.query.username}','${request.query.listname}',' ${request.query.price}')`;

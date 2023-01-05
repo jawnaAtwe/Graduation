@@ -1,8 +1,16 @@
 import 'dart:collection';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:untitled/pages/fetchdata.dart';
+import 'package:untitled/models/GetLocation.dart';
+import 'dart:math' show cos, sqrt, asin;
 
+   double XX=32.18333;
+   double YY=35.149900;
+ late  List<GetLocation> myListget=[];
 class MapPage extends StatefulWidget {
+   
   double currentLat, currentLng;
   MapPage({required this.currentLat, required this.currentLng});
   @override
@@ -23,15 +31,56 @@ class _MapPageState extends State<MapPage> {
         ImageConfiguration.empty,
         "assets/images/destination_pin_cat5_android.png");
   }
+  getlocation(double currentLat,double currentLng)async{
+    print('ko');
+// final prefs = await SharedPreferences.getlocation();
+myListget=await fetch.getlocation();
 
+double min=100000.11;
+double x=0.0;
+double y=0.0;
+
+myListget.forEach((post) { 
+// if(post.latitude-currentLat>0.0)
+// {
+// if(post.latitude-currentLat<min)
+// min=post.latitude-currentLat;
+// x=post.latitude;
+
+// }else{
+//   if(currentLat-post.latitude<min)
+// min=currentLat-post.latitude;
+// x=post.latitude;
+// }
+var p = 0.017453292519943295;
+    var c = cos;
+    var a = 0.5 - c((post.latitude - currentLat) * p)/2 + 
+          c(currentLat * p) * c(post.latitude * p) * 
+          (1 - c((post.longitude - currentLng) * p))/2;
+    if( 12742 * asin(sqrt(a))<min){
+    min=12742 * asin(sqrt(a));
+x=post.latitude;
+y=post.longitude;
+    }
+
+});
+XX=x;
+YY=y;
+print(x);
+print(" ===");
+print(y);
+  }
   @override
+  fetchdata fetch=new fetchdata();
   void initState() {
     super.initState();
+    getlocation(widget.currentLat,widget.currentLng);
     getCustomMarker();
     createPloyLine();
   }
 
   createPloyLine() {
+    getlocation(widget.currentLat,widget.currentLng);
     myPolyline.add(
       Polyline(
           polylineId: PolylineId('1'),
@@ -41,8 +90,8 @@ class _MapPageState extends State<MapPage> {
             LatLng(widget.currentLat, widget.currentLng),
 
 
-            
-            LatLng(32.18333, 35.149900),
+            ////////
+            LatLng(XX, YY),
           ]),
     );
   }
@@ -70,7 +119,8 @@ class _MapPageState extends State<MapPage> {
   Set<Circle> myCircles = Set.from([
     Circle(
       circleId: CircleId('1'),
-      center: LatLng(32.18333, 35.149900),
+      ////////
+      center: LatLng(XX, YY),
       radius: 250,
       strokeWidth: 3,
       strokeColor: Color.fromARGB(255, 41, 161, 63),
@@ -96,7 +146,8 @@ class _MapPageState extends State<MapPage> {
                   myMarkers.add(
                     Marker(
                       markerId: MarkerId('1'),
-                      position: LatLng(32.18333, 35.149900),
+                      ///////
+                      position: LatLng(XX, YY),
                       infoWindow: InfoWindow(
                           title: 'Market',
                           snippet:

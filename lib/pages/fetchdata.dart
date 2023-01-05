@@ -18,7 +18,7 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
-
+import 'package:untitled/models/GetLocation.dart';
 import 'package:untitled/homm.dart';
 import 'package:async/async.dart';
 import 'dart:convert';
@@ -372,7 +372,26 @@ Future   sendemail(String n1) async {
 
 
 
+Future <List<GetLocation>>  getlocation() async {
+   List<GetLocation> list1;
+ 
+  //  String A1=await SessionManager().get("current-list") ;
+  http.Response res = await http.get(Uri.parse(fetchdata.apiUrl+'getlocation'),
+      headers: {'Content-Type': 'application/json'});
 
+
+  if (res.statusCode == 200) {
+  
+    var jsonString = json.decode(res.body);
+    list1 = List<GetLocation>.from(jsonString.map((i) => GetLocation.fromJson(i)));
+
+   
+  } else {
+    
+    throw Exception('Failed to load album');
+  } return list1;
+
+}
 
 
 
