@@ -6,8 +6,9 @@ import 'package:untitled/pages/fetchdata.dart';
 import 'package:untitled/models/GetLocation.dart';
 import 'dart:math' show cos, sqrt, asin;
 
-   double XX=32.18333;
-   double YY=35.149900;
+   double XX=32.35840000;
+   double YY=35.06831360;
+   String Market='jawna';
  late  List<GetLocation> myListget=[];
 class MapPage extends StatefulWidget {
    
@@ -25,6 +26,7 @@ class _MapPageState extends State<MapPage> {
   List<Polyline> myPolyline = [];
 
   getCustomMarker() async {
+    
     marketMarker = await BitmapDescriptor.fromAssetImage(
         ImageConfiguration.empty, "assets/images/source_pin_android.png");
     currentMarker = await BitmapDescriptor.fromAssetImage(
@@ -32,8 +34,7 @@ class _MapPageState extends State<MapPage> {
         "assets/images/destination_pin_cat5_android.png");
   }
   getlocation(double currentLat,double currentLng)async{
-    print('ko');
-// final prefs = await SharedPreferences.getlocation();
+  
 myListget=await fetch.getlocation();
 
 double min=100000.11;
@@ -41,17 +42,7 @@ double x=0.0;
 double y=0.0;
 
 myListget.forEach((post) { 
-// if(post.latitude-currentLat>0.0)
-// {
-// if(post.latitude-currentLat<min)
-// min=post.latitude-currentLat;
-// x=post.latitude;
 
-// }else{
-//   if(currentLat-post.latitude<min)
-// min=currentLat-post.latitude;
-// x=post.latitude;
-// }
 var p = 0.017453292519943295;
     var c = cos;
     var a = 0.5 - c((post.latitude - currentLat) * p)/2 + 
@@ -61,6 +52,7 @@ var p = 0.017453292519943295;
     min=12742 * asin(sqrt(a));
 x=post.latitude;
 y=post.longitude;
+Market=post.store_name;
     }
 
 });
@@ -89,8 +81,6 @@ print(y);
           points: [
             LatLng(widget.currentLat, widget.currentLng),
 
-
-            ////////
             LatLng(XX, YY),
           ]),
     );
@@ -149,7 +139,7 @@ print(y);
                       ///////
                       position: LatLng(XX, YY),
                       infoWindow: InfoWindow(
-                          title: 'Market',
+                          title: Market,
                           snippet:
                               'this is the closest market to your current location'),
                       onTap: () {

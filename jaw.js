@@ -9,7 +9,7 @@ const pool = mysql.createConnection({
     host: 'localhost',
     user: 'root',
     password: '',
-    database: 'graduation',
+    database: 'graduationjawna',
   
   });
 
@@ -75,7 +75,20 @@ app.get('/infouser', function(request, response){
 });
 //1
 
+app.get('/infouser1', function(request, response){
+    console.log("information");
 
+    let query1 = `SELECT *  FROM products`;
+    
+    pool.query(query1, function(error, results){
+        if ( error ){
+            response.status(400).send('Error in database operation');
+        } else {
+             console.log(results);
+            response.send(results);
+        }
+    });
+});
 
 
 app.get('/listelement', function(request, response){
@@ -131,7 +144,23 @@ app.get('/listelement', function(request, response){
         
         
         });
-        
+        app.get('/sales', function(request, response){
+            console.log('numbersales');
+             let query1= `UPDATE products SET sales ='${request.query.sales}' where productName LIKE '%${request.query.productName}%'  `;
+ 
+            
+     
+             pool.query(query1, function(error, results){
+                 if ( error ){
+                     response.status(400).send('Error in database operation');
+                 } else {
+                      
+                    
+                 }
+             });
+         
+         
+         });
         app.get('/getnumbersales', function(request, response){
             console.log("get");
            
@@ -149,8 +178,24 @@ app.get('/listelement', function(request, response){
          
          
          });
-
-
+         
+         app.get('/getnumbersalesofproduct', function(request, response){
+            console.log("get");
+           
+             let query1= `SELECT * FROM products where productName LIKE '%${request.query.productName}%'  `;
+ 
+            
+     
+             pool.query(query1, function(error, results){
+                 if ( error ){
+                     response.status(400).send('Error in database operation');
+                 } else {
+                    response.send(results);
+                 }
+             });
+         
+         
+         });
     app.get('/listelementselect', function(request, response){
             console.log("select");
            
@@ -281,6 +326,19 @@ app.get('/listitems', function(request, response){
 });
 
 
+app.get('/most', function(request, response){
+    console.log("back");
+    let query1 = `SELECT  *  FROM products ORDER BY sales DESC `;
+    
+    pool.query(query1, function(error, results){
+        if ( error ){
+            response.status(400).send('Error in database operation');
+        } else {
+             console.log(results);
+            response.send(results);
+        }
+    });
+});
 app.get('/wish', function(request, response){
     console.log("back");
     let query1 = `SELECT *  FROM products `;

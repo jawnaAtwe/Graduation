@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_place/google_place.dart';
 import 'package:untitled/models/cart_item.dart';
 import 'package:untitled/models/product.dart';
 import 'package:untitled/pages/cart.dart';
@@ -12,6 +13,7 @@ import 'dart:math';
 import 'dart:typed_data';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 import 'dart:convert';
+import 'dart:io';
 
 // import 'package:image_utils_class/image_utils_class.dart';
 import 'package:untitled/pages/fetchdata.dart';
@@ -46,7 +48,7 @@ TextEditingController productManufactureingController = TextEditingController();
  late int count=1;
 
    late  List<Product> myList=[];
-
+   late String blob='';
 
     addadd(String productName,String marketName,String manufacturing, int price,int amount) async {
 
@@ -98,8 +100,49 @@ try {
       print("no filld");
     }
     getnumber( marketName,count);
+    getnumber1( productName,count);
+    }
+
+     getnumber1(String name,int count)async{
+
+
+   try{ http.Response res = await http.get(
+          Uri.parse(fetchdata.apiUrl+'getnumbersalesofproduct?productName=' +
+              name +
+              '&&sales=' +
+              '${count}' 
+              ),
+      headers: {'Content-Type': 'application/json'});
+
+
+  if (res.statusCode == 200) {
+ print("lplplplp");
+       var jsonString = json.decode(res.body)as List;
+   int count1=jsonString.elementAt(0)['sales'];
+    int A=count1+count;
+     print(A);
+    addadd3(name,A);
+    
+    }else { print("noo");}
+     } catch (e) {
+      print("no filld");
+    }
     
     }
+addadd3(String name,int count)async{
+print("numberrr");
+ try {
+      http.Response res = await http.get(
+          Uri.parse(fetchdata.apiUrl+'sales?productName=' +
+              name +
+              '&&sales=' +
+              '${count}' 
+              ),
+          headers: {'Content-Type': 'application/json'});
+    } catch (e) {
+      print("no filld");
+    }
+}
     getnumber(String marketName,int count)async{
 
 
@@ -188,6 +231,8 @@ class WishList extends StatefulWidget {
 class _MyHomePageState extends State<WishList> {
 
  late final LocalNotificationService service;
+ 
+  var OpenFile;
   void listenToNotification() =>
       service.onNotificationClick.stream.listen(onNoticationListener);
 
@@ -258,6 +303,16 @@ getPostsData();
  void getlist() async{
   myList=await fetch.wish();
  }  
+void getlist1() async{
+  
+var jsonString=await fetch.getinfo11();
+
+ var blob=jsonString.elementAt(0)['image'];
+Uint8List image = Base64Codec().decode(blob);      // image is a Uint8List
+
+
+ }
+
 //  void getimg(String image) async{
 //   Uint8List fileBytes = await http.readBytes(Uri.parse(image));
 
@@ -278,10 +333,17 @@ void minus() {
   }
 
 Uint8List convertBase64Image(String base64String) {
+  print(base64String);
   return Base64Decoder().convert(base64String.split(',').last);
+
 }
   void getPostsData() async{
-   
+//    var jsonString=await fetch.getinfo11();
+
+//   blob=jsonString.elementAt(0)['image'];
+// Uint8List image = Base64Decoder().convert(blob); 
+
+
     List<Widget> listItems = [];
       List<Product> A = [];
     if(myList.isEmpty)
@@ -291,12 +353,12 @@ myList=await fetch.wish();
 
 
 // Display if are image. Image.memory(fileBytes);
-    myList.forEach((post) {
+    myList.forEach((post) async {
     
-    
-
+    // Uint8List image = Base64Codec().decode(post.image);
+// Uint8List image = Uint8List.fromList(post.image.toBytes());
       listItems.add(Container(
-          height: 190,
+          height: 220,
           margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
           decoration: BoxDecoration(
               borderRadius: BorderRadius.all(Radius.circular(20.0)),
@@ -312,11 +374,40 @@ myList=await fetch.wish();
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    Text(
+                     Row(  
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly, 
+           
+          children:<Widget>[Text(
                       post.productName,
                       style: const TextStyle(
                           fontSize: 23, fontWeight: FontWeight.bold),
                     ),
+                    
+                     SizedBox(
+                      width: 20,
+                    ),ElevatedButton(
+                      child: Text('Add'),
+                      style: ElevatedButton.styleFrom(
+                        primary: Colors.teal,
+                        onPrimary: Colors.white,
+                        onSurface: Colors.grey,
+                      ),
+                      onPressed: () {
+                        print('Pressed');
+
+                        // addadd( post.productName,post.marketName,post.manufacturing,"\$ ${post.price}");
+                        update(post.productName,post.marketName,post.manufacturing,"\$ ${post.price*count}", post.price,count);
+                        
+
+                 
+
+                      },
+                    )
+
+,
+                    
+                    
+                    ]),
                     Text(
                       post.marketName,
                       style: const TextStyle(fontSize: 17, color: Colors.grey),
@@ -375,36 +466,52 @@ myList=await fetch.wish();
                                           Color.fromARGB(255, 241, 241, 241),
                                     ),  
                                     
-                    ElevatedButton(
-                      child: Text('Add To Card'),
-                      style: ElevatedButton.styleFrom(
-                        primary: Colors.teal,
-                        onPrimary: Colors.white,
-                        onSurface: Colors.grey,
-                      ),
-                      onPressed: () {
-                        print('Pressed');
+                    // ElevatedButton(
+                    //   child: Text('Add To Card'),
+                    //   style: ElevatedButton.styleFrom(
+                    //     primary: Colors.teal,
+                    //     onPrimary: Colors.white,
+                    //     onSurface: Colors.grey,
+                    //   ),
+                    //   onPressed: () {
+                    //     print('Pressed');
 
-                        // addadd( post.productName,post.marketName,post.manufacturing,"\$ ${post.price}");
-                        update(post.productName,post.marketName,post.manufacturing,"\$ ${post.price*count}", post.price,count);
+                    //     // addadd( post.productName,post.marketName,post.manufacturing,"\$ ${post.price}");
+                    //     update(post.productName,post.marketName,post.manufacturing,"\$ ${post.price*count}", post.price,count);
                         
 
                  
 
-                      },
-                    )
+                    //   },
+                    // )
 
-,
+// ,
           ]),
                   ],
                 ),
-                
-                // new Image.memory(post.image);
-        //  CircleAvatar(
-        //         radius: 25,
-        //         backgroundImage: ImageUtils.base64ToImage(post.image),
-                
-        //       ),   
+// final url = file.path;
+
+    //  OpenFile.open(post.image),
+
+  //               Image(
+  //   image: NetworkImage(
+  //     (post.image),
+  //     scale: 4
+  //   ),
+  // )
+   
+               
+             
+          
+      
+               
+    // Image.asset('C:/Users/MIX-IT/Desktop/paltel.jpg',width: 50,height: 50,),
+  Image.asset(post.image,width: 100,height: 120,),
+
+
+                // Image.file(File(post.image)),
+                // new Image.memory(image)
+         
       //   Image.memory(
       //   Uint8List.fromList(post.image!),
       //   height: 88,
@@ -417,7 +524,14 @@ myList=await fetch.wish();
 //         width: 88,  
 //         fit: BoxFit.cover,
 //       )   
-              ],
+            //  Image.memory(Uint8List.fromList(post.image)),
+            //  CircleAvatar(
+            //   backgroundImage: post.image!=""
+            //       ? MemoryImage(
+            //        Base64Codec().decode(post.image),
+            //         )
+            //       : null,)
+              ]
             ),
           )));
     });

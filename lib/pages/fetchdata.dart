@@ -109,12 +109,48 @@ Future <List<Product>> wish() async {
   } return myList;
 }
 
-// login(n,p) async {
+Future <List<Product>> most() async {
+  late  List<Product> myList=[];
 
-// await sessionManager.set("namename", n);
-//         await sessionManager.set("passpass", p);
-// }
+  http.Response res = await http.get(Uri.parse(fetchdata.apiUrl+'most'),
+      headers: {'Content-Type': 'application/json'});
 
+  if (res.statusCode == 200) {
+    // If the server did return a 200 OK response,
+    // then parse the JSON.
+
+    var jsonString = json.decode(res.body);
+    List<Product> list =
+        List<Product>.from(jsonString.map((i) => Product.fromJson(i)));
+// List<Product> products = jsonString.map((jsonMap) => Product.fromJson(jsonMap)).toList();
+    myList = list;
+   
+  } else {
+    // If the server did not return a 200 OK response,
+    // then throw an exception.
+    throw Exception('Failed to load album');
+  } return myList;
+}
+
+Future  getinfo11() async {
+  final prefs = await SharedPreferences.getInstance();
+  String A=prefs.get("namename").toString() ;
+  String B=prefs.get("passpass").toString() ;
+var jsonString ;
+    try {http.Response res = await http.get(
+          Uri.parse(fetchdata.apiUrl+'infouser1'),
+          headers: {'Content-Type': 'application/json'});
+       if (res.statusCode == 200) {
+       jsonString = new Map<String, dynamic>.from(json.decode(res.body))as List;
+       
+     } else {
+      // show error
+      print("Try Again");
+    }} catch (e) {
+      print("no info");
+    }
+return jsonString;
+}
 
 Future  getinfo1() async {
   final prefs = await SharedPreferences.getInstance();
