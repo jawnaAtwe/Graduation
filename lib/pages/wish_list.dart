@@ -50,7 +50,7 @@ TextEditingController productManufactureingController = TextEditingController();
    late  List<Product> myList=[];
    late String blob='';
 
-    addadd(String productName,String marketName,String manufacturing, int price,int amount) async {
+    addadd(String productName,String marketName,String manufacturing, int price,int amount,String image) async {
 
     final prefs = await SharedPreferences.getInstance();
     String A1=prefs.get("current-list").toString() ;
@@ -63,7 +63,7 @@ try {
 
              
           var data = "${res.body}";
-         addadd1(data,productName,marketName,manufacturing,price,amount);
+         addadd1(data,productName,marketName,manufacturing,price,amount,image);
 
 
     } catch (e) {
@@ -73,7 +73,7 @@ try {
     }
 
     
-    addadd1(String name,String productName,String marketName,String manufacturing, int price,int count) async {
+    addadd1(String name,String productName,String marketName,String manufacturing, int price,int count,String image) async {
         print(price.toInt());
       
         final prefs = await SharedPreferences.getInstance();
@@ -93,7 +93,9 @@ try {
               '&&price=' +
               '${price}'+
                '&&amount=' +
-              '${count}'
+              '${count}'+
+              '&&image=' +
+              image
               ),
           headers: {'Content-Type': 'application/json'});
     } catch (e) {
@@ -396,7 +398,7 @@ myList=await fetch.wish();
                         print('Pressed');
 
                         // addadd( post.productName,post.marketName,post.manufacturing,"\$ ${post.price}");
-                        update(post.productName,post.marketName,post.manufacturing,"\$ ${post.price*count}", post.price,count);
+                        update(post.productName,post.marketName,post.manufacturing,"\$ ${post.price*count}", post.price,count,post.image);
                         
 
                  
@@ -506,7 +508,7 @@ myList=await fetch.wish();
       
                
     // Image.asset('C:/Users/MIX-IT/Desktop/paltel.jpg',width: 50,height: 50,),
-  Image.asset(post.image,width: 100,height: 120,),
+  Image.asset(post.image,width: 140,height: 160,),
 
 
                 // Image.file(File(post.image)),
@@ -577,7 +579,7 @@ final prefs = await SharedPreferences.getInstance();
       print("no filld");
     }
  }
-   update (String productName,String marketName,String manufacturing, String price,int p,int amount) async {
+   update (String productName,String marketName,String manufacturing, String price,int p,int amount,String image) async {
     print("up");
 final prefs = await SharedPreferences.getInstance();
     String A1=prefs.get("current-list").toString() ;
@@ -602,7 +604,7 @@ final prefs = await SharedPreferences.getInstance();
       } else {
         
     nowupdate("$data");
-    addadd( productName,marketName,manufacturing,p*count,count);
+    addadd( productName,marketName,manufacturing,p*count,count,image);
                         
        print("done");
       }

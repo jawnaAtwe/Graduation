@@ -101,11 +101,208 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
+    - C:/Users/MIX-IT/Desktop/images/fish fillet1.jpg
     - assets/images/logo.png
     - assets/icons/
     - assets/images/
-    - C:/Users/MIX-IT/Desktop/images/
+    - C:/Users/MIX-IT/Desktop/images/fish fillet1.jpg
+    - C:/Users/MIX-IT/Desktop/images/fish fillet2.jpg
+    - C:/Users/MIX-IT/Desktop/images/flour1.jpg
+    - C:/Users/MIX-IT/Desktop/images/flour2.jpg
+    - C:/Users/MIX-IT/Desktop/images/French dressing1.jpg
+    - C:/Users/MIX-IT/Desktop/images/French dressing2.jpg
+    - C:/Users/MIX-IT/Desktop/images/garlic bread1.jpg
+    - C:/Users/MIX-IT/Desktop/images/garlic bread2.jpg
+    - C:/Users/MIX-IT/Desktop/images/homemade cheese1.jpg
+    - C:/Users/MIX-IT/Desktop/images/homemade cheese2.jpg
+    - C:/Users/MIX-IT/Desktop/images/icre flakes1.jpg
+    - C:/Users/MIX-IT/Desktop/images/barley1.jpg
+    - C:/Users/MIX-IT/Desktop/images/barley2.jpg
+    - C:/Users/MIX-IT/Desktop/images/barley3.jpg
+    - C:/Users/MIX-IT/Desktop/images/biscuit1.jpg
+    - C:/Users/MIX-IT/Desktop/images/biscuit2.jpg
+    - C:/Users/MIX-IT/Desktop/images/bread roll1.jpg
+    - C:/Users/MIX-IT/Desktop/images/bread roll2.jpg
+    - C:/Users/MIX-IT/Desktop/images/bread roll3.jpg
+    - C:/Users/MIX-IT/Desktop/images/bread1.jpg
+    - C:/Users/MIX-IT/Desktop/images/bread2.jpg
+    - C:/Users/MIX-IT/Desktop/images/buckwheat1.jpg
+    - C:/Users/MIX-IT/Desktop/images/buckwheat2.jpg
+    - C:/Users/MIX-IT/Desktop/images/buckwheat3.jpg
+    - C:/Users/MIX-IT/Desktop/images/buns1.jpg
+    - C:/Users/MIX-IT/Desktop/images/butter1.jpg
+    - C:/Users/MIX-IT/Desktop/images/butter2.jpg
+    - C:/Users/MIX-IT/Desktop/images/buttermilk1.jpg
+    - C:/Users/MIX-IT/Desktop/images/buttermilk2.jpg  
+
+    - C:/Users/MIX-IT/Desktop/images/cake mix1.jpg
+    - C:/Users/MIX-IT/Desktop/images/cake mix2.jpg
+    - C:/Users/MIX-IT/Desktop/images/cakes1.jpg
+    - C:/Users/MIX-IT/Desktop/images/cakes2.jpg
+    - C:/Users/MIX-IT/Desktop/images/cakes3.jpg
+    - C:/Users/MIX-IT/Desktop/images/cereal1.jpg
+    - C:/Users/MIX-IT/Desktop/images/cereal2.jpg
+    - C:/Users/MIX-IT/Desktop/images/cereal3.jpg
+    - C:/Users/MIX-IT/Desktop/images/Cheddar1.jpg
+    - C:/Users/MIX-IT/Desktop/images/Cheddar2.jpg
+    - C:/Users/MIX-IT/Desktop/images/cheese1.jpg
+    - C:/Users/MIX-IT/Desktop/images/cheese2.jpg
+    - C:/Users/MIX-IT/Desktop/images/cinnamon roll1.jpg
+    - C:/Users/MIX-IT/Desktop/images/cinnamon roll2.jpg
+    - C:/Users/MIX-IT/Desktop/images/condensed milk1.jpg
+    - C:/Users/MIX-IT/Desktop/images/condensed milk2.jpg
+    - C:/Users/MIX-IT/Desktop/images/cookie1.jpg
+    - C:/Users/MIX-IT/Desktop/images/cookie2.jpg
+    - C:/Users/MIX-IT/Desktop/images/cookies1.jpg
+    - C:/Users/MIX-IT/Desktop/images/cookies2.jpg
+    - C:/Users/MIX-IT/Desktop/images/cookies3.jpg
+    - C:/Users/MIX-IT/Desktop/images/corn bread1.jpg
+    - C:/Users/MIX-IT/Desktop/images/corn bread2.jpg
+    - C:/Users/MIX-IT/Desktop/images/corn flake1.jpg
+    - C:/Users/MIX-IT/Desktop/images/corn flake2.jpg
+    - C:/Users/MIX-IT/Desktop/images/corn flake3.jpg
+     
+    - C:/Users/MIX-IT/Desktop/images/corn oil1.jpg
+    - C:/Users/MIX-IT/Desktop/images/corn oil2.jpg
+    - C:/Users/MIX-IT/Desktop/images/corn1.jpg
+    - C:/Users/MIX-IT/Desktop/images/corn2.jpg
+    - C:/Users/MIX-IT/Desktop/images/corn3.jpg
+    - C:/Users/MIX-IT/Desktop/images/crab1.jpg
+    - C:/Users/MIX-IT/Desktop/images/crab2.jpg
+    - C:/Users/MIX-IT/Desktop/images/cracker1.jpg
+    - C:/Users/MIX-IT/Desktop/images/cracker2.jpg
+    - C:/Users/MIX-IT/Desktop/images/cream cheese1.jpg
+    - C:/Users/MIX-IT/Desktop/images/cream cheese2.jpg
+    - C:/Users/MIX-IT/Desktop/images/cream1.jpg
+    - C:/Users/MIX-IT/Desktop/images/cream2.jpg
+    - C:/Users/MIX-IT/Desktop/images/dough1.jpg
+    - C:/Users/MIX-IT/Desktop/images/dough2.jpg
+    - C:/Users/MIX-IT/Desktop/images/dry milk1.jpg
+    - C:/Users/MIX-IT/Desktop/images/dry milk2.jpg
+    - C:/Users/MIX-IT/Desktop/images/dry milk3.jpg
+    - C:/Users/MIX-IT/Desktop/images/dumplings1.jpg
+    - C:/Users/MIX-IT/Desktop/images/dumplings2.jpg
+    - C:/Users/MIX-IT/Desktop/images/fish fillet1.jpg
+    - C:/Users/MIX-IT/Desktop/images/fish fillet2.jpg
+    - C:/Users/MIX-IT/Desktop/images/flour1.jpg
+    - C:/Users/MIX-IT/Desktop/images/flour2.jpg
+    - C:/Users/MIX-IT/Desktop/images/French dressing1.jpg
+    - C:/Users/MIX-IT/Desktop/images/French dressing2.jpg
+
+    - C:/Users/MIX-IT/Desktop/images/garlic bread1.jpg
+    - C:/Users/MIX-IT/Desktop/images/garlic bread2.jpg
+    - C:/Users/MIX-IT/Desktop/images/homemade cheese1.jpg
+    - C:/Users/MIX-IT/Desktop/images/homemade cheese2.jpg
+    - C:/Users/MIX-IT/Desktop/images/icre flakes1.jpg
+    - C:/Users/MIX-IT/Desktop/images/icre flakes2.jpg
+    - C:/Users/MIX-IT/Desktop/images/icre flakes3.jpg
+    - C:/Users/MIX-IT/Desktop/images/Italian dressing1.jpg
+    - C:/Users/MIX-IT/Desktop/images/Italian dressing2.jpg
+    - C:/Users/MIX-IT/Desktop/images/low-fat milk1.jpg
+    - C:/Users/MIX-IT/Desktop/images/low-fat milk2.jpg
+    - C:/Users/MIX-IT/Desktop/images/macaroni1.jpg
+    - C:/Users/MIX-IT/Desktop/images/macaroni2.jpg
+    - C:/Users/MIX-IT/Desktop/images/milk1.jpg
+    - C:/Users/MIX-IT/Desktop/images/milk2.jpg
+    - C:/Users/MIX-IT/Desktop/images/moked fish1.jpg
+    - C:/Users/MIX-IT/Desktop/images/moked fish2.jpg
+    - C:/Users/MIX-IT/Desktop/images/Mozzarella1.jpg
+    - C:/Users/MIX-IT/Desktop/images/Mozzarella2.jpg
+    - C:/Users/MIX-IT/Desktop/images/muesli1.jpg
+    - C:/Users/MIX-IT/Desktop/images/muesli2.jpg
+    - C:/Users/MIX-IT/Desktop/images/muesli3.jpg
+    - C:/Users/MIX-IT/Desktop/images/nonfat milk1.jpg
+    - C:/Users/MIX-IT/Desktop/images/nonfat milk2.jpg
+    - C:/Users/MIX-IT/Desktop/images/noodles1.jpg
+    - C:/Users/MIX-IT/Desktop/images/noodles2.jpg
+
+    - C:/Users/MIX-IT/Desktop/images/oats1.jpg
+    - C:/Users/MIX-IT/Desktop/images/oats2.jpg
+    - C:/Users/MIX-IT/Desktop/images/oats3.jpg
+    - C:/Users/MIX-IT/Desktop/images/oats4.jpg
+    - C:/Users/MIX-IT/Desktop/images/olive oil1.jpg
+    - C:/Users/MIX-IT/Desktop/images/olive oil2.jpg
+    - C:/Users/MIX-IT/Desktop/images/Parmesan1.jpg
+    - C:/Users/MIX-IT/Desktop/images/Parmesan2.jpg
+    - C:/Users/MIX-IT/Desktop/images/pasta1.jpg
+    - C:/Users/MIX-IT/Desktop/images/pasta2.jpg
+    - C:/Users/MIX-IT/Desktop/images/pasteurized milk1.jpg
+    - C:/Users/MIX-IT/Desktop/images/pasteurized milk2.jpg
+    - C:/Users/MIX-IT/Desktop/images/pies1.jpg
+    - C:/Users/MIX-IT/Desktop/images/pies2.jpg
+    - C:/Users/MIX-IT/Desktop/images/pies3.jpg
+    - C:/Users/MIX-IT/Desktop/images/popcorn1.jpg
+    - C:/Users/MIX-IT/Desktop/images/popcorn2.jpg
+    - C:/Users/MIX-IT/Desktop/images/popcorn3.jpg
+    - C:/Users/MIX-IT/Desktop/images/poppy seed roll1.jpg
+    - C:/Users/MIX-IT/Desktop/images/poppy seed roll2.jpg
+    - C:/Users/MIX-IT/Desktop/images/raisin bread1.jpg
+    - C:/Users/MIX-IT/Desktop/images/raisin bread2.jpg
+    - C:/Users/MIX-IT/Desktop/images/ravioli1.jpg
+    - C:/Users/MIX-IT/Desktop/images/ravioli2.jpg
+    - C:/Users/MIX-IT/Desktop/images/rice1.jpg
+    - C:/Users/MIX-IT/Desktop/images/rice2.jpg
+
+    - C:/Users/MIX-IT/Desktop/images/rice3.jpg
+    - C:/Users/MIX-IT/Desktop/images/rolls.jpg
+    - C:/Users/MIX-IT/Desktop/images/Russian dressing1.jpg
+    - C:/Users/MIX-IT/Desktop/images/Russian dressing2.jpg
+    - C:/Users/MIX-IT/Desktop/images/rye bread1.jpg
+    - C:/Users/MIX-IT/Desktop/images/rye bread2.jpg
    
+    - C:/Users/MIX-IT/Desktop/images/rye2.jpg
+    - C:/Users/MIX-IT/Desktop/images/rye3.jpg
+    - C:/Users/MIX-IT/Desktop/images/salad dressing1.jpg
+    - C:/Users/MIX-IT/Desktop/images/salad dressing2.jpg
+    - C:/Users/MIX-IT/Desktop/images/salmon steak1.jpg
+    - C:/Users/MIX-IT/Desktop/images/salmon steak2.jpg
+    - C:/Users/MIX-IT/Desktop/images/salted fish1.jpg
+    - C:/Users/MIX-IT/Desktop/images/salted fish2.jpg
+    - C:/Users/MIX-IT/Desktop/images/seafood1.jpg
+    - C:/Users/MIX-IT/Desktop/images/seafood2.jpg
+    - C:/Users/MIX-IT/Desktop/images/sesame oil1.jpg
+    - C:/Users/MIX-IT/Desktop/images/poppy seed roll1.jpg
+    - C:/Users/MIX-IT/Desktop/images/sesame oil2.jpg
+    - C:/Users/MIX-IT/Desktop/images/sesame roll1.jpg
+    - C:/Users/MIX-IT/Desktop/images/sesame roll2.jpg
+    - C:/Users/MIX-IT/Desktop/images/sour cream1.jpg
+    - C:/Users/MIX-IT/Desktop/images/sour cream2.jpg
+    - C:/Users/MIX-IT/Desktop/images/sour milk1.jpg
+    - C:/Users/MIX-IT/Desktop/images/sour milk2.jpg
+
+    - C:/Users/MIX-IT/Desktop/images/sourdough bread1.jpg
+    - C:/Users/MIX-IT/Desktop/images/sourdough bread2.jpg
+    - C:/Users/MIX-IT/Desktop/images/spaghetti1.jpg
+    - C:/Users/MIX-IT/Desktop/images/spaghetti2.jpg
+    - C:/Users/MIX-IT/Desktop/images/squid1.jpg
+    - C:/Users/MIX-IT/Desktop/images/squid2.jpg
+    - C:/Users/MIX-IT/Desktop/images/sunflower seed oil1.jpg
+    - C:/Users/MIX-IT/Desktop/images/sunflower seed oil2.jpg
+    - C:/Users/MIX-IT/Desktop/images/toast1.jpg
+    - C:/Users/MIX-IT/Desktop/images/toast2.jpg
+    - C:/Users/MIX-IT/Desktop/images/tortilla1.jpg
+    - C:/Users/MIX-IT/Desktop/images/tortilla2.jpg
+    - C:/Users/MIX-IT/Desktop/images/vegetable oil1.jpg
+    - C:/Users/MIX-IT/Desktop/images/vegetable oil2.jpg
+    - C:/Users/MIX-IT/Desktop/images/vermicelli1.jpg
+    - C:/Users/MIX-IT/Desktop/images/vermicelli2.jpg
+    - C:/Users/MIX-IT/Desktop/images/wafer1.jpg
+    - C:/Users/MIX-IT/Desktop/images/wafer2.jpg
+    - C:/Users/MIX-IT/Desktop/images/waffle1.jpg
+    - C:/Users/MIX-IT/Desktop/images/waffle2.jpg
+    - C:/Users/MIX-IT/Desktop/images/wheat.jpg
+    - C:/Users/MIX-IT/Desktop/images/white bread1.jpg
+    - C:/Users/MIX-IT/Desktop/images/white bread2.jpg
+    - C:/Users/MIX-IT/Desktop/images/whole milk1.jpg
+    - C:/Users/MIX-IT/Desktop/images/whole milk2.jpg
+    - C:/Users/MIX-IT/Desktop/images/whole-wheat bread1.jpg
+    - C:/Users/MIX-IT/Desktop/images/whole-wheat bread2.jpg
+    - C:/Users/MIX-IT/Desktop/images/yogurt2.jpg
+    - C:/Users/MIX-IT/Desktop/images/yogurt1.jpg
+    
+
+
+
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

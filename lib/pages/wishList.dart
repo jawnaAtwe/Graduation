@@ -170,7 +170,7 @@ myList=await fetch.most();
               ]),
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 6),
-            child: Column(
+            child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               
               children: <Widget>[
@@ -210,8 +210,9 @@ myList=await fetch.most();
           ]),
                   ],
                 ),
-                
-              
+                Image.asset(post.image,width: 100,height: 80,),
+
+               
               ],
             ),
           )));

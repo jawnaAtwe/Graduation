@@ -95,9 +95,9 @@ app.get('/listelement', function(request, response){
     console.log("backjojo");
     //compare if less go to insert
     //else send res notification
-    let query1 = `INSERT INTO listselement (productName,listName,marketName,userName,manufacturing,price,amount) 
+    let query1 = `INSERT INTO listselement (productName,listName,marketName,userName,manufacturing,price,amount,image) 
     VALUES ('${request.query.productName}','${request.query.listName}'
-    ,' ${request.query.marketName}',' ${request.query.userName}',' ${request.query.manufacturing}', '${request.query.price}','${request.query.amount}')`;
+    ,' ${request.query.marketName}',' ${request.query.userName}',' ${request.query.manufacturing}', '${request.query.price}','${request.query.amount}','${request.query.image}')`;
     
     pool.query(query1, function(error, results){
         if ( error ){

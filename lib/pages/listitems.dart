@@ -217,7 +217,8 @@ myList=await fetch.showlistitem();
              
              
                   ],
-                ),
+                ), Image.asset(post.image,width: 140,height: 160,),
+
                 // Image.asset(
                 //   "assets/images/${post.imageUrl}.png",
                 //   height: double.infinity,

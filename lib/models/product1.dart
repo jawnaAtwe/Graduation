@@ -7,7 +7,7 @@ class Product1 {
   final int price;
    final int  amount;
   final String manufacturing;
-  // final String expiryDate;
+  final String image;
   // final int productNumber;
 
   final String? description;
@@ -20,7 +20,7 @@ factory Product1.fromJson(Map<String,dynamic> json) => Product1(
     amount: json['amount']  == null ? 0 : json['amount'] as int,
     price: json['price'] == null ? 0 : json['price'] as int,
     manufacturing: json['manufacturing']  == null ? '' : json['manufacturing']as String,
-    // expiryDate: json['expiryDate']  == null ? '' : json['expiryDate']as String,
+    image: json['image']  == null ? '' : json['image']as String,
     // productNumber: json['productNumber']   == null ? 0 : json['productNumber'] as int,
   );
   
@@ -30,7 +30,7 @@ factory Product1.fromJson(Map<String,dynamic> json) => Product1(
     required this.amount,
     required this.price,
     required this.manufacturing,
-    // required this.expiryDate,
+    required this.image,
     // required this.productNumber,
     this.description,
     this.inCart = false,
@@ -49,7 +49,7 @@ factory Product1.fromJson(Map<String,dynamic> json) => Product1(
     data['price'] = this.price;
 
 data['manufacturing'] = this.manufacturing;
-    // data['expiryDate'] = this.expiryDate;
+    data['image'] = this.image;
     // data['productNumber'] = this.productNumber;
 
     return data;
