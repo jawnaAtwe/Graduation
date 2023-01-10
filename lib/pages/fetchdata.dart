@@ -1,5 +1,7 @@
+import 'package:untitled/models/market.dart';
 import 'package:untitled/pages/Sharedsession.dart';
 import 'package:untitled/models/product1.dart';
+import 'package:untitled/models/market.dart';
 import 'package:untitled/models/user.dart';
 import 'package:untitled/pages/listitems.dart';
 import 'package:flutter/material.dart';
@@ -44,6 +46,7 @@ Future <List<CartItem>> wish1() async  {
   final prefs = await SharedPreferences.getInstance();
   String k=prefs.get("namename").toString() ;
   List<CartItem> mylist2;
+  
     http.Response res = await http.get(Uri.parse(fetchdata.apiUrl+'showlist?username='+k),
   headers: {
 'Content-Type':'application/json'
@@ -108,7 +111,52 @@ Future <List<Product>> wish() async {
     throw Exception('Failed to load album');
   } return myList;
 }
+Future <List<Product>> productadmin(String A) async {
+  late  List<Product> myList3=[];
 
+  http.Response res = await http.get(Uri.parse(fetchdata.apiUrl+'productadmin?AdminName='+A),
+      headers: {'Content-Type': 'application/json'});
+
+  if (res.statusCode == 200) {
+    // If the server did return a 200 OK response,
+    // then parse the JSON.
+
+    var jsonString = json.decode(res.body);
+    List<Product> list =
+        List<Product>.from(jsonString.map((i) => Product.fromJson(i)));
+// List<Product> products = jsonString.map((jsonMap) => Product.fromJson(jsonMap)).toList();
+    myList3 = list;
+    print('lp');
+   print(myList3);
+  } else {
+    // If the server did not return a 200 OK response,
+    // then throw an exception.
+    throw Exception('Failed to load album');
+  } return myList3;
+}
+
+Future <List<market>> menue() async {
+  late  List<market> myList3=[];
+
+  http.Response res = await http.get(Uri.parse(fetchdata.apiUrl+'adminname'),
+      headers: {'Content-Type': 'application/json'});
+
+  if (res.statusCode == 200) {
+    // If the server did return a 200 OK response,
+    // then parse the JSON.
+
+    var jsonString = json.decode(res.body);
+    List<market> list =
+        List<market>.from(jsonString.map((i) => market.fromJson(i)));
+// List<Product> products = jsonString.map((jsonMap) => Product.fromJson(jsonMap)).toList();
+    myList3 = list;
+   
+  } else {
+    // If the server did not return a 200 OK response,
+    // then throw an exception.
+    throw Exception('Failed to load album');
+  } return myList3;
+}
 Future <List<Product>> most() async {
   late  List<Product> myList=[];
 

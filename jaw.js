@@ -382,6 +382,20 @@ app.get('/login', function(request, response){
 });
 
 
+app.get('/adminname', function(request, response){
+    console.log("back");
+    let query1 = `SELECT *  FROM admin `;
+    
+    pool.query(query1, function(error, results){
+        if ( error ){
+            response.status(400).send('Error in database operation');
+        } else {
+             console.log(results);
+            response.send(results);
+        }
+    });
+});
+
 app.get('/getusernametoshare', function(request, response){
  
     let query1 = `SELECT * FROM list Where username LIKE '%${request.query.username}%' and listname='${request.query.listname}'`;
@@ -528,6 +542,18 @@ app.get('/register', function(request, response){
              console.log(results);
             response.send("Success");
            
+        }
+    });
+});
+app.get('/productadmin', function(request, response){
+    console.log("adminproduct");
+    let query1 = `SELECT *  FROM products  where marketName='${request.query.AdminName}' `;
+    pool.query(query1, function(error, results){
+        if ( error ){
+            response.status(400).send('Error in database operation');
+        } else {
+             console.log(results);
+            response.send(results);
         }
     });
 });

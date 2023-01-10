@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_place/google_place.dart';
 import 'package:untitled/models/cart_item.dart';
 import 'package:untitled/models/product.dart';
+import 'package:untitled/models/market.dart';
 import 'package:untitled/pages/cart.dart';
 import 'package:untitled/widgets/app_button.dart';
 import 'package:untitled/widgets/base_view.dart';
@@ -48,6 +49,8 @@ TextEditingController productManufactureingController = TextEditingController();
  late int count=1;
 
    late  List<Product> myList=[];
+  late  List<market> myListmenue=[];
+   
    late String blob='';
 
     addadd(String productName,String marketName,String manufacturing, int price,int amount,String image) async {
@@ -302,8 +305,16 @@ getPostsData();
   bool closeTopContainer = false;
   double topContainer = 0;
   List<Widget> itemsData = [];
+   List<Widget> itemsData1 = [];
  void getlist() async{
   myList=await fetch.wish();
+ }  
+ void getlistadmin(String A) async{
+ 
+   myList=await fetch.productadmin(A);
+   
+   print(myList);
+  getPostsData();
  }  
 void getlist1() async{
   
@@ -345,14 +356,14 @@ Uint8List convertBase64Image(String base64String) {
 //   blob=jsonString.elementAt(0)['image'];
 // Uint8List image = Base64Decoder().convert(blob); 
 
-
+ List<Widget> listItems1 = [];
     List<Widget> listItems = [];
       List<Product> A = [];
     if(myList.isEmpty)
 myList=await fetch.wish();
 // XFile? file = await ImagePicker().pickImage(source: ImageSource.gallery);
    // urlImageBlob is the URL where our file is hosted.
-
+myListmenue=await fetch.menue();
 
 // Display if are image. Image.memory(fileBytes);
     myList.forEach((post) async {
@@ -468,79 +479,81 @@ myList=await fetch.wish();
                                           Color.fromARGB(255, 241, 241, 241),
                                     ),  
                                     
-                    // ElevatedButton(
-                    //   child: Text('Add To Card'),
-                    //   style: ElevatedButton.styleFrom(
-                    //     primary: Colors.teal,
-                    //     onPrimary: Colors.white,
-                    //     onSurface: Colors.grey,
-                    //   ),
-                    //   onPressed: () {
-                    //     print('Pressed');
-
-                    //     // addadd( post.productName,post.marketName,post.manufacturing,"\$ ${post.price}");
-                    //     update(post.productName,post.marketName,post.manufacturing,"\$ ${post.price*count}", post.price,count);
-                        
-
-                 
-
-                    //   },
-                    // )
-
-// ,
+           
           ]),
                   ],
                 ),
-// final url = file.path;
 
-    //  OpenFile.open(post.image),
-
-  //               Image(
-  //   image: NetworkImage(
-  //     (post.image),
-  //     scale: 4
-  //   ),
-  // )
-   
-               
-             
-          
-      
-               
-    // Image.asset('C:/Users/MIX-IT/Desktop/paltel.jpg',width: 50,height: 50,),
   Image.asset(post.image,width: 140,height: 160,),
-
-
-                // Image.file(File(post.image)),
-                // new Image.memory(image)
-         
-      //   Image.memory(
-      //   Uint8List.fromList(post.image!),
-      //   height: 88,
-      //   width: 88,
-      //   fit: BoxFit.cover,
-      // )    
-// convertBase64Image(post.image) ==null? Container():Image.memory(
-//         base64Decode(post.image),
-//         height: 88,
-//         width: 88,  
-//         fit: BoxFit.cover,
-//       )   
-            //  Image.memory(Uint8List.fromList(post.image)),
-            //  CircleAvatar(
-            //   backgroundImage: post.image!=""
-            //       ? MemoryImage(
-            //        Base64Codec().decode(post.image),
-            //         )
-            //       : null,)
-              ]
+ ]
             ),
           )));
     });
     setState(() {
       itemsData = listItems;
-      
+      itemsData1 = listItems1;
 
+    });
+
+
+      myListmenue.forEach((post) async {
+    
+    // Uint8List image = Base64Codec().decode(post.image);
+// Uint8List image = Uint8List.fromList(post.image.toBytes());
+      listItems1.add(Container(
+        
+          height: 100,
+          margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+          decoration: BoxDecoration(
+          
+              borderRadius: BorderRadius.all(Radius.circular(20.0)),
+              color: Color.fromARGB(255, 221, 161, 71),
+              boxShadow: [
+                BoxShadow(color: Colors.black.withAlpha(100), blurRadius: 10.0),
+              ]),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 13),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                     Row(  
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly, 
+           
+          children:<Widget>[Text(
+                      post.AdminName,
+                      style: const TextStyle(
+                          fontSize: 23, fontWeight: FontWeight.bold),
+                    ),
+                    
+                     SizedBox(
+                      width: 20,
+                    ),ElevatedButton(
+                      child: Text('Show Product'),
+                      style: ElevatedButton.styleFrom(
+                        primary: Colors.teal,
+                        onPrimary: Colors.white,
+                        onSurface: Colors.grey,
+                      ),
+                      onPressed: () {
+                    getlistadmin(post.AdminName);},
+                    )
+, ]),
+                    Text(
+                      post.city,
+                 
+                      style: const TextStyle(fontSize: 17, color: Colors.white),
+                    ),
+                  
+         
+                  ],
+                ),
+
+ ]
+            ),
+          )));
     });
     
   }
@@ -670,6 +683,26 @@ final prefs = await SharedPreferences.getInstance();
             ],
           ),
         ),
+        drawer: Drawer(
+child: Column(crossAxisAlignment: CrossAxisAlignment.stretch,
+  children: [
+    Expanded(
+                  child: ListView.builder(
+                    
+                      controller: controller,
+                      itemCount: itemsData1.length,
+                      physics: BouncingScrollPhysics(),
+                      itemBuilder: (context, index) {
+                        return Align(
+                            heightFactor: 1,
+                            alignment: Alignment.topCenter,
+                            child: itemsData1[index]);
+                      })),
+
+]),
+
+
+        ),
       ),
     );
   }
@@ -693,7 +726,19 @@ final prefs = await SharedPreferences.getInstance();
             backgroundColor: Color.fromARGB(255, 221, 161, 71),
           ),
         ), // avatarglow
-
+ElevatedButton(
+                      child: Text('All '),
+                      style: ElevatedButton.styleFrom(
+                        primary: Colors.teal,
+                        onPrimary: Colors.white,
+                        onSurface: Colors.grey,
+                      ),
+                      onPressed: () {
+                    
+getlist();
+getPostsData();
+                      },
+                    ),
         Expanded(
             child: Container(
           decoration: BoxDecoration(
