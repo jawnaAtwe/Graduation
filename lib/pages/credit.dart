@@ -32,14 +32,14 @@ fetchdata fetch=new fetchdata();
   late  List<CartItem> myList1=[];
 
 
-  up( ) async {
+  void up( ) async {
     final prefs1 = await SharedPreferences.getInstance();
    String n=prefs1.get("namename").toString() ;
- String nn=prefs1.get("current-price").toString() ;
+ String nn=prefs1.get("current-list").toString() ;
      try {
       http.Response res = await http.get(
           Uri.parse(fetchdata.apiUrl+'upcard?userName=' +
-              n +'listName'+nn
+              n +'&&listName='+nn
              ),
           headers: {'Content-Type': 'application/json'});
     } catch (e) {

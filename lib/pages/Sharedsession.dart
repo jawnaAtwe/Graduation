@@ -53,7 +53,14 @@ final prefs = await SharedPreferences.getInstance();
                     
 
 }
+ savelist1(String A) async{
+final prefs = await SharedPreferences.getInstance();
+ prefs.setString("current-list", A);
 
+ 
+                    
+
+}
 delete()async{
 
   SharedPreferences prefs = await SharedPreferences.getInstance();

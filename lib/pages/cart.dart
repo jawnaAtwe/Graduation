@@ -184,8 +184,10 @@ class _MyHomePageState extends State<Cart> {
                   onPrimary: Colors.white,
                   onSurface: Colors.grey,
                 ),
-                onPressed: () {
+                onPressed: () async{
                   //  sendemail(post.listname);
+                   Sharedsession shared=new Sharedsession();
+                   await shared.savelist1(post.listname);
                    openDialogepay( post.listname);
               },
               ), ]),

@@ -469,33 +469,33 @@ let query11 = `SELECT *  FROM list where username LIKE '%${request.query.userNam
             response.status(400).send('Error in database operation');
         } else {
             const p= results[0].sale;
+            console.log(p);
             
-            
-        //     let querynew1 = `SELECT  * FROM users
-        //     where username LIKE '%${request.query.userName}%' `;
+            let querynew1 = `SELECT  * FROM users where username LIKE '%${request.query.userName}%' `;
            
             
              
-        //     pool.query(querynew1, function(error, results1){
-        //         if ( error ){ const pp= results1[0].card
-        //             response.status(400).send('Error in database operation');
-        //         } else {
-        //             const pp= results[0].card;
-        //             number1=pp-p;
-        //         let querynew = `UPDATE users SET  card = '${number1}' 
-        //         where username LIKE '%${request.query.userName}%' `;
+            pool.query(querynew1, function(error, results1){
+                if ( error ){ 
+                    response.status(400).send('Error in database operation');
+                } else {
+                    const pp= results1[0].card;
+                    number1=pp-p;
+                    console.log(pp);
+                    console.log(number1);
+                let querynew = `UPDATE users SET  card = '${number1}' where username LIKE '%${request.query.userName}%' `;
                 
-        //         pool.query(querynew, function(error, results2){
-        //             if ( error ){
-        //                 response.status(400).send('Error in database operation');
-        //             } else {
+                pool.query(querynew, function(error, results2){
+                    if ( error ){
+                        response.status(400).send('Error in database operation');
+                    } else {
                          
                        
-        //             }
-        //         });
+                    }
+                });
                    
-        //     }
-        // });
+            }
+        });
    
                      
         }
