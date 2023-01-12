@@ -5,10 +5,12 @@ import 'package:untitled/constants/constants.dart';
 import 'package:untitled/pages/cart.dart';
 import 'package:untitled/pages/home.dart';
 import 'package:untitled/pages/chat.dart';
+import 'package:untitled/pages/comment.dart';
 import 'package:untitled/pages/user_profile.dart';
 import 'package:untitled/pages/wish_list.dart';
 import 'package:untitled/pages/homeScreenChat.dart';
 import 'package:untitled/pages/wishList.dart';
+
 class homm extends StatelessWidget {
   const homm({Key? key}) : super(key: key);
 
@@ -69,6 +71,10 @@ class _MyHomePageState extends State<MyHomePage1> {
               icon: _createBarIcon('user_profile', 3),
               label: 'You',
             ),
+             BottomNavigationBarItem(
+              icon: _createBarIcon('wallet', 4),
+              label: 'comment',
+            ),
           ],
         ),
       ),
@@ -85,6 +91,8 @@ class _MyHomePageState extends State<MyHomePage1> {
         return  HomeScreenChat();
       case 3:
         return const UserProfile();
+      case 4:
+       return  TestMe();
       default:
         return const WishList1();
     }

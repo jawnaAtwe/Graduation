@@ -558,6 +558,36 @@ app.get('/productadmin', function(request, response){
     });
 });
 
+app.get('/usercomment', function(request, response){
+    console.log("usercomment");
+    let query1 = `SELECT *  FROM comments  `;
+    pool.query(query1, function(error, results){
+        if ( error ){
+            response.status(400).send('Error in database operation');
+        } else {
+             console.log(results);
+            response.send(results);
+        }
+    });
+});
+
+
+
+app.get('/insertcomment', function(request, response){
+   
+    let query1 = `INSERT INTO comments (name,pic,message,date) VALUES ('${request.query.name}','assets/images/user.png',' ${request.query.message}','${request.query.date}')`;
+    
+    pool.query(query1, function(error, results){
+        if ( error ){
+            response.status(400).send('Error in database operation');
+        } else {
+             console.log(results);
+            response.send("Success");
+           
+        }
+    });
+});
+
 app.listen(3000, function () {
     console.log('Express server is listening on port 3000');
 });

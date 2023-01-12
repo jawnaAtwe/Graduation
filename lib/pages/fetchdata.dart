@@ -3,6 +3,7 @@ import 'package:untitled/pages/Sharedsession.dart';
 import 'package:untitled/models/product1.dart';
 import 'package:untitled/models/market.dart';
 import 'package:untitled/models/user.dart';
+import 'package:untitled/models/usercomment.dart';
 import 'package:untitled/pages/listitems.dart';
 import 'package:flutter/material.dart';
 import 'package:untitled/models/cart_item.dart';
@@ -157,6 +158,30 @@ Future <List<market>> menue() async {
     throw Exception('Failed to load album');
   } return myList3;
 }
+
+Future <List<usercomment>> comment() async {
+  late  List<usercomment> myList3=[];
+
+  http.Response res = await http.get(Uri.parse(fetchdata.apiUrl+'usercomment'),
+      headers: {'Content-Type': 'application/json'});
+
+  if (res.statusCode == 200) {
+    // If the server did return a 200 OK response,
+    // then parse the JSON.
+
+    var jsonString = json.decode(res.body);
+    List<usercomment> list =
+        List<usercomment>.from(jsonString.map((i) => usercomment.fromJson(i)));
+// List<Product> products = jsonString.map((jsonMap) => Product.fromJson(jsonMap)).toList();
+    myList3 = list;
+   
+  } else {
+    // If the server did not return a 200 OK response,
+    // then throw an exception.
+    throw Exception('Failed to load album');
+  } return myList3;
+}
+
 Future <List<Product>> most() async {
   late  List<Product> myList=[];
 

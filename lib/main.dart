@@ -3,7 +3,7 @@ import 'dart:async';
 import 'dart:ui';
 import 'package:untitled/homm.dart';
 import 'package:untitled/pages/getCurrentLocation.dart';
-
+import 'package:untitled/pages/comment.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:rounded_loading_button/rounded_loading_button.dart';
@@ -146,21 +146,21 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                           }));
                         },
                       ),
-                      ThemeButton(
-                        label: "Test",
-                        labelColor: Color.fromARGB(255, 255, 255, 255),
-                        color: Colors.transparent,
-                        highlight:
-                            Color.fromARGB(255, 172, 190, 90).withOpacity(0.5),
-                        borderColor: Color.fromARGB(255, 172, 190, 90),
-                        borderWidth: 4,
-                        onClick: () {
-                          Navigator.of(context)
-                              .push(MaterialPageRoute(builder: (context) {
-                            return homm();
-                          }));
-                        },
-                      )
+                      // ThemeButton(
+                      //   label: "Test",
+                      //   labelColor: Color.fromARGB(255, 255, 255, 255),
+                      //   color: Colors.transparent,
+                      //   highlight:
+                      //       Color.fromARGB(255, 172, 190, 90).withOpacity(0.5),
+                      //   borderColor: Color.fromARGB(255, 172, 190, 90),
+                      //   borderWidth: 4,
+                      //   onClick: () {
+                      //     Navigator.of(context)
+                      //         .push(MaterialPageRoute(builder: (context) {
+                      //       return TestMe();
+                      //     }));
+                      //   },
+                      // )
                     ],
                   ),
                 )
