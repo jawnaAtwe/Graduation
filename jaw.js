@@ -220,6 +220,7 @@ app.get('/listelement', function(request, response){
 app.get('/update', function(request, response){
       //compare if less go to update
     //else nothing
+    var number1;
     console.log("update");
 let query11 = `SELECT *  FROM list where username LIKE '%${request.query.userName}%' and listname='${request.query.listName}' `;
  
@@ -234,17 +235,33 @@ let query11 = `SELECT *  FROM list where username LIKE '%${request.query.userNam
             const j1=parseInt(y);
             // const fin= subtract(p, p1);
             console.log( p-j1);
-           
+           const sale=results[0].sale;
         
             var number = p-j1;
             response.send((number).toString());
-               
+
+            
+             number1 = sale+j1;
                 console.log("yes");
-  
+                console.log(number1);
+                let querynew = `UPDATE list SET  sale = '${number1}' 
+                where username LIKE '%${request.query.userName}%' and listname='${request.query.listName}'`;
+                
+                pool.query(querynew, function(error, results1){
+                    if ( error ){
+                        response.status(400).send('Error in database operation');
+                    } else {
+                         
+                       
+                    }
+                });
            
                      
         }
     });
+
+
+
    
 });
 
@@ -441,6 +458,51 @@ app.get('/share1', function(request, response){
         }
     });
 });
+app.get('/upcard', function(request, response){
+ 
+    var number1;
+    console.log("update");
+let query11 = `SELECT *  FROM list where username LIKE '%${request.query.userName}%' and listname='${request.query.listName}' `;
+ 
+    pool.query(query11, function(error, results){
+        if ( error ){
+            response.status(400).send('Error in database operation');
+        } else {
+            const p= results[0].sale;
+            
+            
+        //     let querynew1 = `SELECT  * FROM users
+        //     where username LIKE '%${request.query.userName}%' `;
+           
+            
+             
+        //     pool.query(querynew1, function(error, results1){
+        //         if ( error ){ const pp= results1[0].card
+        //             response.status(400).send('Error in database operation');
+        //         } else {
+        //             const pp= results[0].card;
+        //             number1=pp-p;
+        //         let querynew = `UPDATE users SET  card = '${number1}' 
+        //         where username LIKE '%${request.query.userName}%' `;
+                
+        //         pool.query(querynew, function(error, results2){
+        //             if ( error ){
+        //                 response.status(400).send('Error in database operation');
+        //             } else {
+                         
+                       
+        //             }
+        //         });
+                   
+        //     }
+        // });
+   
+                     
+        }
+    });
+
+
+});
 app.get('/showlist', function(request, response){
     console.log("backshow");
     let query1 = `SELECT *  FROM list where username LIKE '%${request.query.username}%'`;
@@ -533,7 +595,7 @@ app.get('/reglist', function(request, response){
 
 app.get('/register', function(request, response){
    
-    let query1 = `INSERT INTO users (username,userpass,email,place,phone) VALUES ('${request.query.username}','${request.query.userpass}',' ${request.query.email}','${request.query.place}','${request.query.phone}')`;
+    let query1 = `INSERT INTO users (username,userpass,email,place,phone,card) VALUES ('${request.query.username}','${request.query.userpass}',' ${request.query.email}','${request.query.place}','${request.query.phone}','5000')`;
     
     pool.query(query1, function(error, results){
         if ( error ){

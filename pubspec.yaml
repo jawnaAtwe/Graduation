@@ -71,12 +71,16 @@ dependencies:
   google_maps_flutter: ^2.2.2
   dio: ^4.0.6
   geolocator: ^9.0.2
+  credit_card_number_validator: ^1.0.4
   comment_box: ^0.0.18
   firebase_core: ^2.4.0
   firebase_auth: ^4.2.3
   cloud_firestore: ^4.3.0
+  flutter_credit_card: ^3.0.4
+  awesome_card: ^1.1.7
   modal_progress_hud_nsn: ^0.3.0
   firebase_storage: ^11.0.10
+  
   
 dev_dependencies:
   flutter_test:

@@ -10,6 +10,7 @@ import 'package:untitled/pages/users.dart';
 import 'package:untitled/widgets/base_view.dart';
 import 'package:untitled/pages/profile.dart';
 import 'package:untitled/pages/fetchdata.dart';
+import 'package:untitled/pages/credit.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class UserProfile extends StatefulWidget {
@@ -61,6 +62,16 @@ class _profileScreenState extends State<UserProfile> {
                    Navigator.of(context)
                         .push(MaterialPageRoute(builder: (context) {
                       return MyApp();
+                    }))
+                  }),
+                      _buildListItem(
+              'settings',
+              'credit card',
+              () => {
+               
+                   Navigator.of(context)
+                        .push(MaterialPageRoute(builder: (context) {
+                      return MySample();
                     }))
                   }),
 

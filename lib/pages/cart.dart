@@ -7,6 +7,7 @@ import 'package:untitled/models/cart_item.dart';
 import 'package:untitled/models/product.dart';
 import 'package:untitled/pages/fetchdata.dart';
 import 'package:untitled/pages/wish_list.dart';
+import 'package:untitled/pages/credit.dart';
 import 'package:untitled/widgets/app_button.dart';
 import 'package:untitled/widgets/base_view.dart';
 import 'package:untitled/widgets/cart_product_item.dart';
@@ -177,14 +178,15 @@ class _MyHomePageState extends State<Cart> {
               ),
              
                ElevatedButton(
-                child: Text('send'),
+                child: Text('request'),
                 style: ElevatedButton.styleFrom(
                   primary: Color.fromARGB(255, 221, 161, 71),
                   onPrimary: Colors.white,
                   onSurface: Colors.grey,
                 ),
                 onPressed: () {
-                   sendemail(post.listname);
+                  //  sendemail(post.listname);
+                   openDialogepay( post.listname);
               },
               ), ]),
             ],
@@ -231,6 +233,46 @@ class _MyHomePageState extends State<Cart> {
   String dialogeValue = '';
 
  
+
+
+     void openDialogepay(String s1){
+  Future openDialoge2() => showDialog(
+      context: this.context,
+      builder: (context) => AlertDialog(
+            backgroundColor: Color.fromARGB(255, 209, 224, 199),
+            title: Text('which way u want :'),
+            //content: Text('ADD ITEMS USING :'),
+            actions: [
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  primary: Color.fromARGB(255, 221, 161, 71),
+                ),
+                onPressed: ()async {
+                   
+                sendemail(s1);
+                },
+                child: Text("Cash"),
+              ),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  primary: Color.fromARGB(255, 221, 161, 71),
+                ),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                  Navigator.of(context)
+                      .push(MaterialPageRoute(builder: (context) {
+                    return MySample();
+                  }));
+                },
+                child: Text("credit card"),
+              ),
+            ],
+          ));
+          openDialoge2();
+}
+
+
+
      void openDialoge1(String s1, String s2){
   Future openDialoge2() => showDialog(
       context: this.context,
