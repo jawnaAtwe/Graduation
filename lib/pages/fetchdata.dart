@@ -1,4 +1,5 @@
 import 'package:untitled/models/market.dart';
+import 'package:untitled/models/offermodel.dart';
 import 'package:untitled/pages/Sharedsession.dart';
 import 'package:untitled/models/product1.dart';
 import 'package:untitled/models/market.dart';
@@ -111,6 +112,52 @@ Future <List<Product>> wish() async {
     // then throw an exception.
     throw Exception('Failed to load album');
   } return myList;
+}
+Future <List<offermodel>> offer() async {
+  late  List<offermodel> myList=[];
+
+  http.Response res = await http.get(Uri.parse(fetchdata.apiUrl+'offer'),
+      headers: {'Content-Type': 'application/json'});
+
+  if (res.statusCode == 200) {
+   
+
+    var jsonString = json.decode(res.body);
+    List<offermodel> list =
+        List<offermodel>.from(jsonString.map((i) => offermodel.fromJson(i)));
+
+    myList = list;
+   
+  } else {
+    // If the server did not return a 200 OK response,
+    // then throw an exception.
+    throw Exception('Failed to load album');
+  } return myList;
+}
+
+
+Future <List<offermodel>> offeradmin(String A) async {
+  late  List<offermodel> myList3=[];
+
+  http.Response res = await http.get(Uri.parse(fetchdata.apiUrl+'offeradmin?AdminName='+A),
+      headers: {'Content-Type': 'application/json'});
+
+  if (res.statusCode == 200) {
+    // If the server did return a 200 OK response,
+    // then parse the JSON.
+
+    var jsonString = json.decode(res.body);
+    List<offermodel> list =
+        List<offermodel>.from(jsonString.map((i) => offermodel.fromJson(i)));
+// List<Product> products = jsonString.map((jsonMap) => Product.fromJson(jsonMap)).toList();
+    myList3 = list;
+    print('lp');
+   print(myList3);
+  } else {
+    // If the server did not return a 200 OK response,
+    // then throw an exception.
+    throw Exception('Failed to load album');
+  } return myList3;
 }
 Future <List<Product>> productadmin(String A) async {
   late  List<Product> myList3=[];

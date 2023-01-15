@@ -6,11 +6,11 @@ import 'package:untitled/pages/Sharedsession.dart';
 import 'package:untitled/constants/constants.dart';
 import 'package:untitled/main.dart';
 import 'package:untitled/pages/listitems.dart';
+import 'package:untitled/pages/offers.dart';
 import 'package:untitled/pages/users.dart';
 import 'package:untitled/widgets/base_view.dart';
 import 'package:untitled/pages/profile.dart';
 import 'package:untitled/pages/fetchdata.dart';
-import 'package:untitled/pages/credit.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class UserProfile extends StatefulWidget {
@@ -51,6 +51,13 @@ class _profileScreenState extends State<UserProfile> {
                     Navigator.of(context)
                         .push(MaterialPageRoute(builder: (c) => pro()))
                   }),
+                    _buildListItem(
+              'settings',
+              'Offer',
+              () => {
+                    Navigator.of(context)
+                        .push(MaterialPageRoute(builder: (c) => offer()))
+                  }),
           _buildListItem(
               'settings',
               'Sign Out',
@@ -62,16 +69,6 @@ class _profileScreenState extends State<UserProfile> {
                    Navigator.of(context)
                         .push(MaterialPageRoute(builder: (context) {
                       return MyApp();
-                    }))
-                  }),
-                      _buildListItem(
-              'settings',
-              'credit card',
-              () => {
-               
-                   Navigator.of(context)
-                        .push(MaterialPageRoute(builder: (context) {
-                      return MySample();
                     }))
                   }),
 

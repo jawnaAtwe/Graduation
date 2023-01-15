@@ -111,6 +111,49 @@ app.get('/listelement', function(request, response){
         app.get('/deleteproduct', function(request, response){
             console.log("yes");
            
+            let query2 = `SELECT * FROM listselement  where listName ='${request.query.listname}' and productName='${request.query.nameproduct}' and username LIKE '%${request.query.username}%'
+            and amount ='${request.query.amount}'`;
+           
+            pool.query(query2, function(error, results1){
+                if ( error ){
+                    response.status(400).send('Error in database operation');
+                } else { const p= results1[0].price;
+                     
+                    let query4 = `SELECT * FROM list  where  username LIKE '%${request.query.username}%'
+                    and listname='${request.query.listname}'`;
+            
+                    pool.query(query4, function(error, results){
+                        if ( error ){
+                            response.status(400).send('Error in database operation');
+                        } else {
+                            const pp= results[0].price;
+                           var nn=pp+p;
+console.log(nn);
+                           let querynew = `UPDATE list SET  price = '${nn}' 
+                           where username LIKE '%${request.query.username}%' and listname='${request.query.listname}'`;
+                           
+                           pool.query(querynew, function(error, results3){
+                               if ( error ){
+                                   response.status(400).send('Error in database operation');
+                               } else {
+                                    
+                                  
+                               }
+                           });
+                      
+
+
+                        }
+                    });
+
+
+
+
+                   
+                }
+            });
+
+
             let query1 = `DELETE FROM listselement  where listName ='${request.query.listname}' and productName='${request.query.nameproduct}' and username LIKE '%${request.query.username}%'
             and amount ='${request.query.amount}'`;
     
@@ -242,8 +285,7 @@ let query11 = `SELECT *  FROM list where username LIKE '%${request.query.userNam
 
             
              number1 = sale+j1;
-                console.log("yes");
-                console.log(number1);
+              
                 let querynew = `UPDATE list SET  sale = '${number1}' 
                 where username LIKE '%${request.query.userName}%' and listname='${request.query.listName}'`;
                 
@@ -268,7 +310,6 @@ let query11 = `SELECT *  FROM list where username LIKE '%${request.query.userNam
 
 app.get('/nowupdate', function(request, response){
  
-  console.log("nowupdate");
 let query11 = `UPDATE list SET price ='${request.query.price}' where username LIKE '%${request.query.userName}%' and listname='${request.query.listName}' `;
 
   pool.query(query11, function(error, results){
@@ -336,7 +377,7 @@ app.get('/listitems', function(request, response){
         if ( error ){
             response.status(400).send('Error in database operation');
         } else {
-             console.log(results);
+            
             response.send(results);
         }
     });
@@ -351,7 +392,7 @@ app.get('/most', function(request, response){
         if ( error ){
             response.status(400).send('Error in database operation');
         } else {
-             console.log(results);
+             
             response.send(results);
         }
     });
@@ -364,7 +405,22 @@ app.get('/wish', function(request, response){
         if ( error ){
             response.status(400).send('Error in database operation');
         } else {
-             console.log(results);
+           
+            response.send(results);
+        }
+    });
+});
+
+
+app.get('/offer', function(request, response){
+    console.log("back");
+    let query1 = `SELECT *  FROM offers `;
+    
+    pool.query(query1, function(error, results){
+        if ( error ){
+            response.status(400).send('Error in database operation');
+        } else {
+           
             response.send(results);
         }
     });
@@ -377,7 +433,7 @@ app.get('/usersonline', function(request, response){
         if ( error ){
             response.status(400).send('Error in database operation');
         } else {
-             console.log(results);
+             
             response.send(results);
         }
     });
@@ -392,7 +448,7 @@ app.get('/login', function(request, response){
         if ( error ){
             response.status(400).send('Error in database operation');
         } else {
-             console.log(results);
+            
             response.send(results);
         }
     });
@@ -407,7 +463,7 @@ app.get('/adminname', function(request, response){
         if ( error ){
             response.status(400).send('Error in database operation');
         } else {
-             console.log(results);
+             
             response.send(results);
         }
     });
@@ -433,7 +489,7 @@ app.get('/share', function(request, response){
     let query1 = `UPDATE list SET username = '${request.query.username}+${request.query.person}' where 
      username LIKE '%${request.query.username1}%' and listname='${request.query.listname}'`;
     
-    console.log(request.query.username);
+   
     pool.query(query1, function(error, results){
         if ( error ){
             response.status(400).send('Error in database operation');
@@ -461,7 +517,7 @@ app.get('/share1', function(request, response){
 app.get('/upcard', function(request, response){
  
     var number1;
-    console.log("update");
+    
 let query11 = `SELECT *  FROM list where username LIKE '%${request.query.userName}%' and listname='${request.query.listName}' `;
  
     pool.query(query11, function(error, results){
@@ -511,7 +567,7 @@ app.get('/showlist', function(request, response){
         if ( error ){
             response.status(400).send('Error in database operation');
         } else {
-             console.log(results);
+             
             response.send(results);
         }
     });
@@ -525,7 +581,7 @@ app.get('/loginadmin', function(request, response){
         if ( error ){
             response.status(400).send('Error in database operation');
         } else {
-             console.log(results);
+            
             response.send(results);
         }
     });
@@ -539,7 +595,7 @@ app.get('/sendemail', function(request, response){
         if ( error ){
             response.status(400).send('Error in database operation');
         } else {
-             console.log(results);
+             
             response.send(results);
             
 
@@ -560,7 +616,7 @@ app.get('/getlocation', function(request, response){
         if ( error ){
             response.status(400).send('Error in database operation');
         } else {
-             console.log(results);
+             
             response.send(results);
             
 
@@ -586,7 +642,7 @@ app.get('/reglist', function(request, response){
         if ( error ){
             response.status(400).send('Error in database operation');
         } else {
-             console.log(results);
+             
             response.send("Success");
            
         }
@@ -601,7 +657,7 @@ app.get('/register', function(request, response){
         if ( error ){
             response.status(400).send('Error in database operation');
         } else {
-             console.log(results);
+             
             response.send("Success");
            
         }
@@ -614,12 +670,24 @@ app.get('/productadmin', function(request, response){
         if ( error ){
             response.status(400).send('Error in database operation');
         } else {
-             console.log(results);
+             
             response.send(results);
         }
     });
 });
 
+app.get('/offeradmin', function(request, response){
+    console.log("adminproduct");
+    let query1 = `SELECT *  FROM offers  where marketname='${request.query.AdminName}' `;
+    pool.query(query1, function(error, results){
+        if ( error ){
+            response.status(400).send('Error in database operation');
+        } else {
+             
+            response.send(results);
+        }
+    });
+});
 app.get('/usercomment', function(request, response){
     console.log("usercomment");
     let query1 = `SELECT *  FROM comments  `;
